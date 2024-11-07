@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 시급 타입 배열 리소스 정의 -->
+    <string-array name="wage_types">
+        <item>시급</item>
+        <item>일급</item>
+        <item>주급</item>
+        <item>월급</item>
+    </string-array>
+</resources>
