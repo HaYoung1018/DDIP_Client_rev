@@ -1,5 +1,4 @@
-﻿# DDIP_Client
-
+﻿# DDIP_Client 페이지 설명(로그인, 회원가입 제외)
 activity_main.xml , MainActivity => 메인페이지
 
 crewroom.xml , CrewRoomActivity => 크룰룸 페이지(하단바 문모양 클릭하면 나옴)
