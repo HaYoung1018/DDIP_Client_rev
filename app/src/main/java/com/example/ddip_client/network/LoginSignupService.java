@@ -10,11 +10,11 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-public interface ApiService {
-    @POST("users/signup")
+public interface LoginSignupService {
+    @POST("Member/signup")
     Call<Member> signup(@Body Member ddip_db);
 
-    @POST("users/login")
+    @POST("Member/login")
     Call<Member> login(@Query("id") String id, @Query("password") String password);
 
     @GET("/api/check-username")

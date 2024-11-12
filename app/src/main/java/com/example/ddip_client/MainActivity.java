@@ -73,14 +73,15 @@ public class MainActivity extends AppCompatActivity {
 
         // 알람 버튼 클릭시 알람화면으로 이동
         alarmButton.setOnClickListener(v -> {
-                    Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
-                    startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
+            startActivity(intent);
         });
 
         // 마이페이지 버튼 클릭시 마이페이지로 이동
         myPageButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, MypageActivity.class);
             startActivity(intent);
+            finish();
         });
 
 

@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ddip_client.models.Member;
-import com.example.ddip_client.network.ApiService;
+import com.example.ddip_client.network.LoginSignupService;
 import com.example.ddip_client.network.RetrofitClient;
 
 import retrofit2.Call;
@@ -28,6 +28,7 @@ public class SignupActivity extends AppCompatActivity {
     private boolean isIdValid = false;
     private boolean isPwdValid = false;
     private String usertype = "Staff";
+    private String tempphone = "010-0000-0000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,16 +110,9 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
 
-                // 회원 정보를 SharedPreferences에 저장
-                SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("userId", id);
-                editor.putString("userPassword", password);
-                editor.apply();
-
                 // 회원가입 성공 로직 (실제 서버로의 데이터 전송이 필요)
                 isManager = usertype;
-                Member data = new Member(id, password, name, email, isManager);
+                Member data = new Member(id, password, name, email, isManager, tempphone);
                 signupUser(data);
                 Intent intent = new Intent(SignupActivity.this, LoginSignupActivity.class);
                 startActivity(intent);
@@ -129,7 +123,7 @@ public class SignupActivity extends AppCompatActivity {
 
     //아이디 중복 확인 요청 함수
     private void checkIdAvailability(String userid) {
-        ApiService userApi = RetrofitClient.getClient().create(ApiService.class);
+        LoginSignupService userApi = RetrofitClient.getClient().create(LoginSignupService.class);
         //서버로 아이디 중복 확인 요청 보내기
         Call<Boolean> call = userApi.checkUserid(userid);
 
@@ -196,7 +190,7 @@ public class SignupActivity extends AppCompatActivity {
     //회원가입 요청 함수
     private void signupUser(Member user){
         System.out.println(user.getUser_type());
-        ApiService userApi = RetrofitClient.getClient().create(ApiService.class);
+        LoginSignupService userApi = RetrofitClient.getClient().create(LoginSignupService.class);
         Call<Member> call = userApi.signup(user);
         call.enqueue(new Callback<Member>() {
             @Override
