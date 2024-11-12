@@ -13,9 +13,16 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,10 +36,21 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "MemoPrefs"; // SharedPreferences 파일명
     private static final String MEMO_PREFIX = "memo_"; // 메모 저장 키의 접두사
 
+    private CrewroomAdapter crewRoomAdapter;
+    private List<String> crewRoomList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // main.xml로 변경했습니다.
+
+        // RecyclerView 설정
+        RecyclerView crewRoomRecyclerView = findViewById(R.id.crew_room_recycler_view);
+        crewRoomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        crewRoomAdapter = new CrewroomAdapter(crewRoomList);
+        crewRoomRecyclerView.setAdapter(crewRoomAdapter);
+
+        // 크루룸 초대코드 설정이런거 넣어야함
 
         // ------------------ Header (상단바) ------------------
         TextView titleTextView = findViewById(R.id.title_text);
@@ -65,13 +83,33 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+
         // ------------------ Add Work (근무지 추가) ------------------
         Button addWorkButton = findViewById(R.id.add_work_button);
         addWorkButton.setOnClickListener(v -> {
-            Toast.makeText(this, "근무지 추가 클릭됨", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, AddWorkActivity.class);
-            startActivity(intent);
+            // 다이얼로그 생성
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("크루룸 추가");
+            builder.setMessage("초대 코드를 입력하세요.");
+
+            // EditText 추가
+            final EditText input = new EditText(this);
+            builder.setView(input);
+
+            // 확인 버튼 추가
+            builder.setPositiveButton("확인", (dialog, which) -> {
+                String inviteCode = input.getText().toString();
+                // 초대 코드 처리 로직 여기에 추가하기
+                Toast.makeText(MainActivity.this, "초대 코드: " + inviteCode, Toast.LENGTH_SHORT).show();
+            });
+
+            // 취소 버튼 추가
+            builder.setNegativeButton("취소", (dialog, which) -> dialog.cancel());
+
+            // 다이얼로그 표시
+            builder.show();
         });
+
 
         // ------------------ Memo (메모) ------------------
         memoInput = findViewById(R.id.memo_input);
