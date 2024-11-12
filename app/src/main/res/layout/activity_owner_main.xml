@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:id="@+id/owner_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -195,5 +196,5 @@
             android:contentDescription="마이페이지"
             android:background="?android:attr/selectableItemBackgroundBorderless" />
     </LinearLayout>
-
 </LinearLayout>
+
