@@ -87,29 +87,6 @@ public class MainActivity extends AppCompatActivity {
         // ------------------ Add Work (근무지 추가) ------------------
         Button addWorkButton = findViewById(R.id.add_work_button);
         addWorkButton.setOnClickListener(v -> {
-            // 다이얼로그 생성
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("크루룸 추가");
-            builder.setMessage("초대 코드를 입력하세요.");
-
-            // EditText 추가
-            final EditText input = new EditText(this);
-            builder.setView(input);
-
-            // 확인 버튼 추가
-            builder.setPositiveButton("확인", (dialog, which) -> {
-                String inviteCode = input.getText().toString();
-                // 초대 코드 처리 로직 여기에 추가하기
-                Toast.makeText(MainActivity.this, "초대 코드: " + inviteCode, Toast.LENGTH_SHORT).show();
-            });
-
-            // 취소 버튼 추가
-            builder.setNegativeButton("취소", (dialog, which) -> dialog.cancel());
-
-            // 다이얼로그 표시
-            builder.show();
-        });
-
 
         // ------------------ Memo (메모) ------------------
         memoInput = findViewById(R.id.memo_input);
