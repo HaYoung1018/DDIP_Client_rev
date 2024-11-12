@@ -40,15 +40,33 @@
             android:name=".CrewRoomActivity"
             android:exported="true" />
 
+        <!-- CalendarActivity 등록 -->
         <activity
             android:name=".CalendarActivity"
             android:exported="true" />
+
+        <!-- AddWorkActivity 등록 -->
         <activity
             android:name=".AddWorkActivity"
             android:exported="true"/>
 
+        <!-- InviteCodeActivity 등록 -->
+        <activity
+            android:name=".InviteCodeActivity"
+            android:exported="true"/>
+
+        <!-- InvitedRoomActivity 등록 -->
+        <activity
+            android:name=".InvitedRoomActivity"
+            android:exported="true"/>
+
+        <!-- AlarmActivity 등록 -->
         <activity android:name=".AlarmActivity" />
+
+        <!-- MypageActivity 등록 -->
         <activity android:name=".MypageActivity" />
+
+        <!-- UserListActivity 등록 -->
         <activity android:name=".UserListActivity" />
 
     </application>

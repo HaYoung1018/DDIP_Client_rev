@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class OwnerMainActivity extends AppCompatActivity {
 
     // Memo 관련 변수
     private EditText memoInput;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // main.xml로 변경했습니다.
+        setContentView(R.layout.activity_owner_main); // main.xml로 변경했습니다.
 
         // ------------------ Header (상단바) ------------------
         TextView titleTextView = findViewById(R.id.title_text);
@@ -49,19 +49,19 @@ public class MainActivity extends AppCompatActivity {
 
         // 서브크루 버튼 클릭시 크루룸으로 이동
         subCrewButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, CrewRoomActivity.class);
+            Intent intent = new Intent(OwnerMainActivity.this, CrewRoomActivity.class);
             startActivity(intent);
         });
 
         // 알람 버튼 클릭시 알람화면으로 이동
         alarmButton.setOnClickListener(v -> {
-                    Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
-                    startActivity(intent);
+            Intent intent = new Intent(OwnerMainActivity.this, AlarmActivity.class);
+            startActivity(intent);
         });
 
         // 마이페이지 버튼 클릭시 마이페이지로 이동
         myPageButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, MypageActivity.class);
+            Intent intent = new Intent(OwnerMainActivity.this, MypageActivity.class);
             startActivity(intent);
         });
 
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         Button addWorkButton = findViewById(R.id.add_work_button);
         addWorkButton.setOnClickListener(v -> {
             Toast.makeText(this, "근무지 추가 클릭됨", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, InviteCodeActivity.class);
+            Intent intent = new Intent(OwnerMainActivity.this, InviteCodeActivity.class);
             startActivity(intent);
         });
 
