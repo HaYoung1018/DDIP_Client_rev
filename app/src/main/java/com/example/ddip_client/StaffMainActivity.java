@@ -69,7 +69,7 @@ public class StaffMainActivity extends AppCompatActivity {
         Button addWorkButton = findViewById(R.id.add_work_button);
         addWorkButton.setOnClickListener(v -> {
             Toast.makeText(this, "근무지 추가 클릭됨", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(StaffMainActivity.this, AddWorkActivity.class);
+            Intent intent = new Intent(StaffMainActivity.this, InviteCodeActivity.class);
             startActivity(intent);
         });
 
@@ -165,4 +165,7 @@ public class StaffMainActivity extends AppCompatActivity {
         // 팝업 메뉴를 화면에 표시
         popupMenu.show();
     }
+
 }
+
+

@@ -88,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
         Button addWorkButton = findViewById(R.id.add_work_button);
         addWorkButton.setOnClickListener(v -> {
 
+            Toast.makeText(this, "근무지 추가 클릭됨", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, InviteCodeActivity.class);
+            startActivity(intent);
+        });
+
         // ------------------ Memo (메모) ------------------
         memoInput = findViewById(R.id.memo_input);
         previousDayButton = findViewById(R.id.previous_day_button);
