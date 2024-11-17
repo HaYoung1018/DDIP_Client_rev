@@ -13,19 +13,12 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class OwnerMainActivity extends AppCompatActivity {
 
     // Memo 관련 변수
     private EditText memoInput;
@@ -36,21 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "MemoPrefs"; // SharedPreferences 파일명
     private static final String MEMO_PREFIX = "memo_"; // 메모 저장 키의 접두사
 
-    private CrewroomAdapter crewRoomAdapter;
-    private List<String> crewRoomList = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // main.xml로 변경했습니다.
-
-        // RecyclerView 설정
-        RecyclerView crewRoomRecyclerView = findViewById(R.id.crew_room_recycler_view);
-        crewRoomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        crewRoomAdapter = new CrewroomAdapter(crewRoomList);
-        crewRoomRecyclerView.setAdapter(crewRoomAdapter);
-
-        // 크루룸 초대코드 설정이런거 넣어야함
+        setContentView(R.layout.activity_owner_main); // main.xml로 변경했습니다.
 
         // ------------------ Header (상단바) ------------------
         TextView titleTextView = findViewById(R.id.title_text);
@@ -67,29 +49,29 @@ public class MainActivity extends AppCompatActivity {
 
         // 서브크루 버튼 클릭시 크루룸으로 이동
         subCrewButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, CrewRoomActivity.class);
+            Intent intent = new Intent(OwnerMainActivity.this, CrewRoomActivity.class);
             startActivity(intent);
         });
 
         // 알람 버튼 클릭시 알람화면으로 이동
         alarmButton.setOnClickListener(v -> {
-                    Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
-                    startActivity(intent);
+            Intent intent = new Intent(OwnerMainActivity.this, AlarmActivity.class);
+            startActivity(intent);
         });
 
         // 마이페이지 버튼 클릭시 마이페이지로 이동
         myPageButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, MypageActivity.class);
+            Intent intent = new Intent(OwnerMainActivity.this, MypageActivity.class);
             startActivity(intent);
         });
-
 
         // ------------------ Add Work (근무지 추가) ------------------
         Button addWorkButton = findViewById(R.id.add_work_button);
         addWorkButton.setOnClickListener(v -> {
-
             Toast.makeText(this, "근무지 추가 클릭됨", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, InviteCodeActivity.class);
+
+            Intent intent = new Intent(OwnerMainActivity.this, InviteCodeActivity.class);
+
             startActivity(intent);
         });
 
@@ -185,4 +167,4 @@ public class MainActivity extends AppCompatActivity {
         // 팝업 메뉴를 화면에 표시
         popupMenu.show();
     }
-}
+

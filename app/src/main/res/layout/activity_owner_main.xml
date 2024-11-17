@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+
+    android:id="@+id/owner_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -20,7 +21,7 @@
             android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="쿠잉"
+            android:text="쿠잉(Owner)"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@android:color/holo_blue_dark"
@@ -150,16 +151,6 @@
             android:padding="12dp"/>
     </LinearLayout>
 
-    <!-- Crew Room List (크루룸 리스트) -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/crew_room_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#EFEFEF" />
-
-
     <!-- 하단 네비게이션 바 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -205,5 +196,5 @@
             android:contentDescription="마이페이지"
             android:background="?android:attr/selectableItemBackgroundBorderless" />
     </LinearLayout>
-
 </LinearLayout>
+

@@ -2,14 +2,24 @@ package com.example.ddip_client;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ddip_client.models.*;
+import com.example.ddip_client.network.ApiService;
+import com.example.ddip_client.network.RetrofitClient;
+
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginSignupActivity extends AppCompatActivity {
 
@@ -17,12 +27,24 @@ public class LoginSignupActivity extends AppCompatActivity {
     private EditText passwordInput;
     private Button loginButton;
     private Button signupButton;
+    private String userTypeResult;
+    private int res = -1;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+//        SharedPreferences에서 저장된 회원 정보 가져오기
+//        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+//        String savedId = sharedPreferences.getString("userId", "");
+//        String savedPassword = sharedPreferences.getString("userPassword", "");
+//
+//        if (!savedId.isEmpty() && !savedPassword.isEmpty()){
+//            loginUser(savedId, savedPassword);
+//        }else{
+//            return;
+//        }
 
         // EditText와 Button을 연결합니다
         idInput = findViewById(R.id.id_input);
@@ -49,21 +71,59 @@ public class LoginSignupActivity extends AppCompatActivity {
                     return;
                 }
 
-                // SharedPreferences에서 저장된 회원 정보 가져오기
-                SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-                String savedId = sharedPreferences.getString("userId", "");
-                String savedPassword = sharedPreferences.getString("userPassword", "");
+                // 로그인 기능 호출
+                ApiService userApi = RetrofitClient.getClient().create(ApiService.class);
+                Call<Member> login = userApi.login(id, password);
 
-                // 로그인 정보 검증
-                if (id.equals(savedId) && password.equals(savedPassword)) {
-                    Toast.makeText(LoginSignupActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                    // 메인 액티비티로 이동하기 위한 Intent
-                    Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(LoginSignupActivity.this, "아이디 또는 비밀번호가 올바르지 않습니다", Toast.LENGTH_SHORT).show();
-                }
+                login.enqueue(new Callback<Member>() {
+                    @Override
+                    public void onResponse(Call<Member> call, Response<Member> response) {
+                        if(response.isSuccessful()){
+                            // 계정 유형에 따른 분기점 설정
+                            ApiService userApi = RetrofitClient.getClient().create(ApiService.class);
+                            Call<Map<String, String>> userType = userApi.checkAdmin(id);
+
+                            userType.enqueue(new Callback<Map<String,String>>() {
+                                @Override
+                                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                                    String result = response.body().get("result");
+                                    if(response.isSuccessful() && response.body() != null){
+                                        if(result.equals("Owner")){
+                                            Toast.makeText(LoginSignupActivity.this, "Owner계정", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(LoginSignupActivity.this, StaffMainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }else{
+                                            Toast.makeText(LoginSignupActivity.this, "Staff계정", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(LoginSignupActivity.this, OwnerMainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }else{
+                                        return;
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                                    System.out.println(t);
+                                    Toast.makeText(LoginSignupActivity.this, "에러 발생", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+
+                        }else{
+                            Toast.makeText(LoginSignupActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                            res = 0;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Member> call, Throwable t) {
+                        Toast.makeText(LoginSignupActivity.this, "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        res = -1;
+                        Log.e("LoginActivity", t.getMessage());
+                    }
+                });
             }
         });
 
@@ -77,4 +137,54 @@ public class LoginSignupActivity extends AppCompatActivity {
             }
         });
     }
+    private void loginUser(String ID, String PW){
+        ApiService userApi = RetrofitClient.getClient().create(ApiService.class);
+        Call<Member> call = userApi.login(ID, PW);
+
+        call.enqueue(new Callback<Member>() {
+            @Override
+            public void onResponse(Call<Member> call, Response<Member> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(LoginSignupActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                    res = 1;
+
+                }else{
+                    Toast.makeText(LoginSignupActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                    res = 0;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Member> call, Throwable t) {
+                Toast.makeText(LoginSignupActivity.this, "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                res = -1;
+                Log.e("LoginActivity", t.getMessage());
+            }
+        });
+    }
+
+    private void isAdmin(String ID){
+        ApiService userApi = RetrofitClient.getClient().create(ApiService.class);
+        Call<Map<String, String>> call = userApi.checkAdmin(ID);
+
+
+        call.enqueue(new Callback<Map<String,String>>() {
+            @Override
+            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                System.out.println(response.body().get("result"));
+                String result;
+                if(response.isSuccessful() && response.body() != null){
+                    result = response.body().get("result").toString();
+                }else{
+                    return;
+                }
+            }
+            @Override
+            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                System.out.println(t);
+                Toast.makeText(LoginSignupActivity.this, "에러 발생", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
+
