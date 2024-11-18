@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/staff_main"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -20,7 +20,7 @@
             android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="쿠잉(Staff)"
+            android:text="쿠잉"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@android:color/holo_blue_dark"
@@ -51,6 +51,7 @@
                 android:text="대나무숲 | 메가커피 레시피 외우는법"
                 android:textColor="@android:color/black" />
         </LinearLayout>
+
 
         <!-- Date Card (10.08) with Background Color #C0E0EA -->
         <androidx.cardview.widget.CardView
@@ -148,6 +149,16 @@
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:padding="12dp"/>
+        <!-- RecyclerView (Crew Room List) -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/crew_room_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:background="@android:color/white"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
     </LinearLayout>
 
     <!-- 하단 네비게이션 바 -->

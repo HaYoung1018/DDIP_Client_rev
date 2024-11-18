@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +15,7 @@
         android:theme="@style/Theme.DDIP_Client"
         tools:targetApi="31">
 
-        <!-- LoginSignupActivity를 첫 화면으로 설정 -->
+        <!-- 첫 화면 설정 -->
         <activity
             android:name=".LoginSignupActivity"
             android:exported="true">
@@ -25,49 +25,19 @@
             </intent-filter>
         </activity>
 
-        <!-- SignupActivity 등록 -->
-        <activity
-            android:name=".SignupActivity"
-            android:exported="true"/>
-
-        <!-- MainActivity 등록 -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"/>
-
-        <!-- CrewRoomActivity 등록 -->
-        <activity
-            android:name=".CrewRoomActivity"
-            android:exported="true" />
-
-        <!-- CalendarActivity 등록 -->
-        <activity
-            android:name=".CalendarActivity"
-            android:exported="true" />
-
-        <!-- AddWorkActivity 등록 -->
-        <activity
-            android:name=".AddWorkActivity"
-            android:exported="true"/>
-
-        <!-- InviteCodeActivity 등록 -->
-        <activity
-            android:name=".InviteCodeActivity"
-            android:exported="true"/>
-
-        <!-- InvitedRoomActivity 등록 -->
-        <activity
-            android:name=".InvitedRoomActivity"
-            android:exported="true"/>
-
-        <!-- AlarmActivity 등록 -->
-        <activity android:name=".AlarmActivity" />
-
-        <!-- MypageActivity 등록 -->
-        <activity android:name=".MypageActivity" />
-
-        <!-- UserListActivity 등록 -->
-        <activity android:name=".UserListActivity" />
+        <!-- 각 Activity 등록 -->
+        <activity android:name=".SignupActivity" android:exported="true" />
+        <activity android:name=".MainActivity" android:exported="true" />
+        <activity android:name=".CrewRoomActivity" android:exported="true" />
+        <activity android:name=".CrewRoomListActivity" android:exported="true" />
+        <activity android:name=".CalendarActivity" android:exported="true" />
+        <activity android:name=".AddWorkActivity" android:exported="true" />
+        <activity android:name=".InviteCodeActivity" android:exported="true" />
+        <activity android:name=".AlarmActivity" android:exported="true" />
+        <activity android:name=".MypageActivity" android:exported="true" />
+        <activity android:name=".OwnerMainActivity" android:exported="true" />
+        <activity android:name=".UserListActivity" android:exported="true" />
+        <activity android:name=".StaffMainActivity" android:exported="true" />
 
     </application>
 

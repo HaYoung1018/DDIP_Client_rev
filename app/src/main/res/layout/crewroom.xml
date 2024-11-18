@@ -3,77 +3,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center"
-    android:background="#C0E0EA">
+    android:padding="16dp">
 
-    <!-- 상단바 (메인페이지와 동일) -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- 방 이름 표시 -->
+    <TextView
+        android:id="@+id/room_name_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:text="방 이름" />
 
-        <!-- Title (쿠잉) -->
-        <TextView
-            android:id="@+id/title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="쿠잉"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/holo_blue_dark"
-            android:layout_marginEnd="8dp" />
-    </LinearLayout>
-
-    <!-- 메인 콘텐츠 영역 (3개의 박스 중 하나 선택) -->
+    <!-- RadioGroup -->
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <!-- 캘린더 박스 -->
         <RadioButton
             android:id="@+id/radio_calendar"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="캘린더"
-            android:layout_marginBottom="16dp"
-            android:padding="16dp"
-            android:background="@drawable/ic_selector_box_background"
-            android:textSize="18sp"
-            android:buttonTint="@android:color/holo_blue_dark"/>
+            android:text="캘린더 보기" />
 
-        <!-- 교환하기 박스 -->
         <RadioButton
             android:id="@+id/radio_exchange"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="교환하기"
-            android:layout_marginBottom="16dp"
-            android:padding="16dp"
-            android:background="@drawable/ic_selector_box_background"
-            android:textSize="18sp"
-            android:buttonTint="@android:color/holo_blue_dark"/>
+            android:text="교환하기" />
 
-        <!-- 알바생 리스트 박스 -->
         <RadioButton
             android:id="@+id/radio_worker_list"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="알바생 리스트"
-            android:padding="16dp"
-            android:background="@drawable/ic_selector_box_background"
-            android:textSize="18sp"
-            android:buttonTint="@android:color/holo_blue_dark"/>
+            android:text="근무자 리스트 보기" />
     </RadioGroup>
 
-    <!-- 하단 네비게이션 바 (메인페이지와 동일) -->
+    <!-- 하단 네비게이션 바 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

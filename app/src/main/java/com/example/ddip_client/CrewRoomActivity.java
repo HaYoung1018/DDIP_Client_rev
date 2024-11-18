@@ -2,10 +2,10 @@ package com.example.ddip_client;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,11 +15,21 @@ public class CrewRoomActivity extends AppCompatActivity {
     private RadioButton radioExchange;
     private RadioButton radioWorkerList;
     private RadioGroup radioGroup;
+    private TextView roomNameTextView; // 방 이름 표시용 TextView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crewroom);
+
+        // ------------------ Intent로 전달받은 방 이름 표시 ------------------
+        roomNameTextView = findViewById(R.id.room_name_text); // crewroom.xml에서 TextView ID
+        String roomName = getIntent().getStringExtra("roomName"); // 전달받은 방 이름
+        if (roomName != null) {
+            roomNameTextView.setText(roomName); // 방 이름 설정
+        } else {
+            roomNameTextView.setText("방 이름 없음"); // 예외 처리
+        }
 
         // ------------------ Bottom Navigation (하단 네비게이션 바) ------------------
         ImageButton homeButton = findViewById(R.id.home_button);
@@ -60,13 +70,16 @@ public class CrewRoomActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        //교환하기 페이지 구현, 이동구현 후 토스트 삭제 and 인텐트 설정 하기
-        radioExchange.setOnClickListener(v -> Toast.makeText(CrewRoomActivity.this, "교환하기 선택됨", Toast.LENGTH_SHORT).show());
+        // 교환하기 페이지 이동 (구현 예정)
+        radioExchange.setOnClickListener(v -> {
+            // 교환하기 페이지로 이동 구현 필요
+            Toast.makeText(CrewRoomActivity.this, "교환하기 선택됨", Toast.LENGTH_SHORT).show();
+        });
 
+        // 근무자 리스트 페이지로 이동
         radioWorkerList.setOnClickListener(v -> {
             Intent intent = new Intent(CrewRoomActivity.this, UserListActivity.class);
             startActivity(intent);
         });
-
     }
 }
