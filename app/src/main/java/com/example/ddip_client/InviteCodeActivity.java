@@ -27,7 +27,7 @@ public class InviteCodeActivity extends AppCompatActivity {
                 Toast.makeText(this, "초대 코드를 입력하세요.", Toast.LENGTH_SHORT).show();
             } else {
                 // 초대 코드 유효성을 확인하고 방으로 이동
-                Intent intent = new Intent(InviteCodeActivity.this, InvitedRoomActivity.class);
+                Intent intent = new Intent(InviteCodeActivity.this, MainActivity.class);//main으로 연결해둠(나중에 main 지우고 나서 staff로 바꾸면됨)
                 intent.putExtra("inviteCode", inviteCode);
                 startActivity(intent);
             }
