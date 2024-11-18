@@ -121,6 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="매장 관리자 이신가요?"
+        android:checked="false"
         android:textSize="16sp"
         android:textColor="@android:color/black" />
 

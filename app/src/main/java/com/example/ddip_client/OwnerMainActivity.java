@@ -86,8 +86,12 @@ public class OwnerMainActivity extends AppCompatActivity {
         Button addWorkButton = findViewById(R.id.add_work_button);
         addWorkButton.setOnClickListener(v -> {
             Toast.makeText(this, "근무지 추가 클릭됨", Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(OwnerMainActivity.this, InviteCodeActivity.class);
+
             startActivityForResult(intent, 100); // 초대코드 Activity 결과 반환 요청
+
+            startActivity(intent);
         });
 
         // ------------------ Memo (메모) ------------------
@@ -188,3 +192,4 @@ public class OwnerMainActivity extends AppCompatActivity {
         Toast.makeText(this, "메모가 삭제되었습니다", Toast.LENGTH_SHORT).show();
     }
 }
+

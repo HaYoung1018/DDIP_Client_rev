@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/staff_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -149,6 +149,7 @@
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:padding="12dp"/>
+      
         <!-- RecyclerView (Crew Room List) -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/crew_room_list"
@@ -206,5 +207,5 @@
             android:contentDescription="마이페이지"
             android:background="?android:attr/selectableItemBackgroundBorderless" />
     </LinearLayout>
-
 </LinearLayout>
+

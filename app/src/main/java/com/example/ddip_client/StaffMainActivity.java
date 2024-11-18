@@ -171,6 +171,7 @@ public class StaffMainActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
+
     private void loadMemo(SimpleDateFormat dateFormat) {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String currentDate = dateFormat.format(calendar.getTime());
@@ -188,3 +189,5 @@ public class StaffMainActivity extends AppCompatActivity {
         Toast.makeText(this, "메모가 삭제되었습니다", Toast.LENGTH_SHORT).show();
     }
 }
+
+
