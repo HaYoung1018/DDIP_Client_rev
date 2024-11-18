@@ -52,6 +52,7 @@
                 android:textColor="@android:color/black" />
         </LinearLayout>
 
+
         <!-- Date Card (10.08) with Background Color #C0E0EA -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -148,6 +149,16 @@
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:padding="12dp"/>
+        <!-- RecyclerView (Crew Room List) -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/crew_room_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:background="@android:color/white"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
     </LinearLayout>
 
     <!-- Crew Room List (크루룸 리스트) -->
