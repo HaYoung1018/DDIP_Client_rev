@@ -14,8 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DDIP_Client"
-        tools:targetApi="31"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".MemberDataEditActivity"
+            android:exported="false" />
         <activity
             android:name=".StaffMainActivity"
             android:exported="false" />
@@ -40,32 +43,20 @@
         <activity
             android:name=".CrewRoomActivity"
             android:exported="true" />
-
         <activity
             android:name=".CalendarActivity"
-            android:exported="true" />
-
-        <!-- AddWorkActivity 등록 -->
+            android:exported="true" /> <!-- AddWorkActivity 등록 -->
         <activity
             android:name=".AddWorkActivity"
-            android:exported="true"/>
-
-        <!-- InviteCodeActivity 등록 -->
+            android:exported="true" /> <!-- InviteCodeActivity 등록 -->
         <activity
             android:name=".InviteCodeActivity"
-            android:exported="true"/>
-
-        <!-- InvitedRoomActivity 등록 -->
+            android:exported="true" /> <!-- InvitedRoomActivity 등록 -->
         <activity
             android:name=".InvitedRoomActivity"
-            android:exported="true"/>
-
-        <activity android:name=".AlarmActivity" />
-
-        <!-- MypageActivity 등록 -->
-        <activity android:name=".MypageActivity" />
-
-        <!-- UserListActivity 등록 -->
+            android:exported="true" />
+        <activity android:name=".AlarmActivity" /> <!-- MypageActivity 등록 -->
+        <activity android:name=".MypageActivity" /> <!-- UserListActivity 등록 -->
         <activity android:name=".UserListActivity" />
     </application>
 

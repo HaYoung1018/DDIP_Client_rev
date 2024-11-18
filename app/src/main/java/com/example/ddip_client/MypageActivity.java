@@ -76,8 +76,13 @@ public class MypageActivity extends AppCompatActivity {
 //        crewRoomButton.setOnClickListener(v -> Toast.makeText(this, "알람 버튼 클릭됨", Toast.LENGTH_SHORT).show());
 //        myPageButton.setOnClickListener(v -> Toast.makeText(this, "마이페이지 버튼 클릭됨", Toast.LENGTH_SHORT).show());
 
-        // 프로필에 정보 뿌리기
 
+        //--------------------(유우선) 임시 개인정보 수정--------------------
+        TextView editMyData = findViewById(R.id.edit_profile_text);
+        editMyData.setOnClickListener(v -> {
+            Intent intent = new Intent(MypageActivity.this, MemberDataEditActivity.class);
+            startActivity(intent);
+        });
 
 
         //---------------------(유우선) 임시 로그아웃------------------------

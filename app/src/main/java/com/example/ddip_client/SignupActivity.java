@@ -22,13 +22,13 @@ import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText NameInput, IdInput, emailInput, pwdInput, pwdCheck;
+    private EditText NameInput, IdInput, emailInput, pwdInput, pwdCheck, contactNumberInput;
     private Button signupBtn, checkIdBtn, checkPwdBtn;
     private CheckBox checkManager;
     private boolean isIdValid = false;
     private boolean isPwdValid = false;
     private String usertype = "Staff";
-    private String tempphone = "010-0000-0000";
+//    private String tempphone = "010-0000-0000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class SignupActivity extends AppCompatActivity {
         checkPwdBtn = findViewById(R.id.password_check_button);
         checkManager = findViewById(R.id.manager_checkbox);
         signupBtn = findViewById(R.id.signup_button);
+        contactNumberInput = findViewById(R.id.contact_number_input);
 
         //아이디 중복 확인 버튼 클릭 리스너 설정
         checkIdBtn.setOnClickListener(new View.OnClickListener() {
@@ -95,11 +96,12 @@ public class SignupActivity extends AppCompatActivity {
                 String email = emailInput.getText().toString().trim();
                 String password = pwdInput.getText().toString().trim();
                 String passwordCheck = pwdCheck.getText().toString().trim();
+                String contactNumber = contactNumberInput.getText().toString().trim();
                 String isManager = usertype;
 
 
                 // 입력값이 모두 비어있지 않은지 확인
-                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(id) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(passwordCheck)) {
+                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(id) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(passwordCheck) || TextUtils.isEmpty(contactNumber)) {
                     Toast.makeText(SignupActivity.this, "모든 정보를 입력하세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -112,7 +114,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 // 회원가입 성공 로직 (실제 서버로의 데이터 전송이 필요)
                 isManager = usertype;
-                Member data = new Member(id, password, name, email, isManager, tempphone);
+                Member data = new Member(id, password, name, email, isManager, contactNumber);
                 signupUser(data);
                 Intent intent = new Intent(SignupActivity.this, LoginSignupActivity.class);
                 startActivity(intent);
