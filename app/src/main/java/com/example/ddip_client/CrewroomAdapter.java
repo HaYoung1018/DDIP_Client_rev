@@ -1,5 +1,6 @@
 package com.example.ddip_client;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,61 +9,59 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
-public class CrewroomAdapter extends RecyclerView.Adapter<CrewroomAdapter.CrewRoomViewHolder> {
+public class CrewRoomAdapter extends RecyclerView.Adapter<CrewRoomAdapter.ViewHolder> {
 
-    private final List<String> crewRoomList;
-    private OnItemClickListener onItemClickListener;
+    private Context context;
+    private List<String> crewRoomList;
+    private OnItemClickListener listener;
 
-    // 생성자: 크루룸 리스트를 초기화
-    public CrewroomAdapter(List<String> crewRoomList) {
-        this.crewRoomList = crewRoomList;
-    }
-
-    // 클릭 리스너 인터페이스 정의
+    // 클릭 리스너 인터페이스
     public interface OnItemClickListener {
-        void onItemClick(String crewRoomName);
+        void onItemClick(String roomName);
     }
 
-    // 클릭 리스너 설정 메서드
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.onItemClickListener = listener;
+    // 생성자
+    public CrewRoomAdapter(Context context, List<String> crewRoomList, OnItemClickListener listener) {
+        this.context = context;
+        this.crewRoomList = crewRoomList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public CrewRoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // crew_room_item 레이아웃을 inflate하여 ViewHolder 생성
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_crewroom, parent, false);
-        return new CrewRoomViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // 아이템 레이아웃을 inflate하여 ViewHolder 생성
+        View view = LayoutInflater.from(context).inflate(R.layout.crew_room_item, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CrewRoomViewHolder holder, int position) {
-        // 현재 위치의 크루룸 이름을 가져와 ViewHolder에 바인딩
-        String crewRoomName = crewRoomList.get(position);
-        holder.crewRoomNameTextView.setText(crewRoomName);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // 데이터 바인딩
+        String roomName = crewRoomList.get(position);
+        holder.roomNameText.setText(roomName);
 
-        // 아이템 클릭 시 리스너 호출
+        // 클릭 이벤트 처리
         holder.itemView.setOnClickListener(v -> {
-            if (onItemClickListener != null) {
-                onItemClickListener.onItemClick(crewRoomName);
+            if (listener != null) {
+                listener.onItemClick(roomName);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return crewRoomList.size();
+        return crewRoomList != null ? crewRoomList.size() : 0;
     }
 
-    // ViewHolder 클래스 정의
-    public static class CrewRoomViewHolder extends RecyclerView.ViewHolder {
-        TextView crewRoomNameTextView;
+    // ViewHolder 클래스
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView roomNameText;
 
-        public CrewRoomViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            crewRoomNameTextView = itemView.findViewById(R.id.crew_room_name);
+            // crew_room_item.xml의 TextView ID와 연결
+            roomNameText = itemView.findViewById(R.id.room_name_text);
         }
     }
 }

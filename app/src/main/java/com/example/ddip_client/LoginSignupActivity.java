@@ -44,7 +44,6 @@ public class LoginSignupActivity extends AppCompatActivity {
             // 로그인 기능 호출
             LoginSignupService userApi = RetrofitClient.getClient().create(LoginSignupService.class);
             Call<Member> login = userApi.login(savedId, savedPassword);
-
             login.enqueue(new Callback<Member>() {
                 @Override
                 public void onResponse(Call<Member> call, Response<Member> response) {
@@ -82,7 +81,7 @@ public class LoginSignupActivity extends AppCompatActivity {
 
 
                     }else{
-                        Toast.makeText(LoginSignupActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginSignupActivity.this, "기존 정보로 로그인 실패", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -92,7 +91,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                     Log.e("LoginActivity", t.getMessage());
                 }
             });
-        }else{
+        }
             // EditText와 Button을 연결합니다
             idInput = findViewById(R.id.id_input);
             passwordInput = findViewById(R.id.password_input);
@@ -189,7 +188,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                 }
             });
         }
-    }
+
 
 
     private void loginUser(String ID, String PW){
