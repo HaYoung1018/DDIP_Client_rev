@@ -10,12 +10,13 @@ public class Member {
 
     public Member() {}
 
-    public Member(String userid, String userpwd, String username, String email, String admin) {
+    public Member(String userid, String userpwd, String username, String email, String admin, String contact_number) {
         this.id = userid;
         this.password = userpwd;
         this.name = username;
         this.email = email;
         this.userType = admin;
+        this.contact_number = contact_number;
     }
 
     public String getId() {
@@ -64,5 +65,14 @@ public class Member {
 
     public void setUser_type(String user_type) {
         this.userType = user_type;
+    }
+
+    public void setAllData(String id, String name, String password, String email, String contactNumber, String userType) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.contact_number = contactNumber;
+        this.userType = userType;
     }
 }
