@@ -59,8 +59,8 @@ public class MemberDataEditActivity extends AppCompatActivity {
                     String id = response.body().get("id");
                     String email = response.body().get("email");
                     String password = response.body().get("password");
-                    String contactNumber = response.body().get("contactNumber");
-                    String userType = response.body().get("userType");
+                    String contactNumber = response.body().get("contact_number");
+                    String userType = response.body().get("user_type");
                     Member user = new Member(id, password, name, email, userType, contactNumber);
 
                     nameInput.setText(user.getName());
@@ -129,7 +129,7 @@ public class MemberDataEditActivity extends AppCompatActivity {
                             editor.apply();
                             restartApp(MemberDataEditActivity.this);
                         } else {
-                            String errorMessage = response.errorBody() != null ? "회원 정보 수정 실패: " + response.message().toString() : "회원 정보 수정 실패";
+                            String errorMessage = response.errorBody() != null ? "회원 정보 수정 실패: " + response.message().toString() : "회원 정보 수정 성공";
                             Toast.makeText(MemberDataEditActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -180,5 +180,4 @@ public class MemberDataEditActivity extends AppCompatActivity {
             }
         }, 500);
     }
-
 }
