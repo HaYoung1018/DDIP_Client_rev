@@ -6,7 +6,7 @@ public class Member {
     private String name;
     private String email;
     private String contact_number;
-    private String userType;
+    private String user_type;
 
     public Member() {}
 
@@ -15,7 +15,7 @@ public class Member {
         this.password = userpwd;
         this.name = username;
         this.email = email;
-        this.userType = admin;
+        this.user_type = admin;
         this.contact_number = contact_number;
     }
 
@@ -60,19 +60,19 @@ public class Member {
     }
 
     public String getUser_type() {
-        return userType;
+        return user_type;
     }
 
     public void setUser_type(String user_type) {
-        this.userType = user_type;
+        this.user_type = user_type;
     }
 
-    public void setAllData(String id, String name, String password, String email, String contactNumber, String userType) {
+    public void setAllData(String id, String name, String password, String email, String contact_number, String user_type) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
-        this.contact_number = contactNumber;
-        this.userType = userType;
+        this.contact_number = contact_number;
+        this.user_type = user_type;
     }
 }
