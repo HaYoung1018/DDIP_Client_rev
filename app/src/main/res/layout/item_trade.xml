@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@android:color/white"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
+
+    <!-- 신청자 정보 -->
+    <TextView
+        android:id="@+id/applicant_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="신청자 : 홍길동"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" /> <!-- 간격 조정 -->
+
+    <!-- 근무 시간 -->
+    <TextView
+        android:id="@+id/shift_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="신청 근무 시간: 2024-11-22 10:00 ~ 14:00"
+        android:textSize="14sp" />
+
+    <!-- 교환 버튼 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/exchange_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="교환"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

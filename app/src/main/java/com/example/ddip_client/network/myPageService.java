@@ -13,9 +13,9 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface myPageService {
-    @GET("/apicollectData")
+    @GET("/api/apicollectData")
     Call<Map<String, String>> collectData(@Query("id") String id);
 
-    @PUT("/apichangeData/{id}")
+    @PUT("/api/apichangeData/{id}")
     Call<Map<String, String>> updateMember(@Path("id") String id, @Body Member member);
 }

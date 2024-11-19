@@ -40,6 +40,9 @@
         <activity android:name=".OwnerMainActivity" android:exported="true" />
         <activity android:name=".UserListActivity" android:exported="true" />
         <activity android:name=".StaffMainActivity" android:exported="true" />
+        <activity android:name=".CreateTradeActivity" android:exported="true" />
+        <activity android:name=".TradeListActivity" android:exported="true" />
+
 
     </application>
 
