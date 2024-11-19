@@ -12,7 +12,7 @@ import retrofit2.http.Path;
 public interface ScheduleApiService {
 
     // 스케줄 정보를 서버에 저장하는 API
-    @POST("api/schedules/add")
+    @POST("/api/schedules/add")
     Call<Void> saveSchedule(@Body Map<String, Object> scheduleData);
 
 }
