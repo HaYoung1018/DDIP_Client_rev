@@ -174,7 +174,6 @@ public class OwnerMainActivity extends AppCompatActivity {
 
         popupMenu.show();
     }
-}
 
     private void loadMemo(SimpleDateFormat dateFormat) {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
