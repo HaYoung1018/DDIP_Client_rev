@@ -1,7 +1,5 @@
 package com.example.ddip_client;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.ddip_client.models.Member;
 import com.example.ddip_client.network.myPageService;
+import com.example.ddip_client.network.MemberService;
 import com.example.ddip_client.network.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -104,8 +103,32 @@ public class MypageActivity extends AppCompatActivity {
         });
 
         //---------------------(유우선) 임시 탈퇴------------------------
-        TextView unsignupButton = findViewById(R.id.unsignup_text);
-        unsignupButton.setOnClickListener(v -> {
+        TextView withdrawButton = findViewById(R.id.unsignup_text);
+        withdrawButton.setOnClickListener(v -> {
+            MemberService memberService = RetrofitClient.getClient().create(MemberService.class);
+            Call<Map<String, String>> call = memberService.withdrawMember(savedId);
+            call.enqueue(new Callback<Map<String, String>>() {
+                @Override
+                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                    if(response.isSuccessful() && response.body() != null){
+                        String responseMassage = response.body().get("message");
+                        Toast.makeText(MypageActivity.this, responseMassage, Toast.LENGTH_SHORT).show();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.remove("userId");
+                        editor.remove("userPassword");
+                        editor.commit();
+                        restartApplication(MypageActivity.this);
+                    } else {
+                        Toast.makeText(MypageActivity.this, "탈퇴에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                    Toast.makeText(MypageActivity.this, "네트워크 오류 발생", Toast.LENGTH_SHORT).show();
+                }
+            });
+
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.remove("userId");
             editor.remove("userPassword");
