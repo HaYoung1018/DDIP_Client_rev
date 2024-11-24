@@ -2,9 +2,11 @@ package com.example.ddip_client;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -59,8 +61,8 @@ public class MemberDataEditActivity extends AppCompatActivity {
                     String id = response.body().get("id");
                     String email = response.body().get("email");
                     String password = response.body().get("password");
-                    String contactNumber = response.body().get("contactNumber");
-                    String userType = response.body().get("userType");
+                    String contactNumber = response.body().get("contact_number");
+                    String userType = response.body().get("user_type");
                     Member user = new Member(id, password, name, email, userType, contactNumber);
 
                     nameInput.setText(user.getName());
@@ -123,13 +125,13 @@ public class MemberDataEditActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(MemberDataEditActivity.this, "회원 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MemberDataEditActivity.this, "회원 정보가 수정되었습니다.\n다시 로그인해 주세요.", Toast.LENGTH_SHORT).show();
                             editor.remove("userId");
                             editor.remove("userPassword");
-                            editor.apply();
-                            restartApp(MemberDataEditActivity.this);
+                            editor.commit();
+                            restartApplication(MemberDataEditActivity.this);
                         } else {
-                            String errorMessage = response.errorBody() != null ? "회원 정보 수정 실패: " + response.message().toString() : "회원 정보 수정 실패";
+                            String errorMessage = response.errorBody() != null ? "회원 정보 수정 실패: " + response.message().toString() : "회원 정보 수정 성공";
                             Toast.makeText(MemberDataEditActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -137,10 +139,6 @@ public class MemberDataEditActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<Map<String, String>> call, Throwable t) {
                         Toast.makeText(MemberDataEditActivity.this, "에러 발생: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.remove("userId");
-                        editor.remove("userPassword");
-                        editor.apply();
                     }
                 });
 
@@ -150,35 +148,12 @@ public class MemberDataEditActivity extends AppCompatActivity {
         });
     }
 
-    public static void restartApp(Context context) {
-        // 현재 앱의 메인 액티비티를 다시 실행하는 Intent 생성
-        Intent restartIntent = new Intent(context.getApplicationContext(), LoginSignupActivity.class);
-        restartIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        // PendingIntent 생성
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                context.getApplicationContext(),
-                0,
-                restartIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE // API 31 이상에서 FLAG_IMMUTABLE 필수
-        );
-
-        // 현재 액티비티 및 모든 액티비티 종료
-        if (context instanceof Activity) {
-            ((Activity) context).finishAffinity(); // 모든 액티비티 종료
-        }
-
-        // 500ms 후 앱 재시작
-        new android.os.Handler().postDelayed(() -> {
-            try {
-                // PendingIntent 실행
-                pendingIntent.send();
-                // 프로세스 강제 종료
-                System.exit(0);
-            } catch (PendingIntent.CanceledException e) {
-                e.printStackTrace();
-            }
-        }, 500);
+    private void restartApplication(Context mContext){
+        PackageManager packageManager = mContext.getPackageManager();
+        Intent intent = packageManager.getLaunchIntentForPackage(mContext.getPackageName());
+        ComponentName componentName = intent.getComponent();
+        Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+        mContext.startActivity(mainIntent);
+        System.exit(0);
     }
-
 }

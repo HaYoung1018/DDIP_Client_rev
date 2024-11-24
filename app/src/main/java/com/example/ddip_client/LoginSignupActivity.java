@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ddip_client.models.*;
@@ -163,8 +164,6 @@ public class LoginSignupActivity extends AppCompatActivity {
                                     Toast.makeText(LoginSignupActivity.this, "에러 발생", Toast.LENGTH_SHORT).show();
                                 }
                             });
-
-
                         } else {
                             Toast.makeText(LoginSignupActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                         }
@@ -178,7 +177,6 @@ public class LoginSignupActivity extends AppCompatActivity {
                 });
             }
         });
-
         // 회원가입 버튼 클릭 리스너 설정
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,6 +228,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                     return;
                 }
             }
+
             @Override
             public void onFailure(Call<Map<String, String>> call, Throwable t) {
                 System.out.println(t);

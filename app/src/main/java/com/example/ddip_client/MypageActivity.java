@@ -1,7 +1,10 @@
 package com.example.ddip_client;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -9,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.ddip_client.models.Member;
 import com.example.ddip_client.network.myPageService;
+import com.example.ddip_client.network.MemberService;
 import com.example.ddip_client.network.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,17 +23,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Map;
 
 public class MypageActivity extends AppCompatActivity {
+    // 로그인 된 계정의 id 불러오기
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String savedId = sharedPreferences.getString("userId", "");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
         //-------------------------프로필에 데이터 뿌리기------------------------
         TextView profileName = findViewById(R.id.username_text);
         TextView profileEmail = findViewById(R.id.user_email_text);
 
-        // 로그인 된 계정의 id 불러오기
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        String savedId = sharedPreferences.getString("userId", "");
+
 
         // 로그인된 계정의 Member객체 생성
         myPageService mypageservice = RetrofitClient.getClient().create(myPageService.class);
@@ -91,15 +98,37 @@ public class MypageActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.remove("userId");
             editor.remove("userPassword");
-            editor.apply();
-            Intent intent = new Intent(MypageActivity.this, LoginSignupActivity.class);
-            startActivity(intent);
-            finish();
+            editor.commit();
+            restartApplication(this);
         });
 
         //---------------------(유우선) 임시 탈퇴------------------------
-        TextView unsignupButton = findViewById(R.id.unsignup_text);
-        unsignupButton.setOnClickListener(v -> {
+        TextView withdrawButton = findViewById(R.id.unsignup_text);
+        withdrawButton.setOnClickListener(v -> {
+            MemberService memberService = RetrofitClient.getClient().create(MemberService.class);
+            Call<Map<String, String>> call = memberService.withdrawMember(savedId);
+            call.enqueue(new Callback<Map<String, String>>() {
+                @Override
+                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                    if(response.isSuccessful() && response.body() != null){
+                        String responseMassage = response.body().get("message");
+                        Toast.makeText(MypageActivity.this, responseMassage, Toast.LENGTH_SHORT).show();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.remove("userId");
+                        editor.remove("userPassword");
+                        editor.commit();
+                        restartApplication(MypageActivity.this);
+                    } else {
+                        Toast.makeText(MypageActivity.this, "탈퇴에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                    Toast.makeText(MypageActivity.this, "네트워크 오류 발생", Toast.LENGTH_SHORT).show();
+                }
+            });
+
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.remove("userId");
             editor.remove("userPassword");
@@ -129,5 +158,15 @@ public class MypageActivity extends AppCompatActivity {
         myPageButton.setOnClickListener(v -> {
             Toast.makeText(this, "마이페이지에 있습니다.", Toast.LENGTH_SHORT).show();
         });
+    }
+
+    // 어플리케이션 재시작 함수
+    private void restartApplication(Context mContext){
+        PackageManager packageManager = mContext.getPackageManager();
+        Intent intent = packageManager.getLaunchIntentForPackage(mContext.getPackageName());
+        ComponentName componentName = intent.getComponent();
+        Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+        mContext.startActivity(mainIntent);
+        System.exit(0);
     }
 }

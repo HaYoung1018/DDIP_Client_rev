@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         myPageButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, MypageActivity.class);
             startActivity(intent);
-            finish();
         });
 
         // ------------------ Add Work (근무지 추가) ------------------
