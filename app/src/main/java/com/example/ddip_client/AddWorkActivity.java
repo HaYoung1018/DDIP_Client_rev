@@ -33,7 +33,7 @@ import android.util.Log;
 
 public class AddWorkActivity extends AppCompatActivity {
 
-    private TextView wageInput;
+    private EditText wageInput;
     private Button selectWorkDateButton;
     private TimePicker startTimePicker;
     private TimePicker endTimePicker;
@@ -42,7 +42,7 @@ public class AddWorkActivity extends AppCompatActivity {
     private List<Long> selectedDates = new ArrayList<>();  // 다중 날짜를 저장하기 위한 리스트
     private ScheduleApiService scheduleApiService;
     //임시id
-    private String id ="user1";
+    private String id ="1";
     private long selectedDate;
 
     @Override
@@ -57,6 +57,8 @@ public class AddWorkActivity extends AppCompatActivity {
         startTimePicker = findViewById(R.id.start_time_picker);
         endTimePicker = findViewById(R.id.end_time_picker);
         saveButton = findViewById(R.id.save_button);
+        startTimePicker.setIs24HourView(true);
+        endTimePicker.setIs24HourView(true);
 
         // 전달된 날짜 값을 Intent에서 가져옴
         selectedDate = getIntent().getLongExtra("selectedDate", -1);
@@ -71,9 +73,6 @@ public class AddWorkActivity extends AppCompatActivity {
             // 예: 전달된 날짜를 Toast 메시지로 확인
             Toast.makeText(this, "선택된 날짜: " + formattedDate, Toast.LENGTH_SHORT).show();
         }
-
-        // 급여 정보 가져오기
-        fetchWage();
 
         selectWorkDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,35 +98,66 @@ public class AddWorkActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveSchedule();
+                boolean check = checkSchedule();
+                if (check){//checkSchedule에서 문제가 없으면 실행
+                    saveSchedule();
+                }
             }
         });
     }
-    private void fetchWage() {
-        Call<Double> call = scheduleApiService.getWage(id); // 임시 memberId
-        call.enqueue(new Callback<Double>() {
-            @Override
-            public void onResponse(Call<Double> call, Response<Double> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    wageInput.setText("나의 급여: " + response.body());
-                } else {
-                    Toast.makeText(AddWorkActivity.this, "Failed to fetch wage.", Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Double> call, Throwable t) {
-                Toast.makeText(AddWorkActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+    private boolean checkSchedule(){
+        String wageText = wageInput.getText().toString().trim(); // 입력값 가져오기 및 공백 제거
+
+        // 시급 입력값 검증
+        if (wageText.isEmpty()) {
+            // 입력값이 비어있는 경우
+            Toast.makeText(AddWorkActivity.this, "시급을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+        } else {
+            try {
+                // 입력값을 정수로 변환
+                int wage = Integer.parseInt(wageText);
+                if (wage < 0) {
+                    // 음수 입력에 대한 처리
+                    Toast.makeText(AddWorkActivity.this, "양수를 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                // 숫자가 아닌 경우 처리
+                Toast.makeText(AddWorkActivity.this, "숫자를 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                return false;
             }
-        });
+        }
+        //날짜 선택 여부 검증
+        if (selectedDates.isEmpty()) {
+            Toast.makeText(this, "날짜를 선택해 주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // 시작 시간
+        int startHour = startTimePicker.getHour();
+        int startMinute = startTimePicker.getMinute();
+        // 종료 시간
+        int endHour = endTimePicker.getHour();
+        int endMinute = endTimePicker.getMinute();
+
+        String comparisonResult;
+        if (startHour == endHour && startMinute == endMinute) {
+            Toast.makeText(this, "시작 시간과 종료 시간이 같습니다.", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (startHour > endHour || (startHour == endHour && startMinute > endMinute)) {
+            Toast.makeText(this, "시작 시간이 종료 시간보다 늦습니다.", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
+
     }
 
     private void saveSchedule() {
-        if (selectedDates.isEmpty()) {
-            Toast.makeText(this, "날짜를 선택해 주세요.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        // 날짜가 있는 경우에만 진행
+        String wageText = wageInput.getText().toString().trim(); // 입력값 가져오기 및 공백 제거
+        int wage = Integer.parseInt(wageText);
+
         Long selectedDate = selectedDates.get(0); // 첫 번째 선택된 날짜 사용 예시
         Map<String, Object> scheduleData = new HashMap<>();
         scheduleData.put("member", id); // 임시 memberId
@@ -137,7 +167,8 @@ public class AddWorkActivity extends AppCompatActivity {
         String endTime = String.format("%02d:%02d:00", endTimePicker.getHour(), endTimePicker.getMinute());
         scheduleData.put("startTime", startTime);
         scheduleData.put("endTime", endTime);
-        scheduleData.put("date", selectedDates.get(0));  // 첫 번째 날짜 선택만 사용 예시
+        scheduleData.put("date", selectedDates.get(0));
+        scheduleData.put("pay", wage);
         scheduleData.put("status", "ACTIVE");
 
         Call<Void> call = scheduleApiService.saveSchedule(scheduleData);

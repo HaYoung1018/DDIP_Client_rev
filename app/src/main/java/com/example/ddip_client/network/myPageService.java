@@ -13,6 +13,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface myPageService {
+
     @GET("myPage/collectData")
     Call<Map<String, String>> collectData(@Query("id") String id);
 
