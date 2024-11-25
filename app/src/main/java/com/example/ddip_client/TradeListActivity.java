@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +39,36 @@ public class TradeListActivity extends AppCompatActivity {
             // CreateTradeActivity 호출
             Intent intent = new Intent(TradeListActivity.this, CreateTradeActivity.class);
             startActivityForResult(intent, REQUEST_CREATE_TRADE);
+        });
+
+        // ------------------ Bottom Navigation (하단 네비게이션 바) ------------------
+        ImageButton homeButton = findViewById(R.id.home_button);
+        ImageButton subCrewButton = findViewById(R.id.sub_crew_button);
+        ImageButton alarmButton = findViewById(R.id.alarm_button);
+        ImageButton myPageButton = findViewById(R.id.my_page_button);
+
+        // 홈 버튼 클릭 리스너 설정
+        homeButton.setOnClickListener(v -> {
+            Intent intent = new Intent(TradeListActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
+
+        // 서브크루룸 이동 버튼 클릭 리스너 설정
+        subCrewButton.setOnClickListener(v -> {
+            Intent intent = new Intent(TradeListActivity.this, ImsiCrewRoomListActivity.class);
+            startActivity(intent);
+        });
+
+        // 알람 버튼 클릭 리스너 설정
+        alarmButton.setOnClickListener(v -> {
+            Intent intent = new Intent(TradeListActivity.this, AlarmActivity.class);
+            startActivity(intent);
+        });
+
+        // 마이페이지 버튼 클릭 리스너 설정
+        myPageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(TradeListActivity.this, MypageActivity.class);
+            startActivity(intent);
         });
     }
 
