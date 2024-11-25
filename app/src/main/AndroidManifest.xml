@@ -31,7 +31,9 @@
         <activity android:name=".SignupActivity" android:exported="true" />
         <activity android:name=".MainActivity" android:exported="true" />
         <activity android:name=".CrewRoomActivity" android:exported="true" />
+        <activity android:name=".ImsiCrewRoomActivity" android:exported="true" />
         <activity android:name=".CrewRoomListActivity" android:exported="true" />
+        <activity android:name=".ImsiCrewRoomListActivity" android:exported="true" />
         <activity android:name=".CalendarActivity" android:exported="true" />
         <activity android:name=".AddWorkActivity" android:exported="true" />
         <activity android:name=".InviteCodeActivity" android:exported="true" />
