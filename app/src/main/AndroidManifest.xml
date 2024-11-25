@@ -29,7 +29,6 @@
 
         <!-- 각 Activity 등록 -->
         <activity android:name=".SignupActivity" android:exported="true" />
-        <activity android:name=".MainActivity" android:exported="true" />
         <activity android:name=".CrewRoomActivity" android:exported="true" />
         <activity android:name=".ImsiCrewRoomActivity" android:exported="true" />
         <activity android:name=".CrewRoomListActivity" android:exported="true" />

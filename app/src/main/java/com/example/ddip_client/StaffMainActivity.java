@@ -66,7 +66,7 @@ public class StaffMainActivity extends AppCompatActivity {
 
         // 서브크루 버튼 클릭
         subCrewButton.setOnClickListener(v -> {
-            Intent intent = new Intent(StaffMainActivity.this, CrewRoomListActivity.class);
+            Intent intent = new Intent(StaffMainActivity.this, ImsiCrewRoomActivity.class);
             startActivity(intent);
         });
 

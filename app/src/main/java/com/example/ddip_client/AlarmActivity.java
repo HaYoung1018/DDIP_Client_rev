@@ -29,7 +29,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         // 문 버튼 클릭시 크루룸 액티비티로 이동
         subCrewButton.setOnClickListener(v -> {
-            Intent intent = new Intent(AlarmActivity.this, CrewRoomActivity.class);
+            Intent intent = new Intent(AlarmActivity.this, ImsiCrewRoomListActivity.class);
             startActivity(intent);
         });
 

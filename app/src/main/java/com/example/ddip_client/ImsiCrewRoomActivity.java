@@ -64,7 +64,10 @@ public class ImsiCrewRoomActivity extends AppCompatActivity {
         });
 
         // 크루룸 이동 버튼 클릭 리스너 설정 (현재 Activity와 동일하므로 토스트만 표시)
-        subCrewButton.setOnClickListener(v -> Toast.makeText(ImsiCrewRoomActivity.this, "크루룸 화면에 있습니다.", Toast.LENGTH_SHORT).show());
+        subCrewButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ImsiCrewRoomActivity.this, ImsiCrewRoomListActivity.class);
+            startActivity(intent);
+        });
 
         // 알람 버튼 클릭 리스너 설정
         alarmButton.setOnClickListener(v -> {
@@ -90,10 +93,10 @@ public class ImsiCrewRoomActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // 교환하기 페이지 이동 (구현 예정)
+        // 교환하기 페이지 이동
         radioExchange.setOnClickListener(v -> {
-            // 교환하기 페이지로 이동 구현 필요
-            Toast.makeText(ImsiCrewRoomActivity.this, "교환하기 선택됨", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ImsiCrewRoomActivity.this, TradeListActivity.class);
+            startActivity(intent);
         });
 
         // 근무자 리스트 페이지로 이동

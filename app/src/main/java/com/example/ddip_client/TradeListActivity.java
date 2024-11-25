@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,18 +40,47 @@ public class TradeListActivity extends AppCompatActivity {
             Intent intent = new Intent(TradeListActivity.this, CreateTradeActivity.class);
             startActivityForResult(intent, REQUEST_CREATE_TRADE);
         });
+
+        // ------------------ Bottom Navigation (하단 네비게이션 바) ------------------
+        ImageButton homeButton = findViewById(R.id.home_button);
+        ImageButton subCrewButton = findViewById(R.id.sub_crew_button);
+        ImageButton alarmButton = findViewById(R.id.alarm_button);
+        ImageButton myPageButton = findViewById(R.id.my_page_button);
+
+        // 홈 버튼 클릭 리스너 설정
+        homeButton.setOnClickListener(v -> {
+            Intent intent = new Intent(TradeListActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
+
+        // 서브크루룸 이동 버튼 클릭 리스너 설정
+        subCrewButton.setOnClickListener(v -> {
+            Intent intent = new Intent(TradeListActivity.this, ImsiCrewRoomListActivity.class);
+            startActivity(intent);
+        });
+
+        // 알람 버튼 클릭 리스너 설정
+        alarmButton.setOnClickListener(v -> {
+            Intent intent = new Intent(TradeListActivity.this, AlarmActivity.class);
+            startActivity(intent);
+        });
+
+        // 마이페이지 버튼 클릭 리스너 설정
+        myPageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(TradeListActivity.this, MypageActivity.class);
+            startActivity(intent);
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CREATE_TRADE && resultCode == RESULT_OK && data != null) {
-            // 전달받은 데이터 추가
-            String applicantName = data.getStringExtra("applicantName");
-            String shiftTime = data.getStringExtra("shiftTime");
+            String selectedWorkTime = data.getStringExtra("selectedWorkTime");
 
-            tradeItems.add(new TradeItem(applicantName, shiftTime));
-            adapter.notifyDataSetChanged(); // RecyclerView 새로고침
+            tradeItems.add(new TradeItem("홍길동", selectedWorkTime, "10:00", "14:00", "4시간"));
+            adapter.notifyDataSetChanged();
         }
     }
+
 }
