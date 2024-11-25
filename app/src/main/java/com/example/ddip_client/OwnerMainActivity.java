@@ -66,7 +66,7 @@ public class OwnerMainActivity extends AppCompatActivity {
 
         // 서브크루 버튼 클릭
         subCrewButton.setOnClickListener(v -> {
-            Intent intent = new Intent(OwnerMainActivity.this, CrewRoomListActivity.class);
+            Intent intent = new Intent(OwnerMainActivity.this, ImsiCrewRoomListActivity.class);
             startActivity(intent);
         });
 
