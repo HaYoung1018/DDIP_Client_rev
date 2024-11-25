@@ -1,81 +1,43 @@
-<ScrollView
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp">
 
-    <LinearLayout
+    <!-- 근무 날짜 선택 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="근무 시간 선택"
+        android:textSize="15sp"
+        android:layout_marginBottom="8dp" />
+
+    <!-- 근무 시간 목록 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/work_time_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp" />
+
+    <!-- 선택된 근무 시간 표시 -->
+    <TextView
+        android:id="@+id/selected_work_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:text="선택된 시간: 없음"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:textSize="14sp" />
 
-        <!-- 근무 날짜 선택 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="신청 근무 날짜"
-            android:textSize="15sp"
-            android:layout_marginBottom="8dp" />
-
-        <Button
-            android:id="@+id/select_work_date_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="날짜 선택"
-            android:layout_marginBottom="8dp" />
-
-        <TextView
-            android:id="@+id/selected_date_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="선택된 날짜: 없음"
-            android:layout_marginBottom="16dp" />
-
-        <!-- 근무 시간 설정 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="신청 근무 시간 설정"
-            android:textSize="15sp"
-            android:layout_marginBottom="8dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="시작 시간"
-            android:layout_marginBottom="4dp" />
-
-        <TimePicker
-            android:id="@+id/start_time_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:timePickerMode="spinner"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="종료 시간"
-            android:layout_marginBottom="4dp" />
-
-        <TimePicker
-            android:id="@+id/end_time_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:timePickerMode="spinner"
-            android:layout_marginBottom="16dp" />
-
-        <!-- 교환 신청 버튼 -->
-        <Button
-            android:id="@+id/submit_trade_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="교환 신청"
-            android:layout_gravity="center"
-            android:layout_marginTop="24dp" />
-    </LinearLayout>
-</ScrollView>
+    <!-- 교환 신청 버튼 -->
+    <Button
+        android:id="@+id/submit_trade_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="교환 신청"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp" />
+</LinearLayout>
