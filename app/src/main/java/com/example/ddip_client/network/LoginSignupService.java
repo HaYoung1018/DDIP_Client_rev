@@ -17,9 +17,9 @@ public interface LoginSignupService {
     @POST("/api/Member/login")
     Call<Member> login(@Query("id") String id, @Query("password") String password);
 
-    @GET("Member/check-username")
+    @GET("/api/Member/check-username")
     Call<Boolean> checkUserid(@Query("id") String id);
 
-    @GET("Member/check-admin")
+    @GET("/api/Member/check-admin")
     Call<Map<String, String>> checkAdmin(@Query("id") String id);
 }
