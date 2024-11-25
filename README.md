@@ -8,4 +8,4 @@ activity_create_trade.xml , CreateTradeActivity.java -> 사용자가 자신의 �
 
 Tradeadaper.java -> 교환리스트와 교환 아이템 연결<br>
 
-WorkTimeAdapter -> 사용자의 근무시간 관리? 사용자 근무시간을 리사이클뷰로 activity_create_trade.xml에띄울 수 있게함
+WorkTimeAdapter.java -> 사용자의 근무시간 관리? 사용자 근무시간을 리사이클뷰로 activity_create_trade.xml에띄울 수 있게함
