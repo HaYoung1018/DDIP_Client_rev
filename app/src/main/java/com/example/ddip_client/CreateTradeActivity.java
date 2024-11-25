@@ -1,70 +1,58 @@
 package com.example.ddip_client;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.Calendar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class CreateTradeActivity extends AppCompatActivity {
 
-    private String selectedDate = "";
+    private String selectedWorkTime = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trade);
 
-        // 입력 요소 참조
-        Button selectDateButton = findViewById(R.id.select_work_date_button);
+        RecyclerView workTimeRecyclerView = findViewById(R.id.work_time_recycler_view);
+        TextView selectedWorkTimeTextView = findViewById(R.id.selected_work_time);
         Button submitTradeButton = findViewById(R.id.submit_trade_button);
-        TimePicker startTimePicker = findViewById(R.id.start_time_picker);
-        TimePicker endTimePicker = findViewById(R.id.end_time_picker);
-        TextView selectedDateTextView = findViewById(R.id.selected_date_text);
 
-        // 날짜 선택 버튼 클릭 이벤트
-        selectDateButton.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    this,
-                    (view, year, month, dayOfMonth) -> {
-                        selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
-                        selectedDateTextView.setText("선택된 날짜: " + selectedDate);
-                    },
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-            );
-            datePickerDialog.show();
+        // 근무 시간 목록 데이터
+        List<String> workTimes = Arrays.asList(
+                "2024-11-26 09:00 ~ 13:00",
+                "2024-11-26 14:00 ~ 18:00",
+                "2024-11-27 10:00 ~ 14:00"
+        );
+
+        // RecyclerView 설정
+        WorkTimeAdapter adapter = new WorkTimeAdapter(workTimes, workTime -> {
+            selectedWorkTime = workTime;
+            selectedWorkTimeTextView.setText("선택된 시간: " + workTime);
         });
+        workTimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        workTimeRecyclerView.setAdapter(adapter);
 
         // 교환 신청 버튼 클릭 이벤트
         submitTradeButton.setOnClickListener(v -> {
-            if (selectedDate.isEmpty()) {
-                Toast.makeText(this, "근무 날짜를 선택하세요.", Toast.LENGTH_SHORT).show();
-                return;
+            if (selectedWorkTime.isEmpty()) {
+                // 선택되지 않은 경우 메시지 표시
+                Toast.makeText(this, "근무 시간을 선택하세요.", Toast.LENGTH_SHORT).show();
+            } else {
+                // 선택된 시간 데이터를 반환
+                Intent intent = new Intent();
+                intent.putExtra("selectedWorkTime", selectedWorkTime);
+                setResult(RESULT_OK, intent);
+                finish();
             }
-
-            int startHour = startTimePicker.getHour();
-            int startMinute = startTimePicker.getMinute();
-            int endHour = endTimePicker.getHour();
-            int endMinute = endTimePicker.getMinute();
-
-            String shiftTime = selectedDate + " " + startHour + ":" + startMinute + " ~ " + endHour + ":" + endMinute;
-
-            // Toast로 확인
-            Toast.makeText(this, "교환 신청 완료: " + shiftTime, Toast.LENGTH_SHORT).show();
-
-            // 데이터를 Intent로 전달
-            Intent intent = new Intent();
-            intent.putExtra("applicantName", "홍길동"); // 예시 이름
-            intent.putExtra("shiftTime", shiftTime);
-            setResult(RESULT_OK, intent);
-            finish(); // 현재 액티비티 종료 후 이전 화면으로 돌아감
         });
     }
 }

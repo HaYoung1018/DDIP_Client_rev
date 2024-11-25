@@ -76,12 +76,11 @@ public class TradeListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CREATE_TRADE && resultCode == RESULT_OK && data != null) {
-            // 전달받은 데이터 추가
-            String applicantName = data.getStringExtra("applicantName");
-            String shiftTime = data.getStringExtra("shiftTime");
+            String selectedWorkTime = data.getStringExtra("selectedWorkTime");
 
-            tradeItems.add(new TradeItem(applicantName, shiftTime));
-            adapter.notifyDataSetChanged(); // RecyclerView 새로고침
+            tradeItems.add(new TradeItem("홍길동", selectedWorkTime, "10:00", "14:00", "4시간"));
+            adapter.notifyDataSetChanged();
         }
     }
+
 }
