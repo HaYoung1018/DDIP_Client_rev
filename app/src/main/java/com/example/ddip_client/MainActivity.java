@@ -55,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
         });
         roomRecyclerView.setAdapter(roomAdapter);
 
+        //@@@@@@@@@@@@@@@@@@@@@@@ 임시 크루룸 생성 버튼 @@@@@@@@@@@@@@@@@@@@@@@@@@@
+        Button imsi_create_crewroom_btn = findViewById(R.id.imsi_create_crewroom_btn);
+        imsi_create_crewroom_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ImsiCreateCrewRoomActivity.class);
+            startActivity(intent);
+        });
+        //@@@@@@@@@@@@@@@@@@@@@@@ 임시 크루룸 생성 버튼 @@@@@@@@@@@@@@@@@@@@@@@@@@@
+
         // ------------------ Bottom Navigation (하단바) ------------------
         ImageButton homeButton = findViewById(R.id.home_button);
         ImageButton subCrewButton = findViewById(R.id.sub_crew_button);

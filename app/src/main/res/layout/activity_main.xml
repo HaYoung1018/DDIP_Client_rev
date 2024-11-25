@@ -125,6 +125,13 @@
                     android:textSize="16sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+        <!-- 임시로 만들어 놓은 버튼. 추후 삭제 -->
+        <Button
+            android:id="@+id/imsi_create_crewroom_btn"
+            android:text="임시 크루룸 생성 버튼"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!-- 임시로 만들어 놓은 버튼. 추후 삭제 -->
 
         <!-- Work Shift Card  -->
         <androidx.cardview.widget.CardView

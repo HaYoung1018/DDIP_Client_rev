@@ -28,6 +28,7 @@
         </activity>
 
         <!-- 각 Activity 등록 -->
+        <activity android:name=".MainActivity" android:exported="true" />
         <activity android:name=".SignupActivity" android:exported="true" />
         <activity android:name=".CrewRoomActivity" android:exported="true" />
         <activity android:name=".ImsiCrewRoomActivity" android:exported="true" />
@@ -44,6 +45,7 @@
         <activity android:name=".StaffMainActivity" android:exported="true" />
         <activity android:name=".CreateTradeActivity" android:exported="true" />
         <activity android:name=".TradeListActivity" android:exported="true" />
+        <activity android:name=".ImsiCreateCrewRoomActivity" android:exported="true" />
 
 
     </application>
