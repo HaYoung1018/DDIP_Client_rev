@@ -144,7 +144,7 @@ public class MypageActivity extends AppCompatActivity {
 
         // 크루룸 버튼 클릭 시 크루룸으로 이동
         calendarButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MypageActivity.this, CrewRoomActivity.class);
+            Intent intent = new Intent(MypageActivity.this, ImsiCrewRoomListActivity.class);
             startActivity(intent);  // 알람 액티비티로 이동
         });
 
