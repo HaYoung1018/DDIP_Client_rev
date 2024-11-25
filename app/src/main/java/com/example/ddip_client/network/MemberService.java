@@ -7,6 +7,6 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Path;
 
 public interface MemberService {
-    @DELETE("Member/withdraw/{id}")
+    @DELETE("/api/Member/withdraw/{id}")
     Call<Map<String, String>> withdrawMember(@Path("id") String id);
 }
