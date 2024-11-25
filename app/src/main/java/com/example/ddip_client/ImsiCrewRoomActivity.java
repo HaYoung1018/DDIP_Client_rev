@@ -90,10 +90,10 @@ public class ImsiCrewRoomActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // 교환하기 페이지 이동 (구현 예정)
+        // 교환하기 페이지 이동
         radioExchange.setOnClickListener(v -> {
-            // 교환하기 페이지로 이동 구현 필요
-            Toast.makeText(ImsiCrewRoomActivity.this, "교환하기 선택됨", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ImsiCrewRoomActivity.this, TradeListActivity.class);
+            startActivity(intent);
         });
 
         // 근무자 리스트 페이지로 이동
