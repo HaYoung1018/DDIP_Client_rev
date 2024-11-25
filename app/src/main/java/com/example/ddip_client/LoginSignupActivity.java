@@ -60,12 +60,12 @@ public class LoginSignupActivity extends AppCompatActivity {
                                 if (response.isSuccessful() && response.body() != null) {
                                     if (result.equals("Owner")) {
                                         Toast.makeText(LoginSignupActivity.this, "Owner계정", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(LoginSignupActivity.this, StaffMainActivity.class);
+                                        Intent intent = new Intent(LoginSignupActivity.this, OwnerMainActivity.class);
                                         startActivity(intent);
                                         finish();
                                     } else {
                                         Toast.makeText(LoginSignupActivity.this, "Staff계정", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(LoginSignupActivity.this, OwnerMainActivity.class);
+                                        Intent intent = new Intent(LoginSignupActivity.this, StaffMainActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
@@ -145,12 +145,12 @@ public class LoginSignupActivity extends AppCompatActivity {
 
                                         if (result.equals("Owner")) {
                                             Toast.makeText(LoginSignupActivity.this, "Owner계정", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(LoginSignupActivity.this, StaffMainActivity.class);
+                                            Intent intent = new Intent(LoginSignupActivity.this, OwnerMainActivity.class);
                                             startActivity(intent);
                                             finish();
                                         } else {
                                             Toast.makeText(LoginSignupActivity.this, "Staff계정", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(LoginSignupActivity.this, OwnerMainActivity.class);
+                                            Intent intent = new Intent(LoginSignupActivity.this, StaffMainActivity.class);
                                             startActivity(intent);
                                             finish();
                                         }
