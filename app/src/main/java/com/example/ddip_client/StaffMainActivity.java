@@ -36,7 +36,7 @@ public class StaffMainActivity extends AppCompatActivity {
 
         // ------------------ Header (상단바) ------------------
         TextView titleTextView = findViewById(R.id.title_text);
-        titleTextView.setText("쿠잉");
+        //titleTextView.setText("쿠잉");
 
         // ------------------ RecyclerView 설정 ------------------
         roomRecyclerView = findViewById(R.id.crew_room_list);
@@ -49,7 +49,7 @@ public class StaffMainActivity extends AppCompatActivity {
         roomAdapter = new CrewRoomAdapter(this, roomList, roomName -> {
             Toast.makeText(this, "선택된 방: " + roomName, Toast.LENGTH_SHORT).show();
             // 방 클릭 시 추가 작업 구현 가능
-            Intent intent = new Intent(StaffMainActivity.this, CrewRoomActivity.class);
+            Intent intent = new Intent(StaffMainActivity.this, ImsiCrewRoomActivity.class);
             intent.putExtra("roomName", roomName); // 방 이름 전달
             startActivity(intent);
         });
@@ -66,7 +66,7 @@ public class StaffMainActivity extends AppCompatActivity {
 
         // 서브크루 버튼 클릭
         subCrewButton.setOnClickListener(v -> {
-            Intent intent = new Intent(StaffMainActivity.this, CrewRoomListActivity.class);
+            Intent intent = new Intent(StaffMainActivity.this, ImsiCrewRoomListActivity.class);
             startActivity(intent);
         });
 
