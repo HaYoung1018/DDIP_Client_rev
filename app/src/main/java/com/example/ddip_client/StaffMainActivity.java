@@ -36,7 +36,7 @@ public class StaffMainActivity extends AppCompatActivity {
 
         // ------------------ Header (상단바) ------------------
         TextView titleTextView = findViewById(R.id.title_text);
-        titleTextView.setText("쿠잉");
+        //titleTextView.setText("쿠잉");
 
         // ------------------ RecyclerView 설정 ------------------
         roomRecyclerView = findViewById(R.id.crew_room_list);
@@ -66,7 +66,7 @@ public class StaffMainActivity extends AppCompatActivity {
 
         // 서브크루 버튼 클릭
         subCrewButton.setOnClickListener(v -> {
-            Intent intent = new Intent(StaffMainActivity.this, CrewRoomListActivity.class);
+            Intent intent = new Intent(StaffMainActivity.this, ImsiCrewRoomListActivity.class);
             startActivity(intent);
         });
 
