@@ -49,7 +49,7 @@ public class StaffMainActivity extends AppCompatActivity {
         roomAdapter = new CrewRoomAdapter(this, roomList, roomName -> {
             Toast.makeText(this, "선택된 방: " + roomName, Toast.LENGTH_SHORT).show();
             // 방 클릭 시 추가 작업 구현 가능
-            Intent intent = new Intent(StaffMainActivity.this, ImsiCrewRoomActivity.class);
+            Intent intent = new Intent(StaffMainActivity.this, CrewRoomActivity.class);
             intent.putExtra("roomName", roomName); // 방 이름 전달
             startActivity(intent);
         });
