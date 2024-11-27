@@ -36,7 +36,7 @@ public class OwnerMainActivity extends AppCompatActivity {
 
         // ------------------ Header (상단바) ------------------
         TextView titleTextView = findViewById(R.id.title_text);
-        titleTextView.setText("쿠잉");
+        //titleTextView.setText("쿠잉");
 
         // ------------------ RecyclerView 설정 ------------------
         roomRecyclerView = findViewById(R.id.crew_room_list);
