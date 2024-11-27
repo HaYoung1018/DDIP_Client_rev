@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ddip_client.models.Member;
+import com.example.ddip_client.network.LoginSignupService;
 import com.example.ddip_client.network.myPageService;
 import com.example.ddip_client.network.MemberService;
 import com.example.ddip_client.network.RetrofitClient;
@@ -138,8 +139,35 @@ public class MypageActivity extends AppCompatActivity {
 
         // 홈 버튼 클릭 시 홈 화면 이동
         homeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MypageActivity.this, MainActivity.class);
-            startActivity(intent);  // 마이페이지로 이동
+            Intent intent;
+            LoginSignupService userApi = RetrofitClient.getClient().create(LoginSignupService.class);
+            Call<Map<String, String>> userType = userApi.checkAdmin(savedId);
+
+            userType.enqueue(new Callback<Map<String, String>>() {
+                @Override
+                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                    String result = response.body().get("result");
+                    if (response.isSuccessful() && response.body() != null) {
+                        if (result.equals("Owner")) {
+                            Intent intent = new Intent(MypageActivity.this, OwnerMainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Intent intent = new Intent(MypageActivity.this, StaffMainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    } else {
+                        return;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                    System.out.println(t);
+                    Toast.makeText(MypageActivity.this, "에러 발생", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         // 크루룸 버튼 클릭 시 크루룸으로 이동
