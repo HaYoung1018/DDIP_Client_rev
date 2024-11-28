@@ -66,7 +66,7 @@ public class UserListActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        member.getall();
+//                        member.getall();
                         members.add(member);
                     }
 
