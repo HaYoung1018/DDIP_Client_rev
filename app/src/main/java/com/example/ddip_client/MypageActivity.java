@@ -176,12 +176,6 @@ public class MypageActivity extends AppCompatActivity {
             startActivity(intent);  // 알람 액티비티로 이동
         });
 
-        // 알람 버튼 클릭 시 알람 페이지로 이동
-        crewRoomButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MypageActivity.this, AlarmActivity.class);
-            startActivity(intent);  // 알람 액티비티로 이동
-        });
-
         // 마이페이지 버튼 클릭시 토스트 출력
         myPageButton.setOnClickListener(v -> {
             Toast.makeText(this, "마이페이지에 있습니다.", Toast.LENGTH_SHORT).show();

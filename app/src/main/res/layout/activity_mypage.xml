@@ -89,19 +89,6 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:layout_marginTop="15dp" />
 
-        <!-- 알림 설정 텍스트 버튼 -->
-        <TextView
-            android:id="@+id/notification_settings_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="알림 설정"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_marginTop="15dp" />
-
         <!-- 로그아웃 및 탈퇴 텍스트 버튼 -->
         <TextView
             android:id="@+id/logout_text"
