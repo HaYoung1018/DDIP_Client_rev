@@ -10,33 +10,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class WorkTimeAdapter extends RecyclerView.Adapter<WorkTimeAdapter.WorkTimeViewHolder> {
+public class WorkTimeAdapter extends RecyclerView.Adapter<WorkTimeAdapter.ViewHolder> {
 
     private final List<String> workTimes;
-    private final OnWorkTimeClickListener clickListener;
+    private final OnItemClickListener onItemClickListener;
 
-    public interface OnWorkTimeClickListener {
-        void onWorkTimeClick(String workTime);
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 
-    public WorkTimeAdapter(List<String> workTimes, OnWorkTimeClickListener clickListener) {
+    public WorkTimeAdapter(List<String> workTimes, OnItemClickListener onItemClickListener) {
         this.workTimes = workTimes;
-        this.clickListener = clickListener;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
     @Override
-    public WorkTimeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(android.R.layout.simple_list_item_1, parent, false);
-        return new WorkTimeViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WorkTimeViewHolder holder, int position) {
-        String workTime = workTimes.get(position);
-        holder.workTimeText.setText(workTime);
-        holder.itemView.setOnClickListener(v -> clickListener.onWorkTimeClick(workTime));
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.textView.setText(workTimes.get(position));
+        holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(position));
     }
 
     @Override
@@ -44,12 +43,12 @@ public class WorkTimeAdapter extends RecyclerView.Adapter<WorkTimeAdapter.WorkTi
         return workTimes.size();
     }
 
-    static class WorkTimeViewHolder extends RecyclerView.ViewHolder {
-        TextView workTimeText;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView textView;
 
-        public WorkTimeViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            workTimeText = itemView.findViewById(android.R.id.text1);
+            textView = itemView.findViewById(android.R.id.text1);
         }
     }
 }
