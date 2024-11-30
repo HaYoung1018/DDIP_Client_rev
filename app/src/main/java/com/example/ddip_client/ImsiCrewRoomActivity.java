@@ -90,12 +90,16 @@ public class ImsiCrewRoomActivity extends AppCompatActivity {
         // 라디오 버튼 선택 이벤트 리스너 설정
         radioCalendar.setOnClickListener(v -> {
             Intent intent = new Intent(ImsiCrewRoomActivity.this, CalendarActivity.class);
+            intent.putExtra("ROOM_ID", roomId); // roomId 전달
+            intent.putExtra("ROOM_NAME", roomName); // roomName 전달
             startActivity(intent);
         });
 
         // 교환하기 페이지 이동
         radioExchange.setOnClickListener(v -> {
             Intent intent = new Intent(ImsiCrewRoomActivity.this, TradeListActivity.class);
+            intent.putExtra("ROOM_ID", roomId); // roomId 전달
+            intent.putExtra("ROOM_NAME", roomName); // roomName 전달
             startActivity(intent);
         });
 

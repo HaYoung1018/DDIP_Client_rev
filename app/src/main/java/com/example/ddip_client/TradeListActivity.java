@@ -1,6 +1,7 @@
 package com.example.ddip_client;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,20 @@ public class TradeListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tradelist);
 
+        // SharedPreferences에서 사용자 ID 가져오기
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String memberId = sharedPreferences.getString("userId", "");
+        if (memberId.isEmpty()) {
+            Toast.makeText(this, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 전달된 데이터 받기
+        Intent intentData = getIntent();
+        String roomId = intentData.getStringExtra("ROOM_ID"); // ROOM_ID 값 받기
+        String roomName = intentData.getStringExtra("ROOM_NAME"); // ROOM_NAME 값 받기
+
+
         // RecyclerView 초기화
         RecyclerView tradeRecyclerView = findViewById(R.id.recycler_view);
         tradeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -38,6 +53,8 @@ public class TradeListActivity extends AppCompatActivity {
         createTradeButton.setOnClickListener(v -> {
             // CreateTradeActivity 호출
             Intent intent = new Intent(TradeListActivity.this, CreateTradeActivity.class);
+            intent.putExtra("ROOM_ID", roomId); // roomId 전달
+            intent.putExtra("ROOM_NAME", roomName); // roomName 전달
             startActivityForResult(intent, REQUEST_CREATE_TRADE);
         });
 
