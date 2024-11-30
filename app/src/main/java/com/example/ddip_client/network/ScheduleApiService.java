@@ -28,4 +28,9 @@ public interface ScheduleApiService {
     // 스케줄 상태 업데이트 API
     @PATCH("/api/schedules/exchange/{scheduleId}")
     Call<Void> updateScheduleStatus(@Path("scheduleId") int scheduleId);
+    @GET("/api/schedules/exchangeable/{crewRoomId}")
+    Call<List<Map<String, Object>>> getExchangeableSchedules(@Path("crewRoomId") String crewRoomId);
+
+    @PATCH("/api/schedules/DDIP")
+    Call<Void> exchangeSchedule(@Body Map<String, String> requestData);
 }

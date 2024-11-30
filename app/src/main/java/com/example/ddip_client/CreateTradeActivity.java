@@ -113,6 +113,7 @@ public class CreateTradeActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             // 성공 메시지 표시
                             Toast.makeText(CreateTradeActivity.this, "교환 신청이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+
                             finish(); // 화면 종료
                         } else {
                             // 실패 메시지 표시
