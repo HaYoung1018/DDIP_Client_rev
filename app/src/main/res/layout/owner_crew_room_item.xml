@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:gravity="center_vertical">
+    <!-- 크루룸 이름 -->
+    <TextView
+        android:id="@+id/crew_room_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="크루룸 이름"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:ellipsize="end"
+        android:singleLine="true" />
+    <!-- 초대코드 -->
+    <TextView
+        android:id="@+id/crew_room_invite_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="초대코드: EV99G85S"
+        android:textSize="14sp"
+        android:textColor="#808080"
+        android:layout_marginEnd="8dp" />
+    <!-- 점 세 개 메뉴 -->
+    <ImageView
+        android:id="@+id/menu_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_more_vert"
+        android:contentDescription="More options"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true" />
+</LinearLayout>
