@@ -14,15 +14,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.ddip_client.network.RetrofitClient;
+import com.example.ddip_client.network.ScheduleApiService;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHolder> {
-
-    private final List<TradeItem> tradeItems;
+    private final List<Map<String, Object>> tradeItems;
+    private final String memberId; // 추가된 필드
 
     // Constructor
-    public TradeAdapter(List<TradeItem> tradeItems) {
+    public TradeAdapter(List<Map<String, Object>> tradeItems, String memberId) {
         this.tradeItems = tradeItems;
+        this.memberId = memberId; // memberId 저장
     }
 
     @NonNull
@@ -35,56 +46,61 @@ public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHol
 
     @Override
     public void onBindViewHolder(@NonNull TradeViewHolder holder, int position) {
-        TradeItem item = tradeItems.get(position);
+        Map<String, Object> tradeItem = tradeItems.get(position);
 
-        // 데이터 바인딩
-        holder.applicantName.setText("신청자: " + item.getApplicantName());
-        holder.workDate.setText("날짜: " + item.getWorkDate());
-        holder.startTime.setText("시작 시간: " + item.getStartTime());
-        holder.endTime.setText("종료 시간: " + item.getEndTime());
-        holder.totalWorkTime.setText("총 근무 시간: " + item.getTotalWorkTime());
+        double hourlyPay = Double.parseDouble(tradeItem.get("pay").toString());
+        double workHours = Double.parseDouble(tradeItem.get("totalHours").toString());
+        int totalPay = (int) (hourlyPay * workHours);
+
+        String applicantName = "신청자: " + tradeItem.get("member").toString();
+        String workDate = "날짜: " + tradeItem.get("date").toString();
+        String workTime = "시간: " + tradeItem.get("startTime").toString() + " ~ " + tradeItem.get("endTime").toString();
+        String totalWorkTime = "근무 시간: " + tradeItem.get("totalHours").toString() + "시간";
+        String pay = "급여: " + totalPay + "원";
+
+        holder.applicantName.setText(applicantName);
+        holder.workDate.setText(workDate);
+        holder.startTime.setText(workTime);
+        holder.totalWorkTime.setText(totalWorkTime);
+        holder.endTime.setText(pay);
 
         // 교환 버튼 클릭 이벤트
         holder.exchangeButton.setOnClickListener(v -> {
-            // AlertDialog 생성
+            int scheduleId = ((Number) tradeItem.get("scheduleId")).intValue();
+
+            // AlertDialog를 통한 확인 절차
             new AlertDialog.Builder(holder.itemView.getContext())
                     .setTitle("교환 요청")
-                    .setMessage("교환하시겠습니까?")
+                    .setMessage("이 스케줄을 교환하시겠습니까?")
                     .setPositiveButton("예", (dialog, which) -> {
-                        // 교환 로직 실행
-                        Toast.makeText(holder.itemView.getContext(),
-                                item.getApplicantName() + "의 근무와 교환이 완료되었습니다.",
-                                Toast.LENGTH_SHORT).show();
-                        // TODO: 교환 완료 시 필요한 추가 작업은 여기에 작성
+                        // Retrofit 호출
+                        Map<String, String> requestData = new HashMap<>();
+                        requestData.put("memberId", memberId); // TradeListActivity에서 전달받은 memberId 사용
+                        requestData.put("scheduleId", String.valueOf(scheduleId));
+
+                        ScheduleApiService scheduleService = RetrofitClient.getClient().create(ScheduleApiService.class);
+                        scheduleService.exchangeSchedule(requestData).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    Toast.makeText(holder.itemView.getContext(), "교환 요청이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(holder.itemView.getContext(), "교환 요청에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Toast.makeText(holder.itemView.getContext(), "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     })
                     .setNegativeButton("아니오", (dialog, which) -> {
-                        // 아무 작업도 하지 않음
-                        Toast.makeText(holder.itemView.getContext(),
-                                "교환이 취소되었습니다.",
-                                Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     })
                     .show();
         });
-
-        // 점 세 개 클릭 이벤트
-        holder.overflowMenu.setOnClickListener(v -> {
-            PopupMenu popupMenu = new PopupMenu(holder.itemView.getContext(), holder.overflowMenu);
-            MenuInflater inflater = popupMenu.getMenuInflater();
-            inflater.inflate(R.menu.item_menu, popupMenu.getMenu());
-
-            popupMenu.setOnMenuItemClickListener(menuItem -> {
-                if (menuItem.getItemId() == R.id.action_delete) {
-                    tradeItems.remove(position);
-                    notifyItemRemoved(position);
-                    Toast.makeText(holder.itemView.getContext(), "항목이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                return false;
-            });
-            popupMenu.show();
-        });
     }
-
 
     @Override
     public int getItemCount() {
