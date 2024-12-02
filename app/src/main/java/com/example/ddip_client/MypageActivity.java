@@ -30,6 +30,7 @@ public class MypageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String savedId = sharedPreferences.getString("userId", "");
+        String savedUserType = sharedPreferences.getString("userType", "");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
@@ -140,34 +141,43 @@ public class MypageActivity extends AppCompatActivity {
         // 홈 버튼 클릭 시 홈 화면 이동
         homeButton.setOnClickListener(v -> {
             Intent intent;
-            LoginSignupService userApi = RetrofitClient.getClient().create(LoginSignupService.class);
-            Call<Map<String, String>> userType = userApi.checkAdmin(savedId);
-
-            userType.enqueue(new Callback<Map<String, String>>() {
-                @Override
-                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
-                    String result = response.body().get("result");
-                    if (response.isSuccessful() && response.body() != null) {
-                        if (result.equals("Owner")) {
-                            Intent intent = new Intent(MypageActivity.this, OwnerMainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Intent intent = new Intent(MypageActivity.this, StaffMainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    } else {
-                        return;
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Map<String, String>> call, Throwable t) {
-                    System.out.println(t);
-                    Toast.makeText(MypageActivity.this, "에러 발생", Toast.LENGTH_SHORT).show();
-                }
-            });
+//            LoginSignupService userApi = RetrofitClient.getClient().create(LoginSignupService.class);
+//            Call<Map<String, String>> userType = userApi.checkAdmin(savedId);
+//
+//            userType.enqueue(new Callback<Map<String, String>>() {
+//                @Override
+//                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+//                    String result = response.body().get("result");
+//                    if (response.isSuccessful() && response.body() != null) {
+//                        if (result.equals("Owner")) {
+//                            Intent intent = new Intent(MypageActivity.this, OwnerMainActivity.class);
+//                            startActivity(intent);
+//                            finish();
+//                        } else {
+//                            Intent intent = new Intent(MypageActivity.this, StaffMainActivity.class);
+//                            startActivity(intent);
+//                            finish();
+//                        }
+//                    } else {
+//                        return;
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Map<String, String>> call, Throwable t) {
+//                    System.out.println(t);
+//                    Toast.makeText(MypageActivity.this, "에러 발생", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+            if (savedUserType.equals("Owner")){
+                intent = new Intent(MypageActivity.this, OwnerMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                intent = new Intent(MypageActivity.this, StaffMainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
         // 크루룸 버튼 클릭 시 크루룸으로 이동
