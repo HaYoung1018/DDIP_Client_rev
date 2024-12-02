@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ddip_client.models.CrewRoomMember;
+import com.example.ddip_client.models.Member;
 import com.example.ddip_client.network.CrewRoomApiService;
+import com.example.ddip_client.network.MemberService;
 import com.example.ddip_client.network.RetrofitClient;
 
 import retrofit2.Call;
@@ -28,7 +30,11 @@ public class UserListActivity extends AppCompatActivity {
 
     private UserAdapter userAdapter;
     private CrewRoomApiService api = RetrofitClient.getClient().create(CrewRoomApiService.class);
-    private List<CrewRoomMember> members = new ArrayList<CrewRoomMember>();
+    private MemberService mapi = RetrofitClient.getClient().create(MemberService.class);
+    private List<CrewRoomMember> listedMembers = new ArrayList<CrewRoomMember>();
+    private String name;
+    private int i;
+    private int j;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
@@ -42,12 +48,12 @@ public class UserListActivity extends AppCompatActivity {
         Intent intentData = getIntent();
         String RoomId = intentData.getStringExtra("ROOM_ID"); // ROOM_ID 값 받기
 
-        Call <List<Map<String, String >>> call = api.getCrewRoomMembers(RoomId);
+        Call <List<Map<String, String>>> call = api.getCrewRoomMembers(RoomId);
         call.enqueue(new Callback<List<Map<String, String>>>() {
             @Override
             public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
                 if(response.isSuccessful() && response.body() != null){
-                    for(int i = 0; i < response.body().size(); i++){
+                    for(i = 0; i < response.body().size(); i++){
                         Map<String, String > memberData = response.body().get(i);
                         CrewRoomMember member = new CrewRoomMember();
                         member.setMember(memberData.get("member"));
@@ -67,33 +73,41 @@ public class UserListActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 //                        member.getall();
-                        members.add(member);
+                        listedMembers.add(member);
                     }
 
                     List<User> userList = new ArrayList<>();
                     userAdapter = new UserAdapter(userList);
                     recyclerView.setAdapter(userAdapter);
 
-                    for(int i = 0; i < members.size(); i++){
-                        String name = members.get(i).getMember();
-                        String contactNumber = members.get(i).getcontactNumber();
+                    for(j= 0; j < listedMembers.size(); j++){
+                        String id = listedMembers.get(j).getMember();
+                        String contact = listedMembers.get(j).getcontactNumber();
 
-                        addUser(new User(name, contactNumber, R.drawable.ic_user_profile));
+
+                        Call <Map<String, String>> mcall = mapi.findMemberById(id);
+                        mcall.enqueue(new Callback<Map<String, String>>() {
+                            @Override
+                            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                                name = response.body().get("name");
+                                addUser(new User(name, contact, R.drawable.ic_user_profile));
+                            }
+                            @Override
+                            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                                Toast.makeText(UserListActivity.this, "정보를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-
                 } else {
                     Toast.makeText(UserListActivity.this, "사용자 정보를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<List<Map<String, String>>> call, Throwable t) {
                 Toast.makeText(UserListActivity.this, "요청 실패.", Toast.LENGTH_SHORT).show();
                 System.out.println(t);
             }
         });
-
-
 
         // 예시로 사용자 추가
 //        addUser(new User("사용자 이름 1", "010-1234-5678", R.drawable.ic_user_profile));

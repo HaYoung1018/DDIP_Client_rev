@@ -141,16 +141,20 @@ public class LoginSignupActivity extends AppCompatActivity {
                                         SharedPreferences.Editor autoLogin = sharedPreferences.edit();
                                         autoLogin.putString("userId", id);
                                         autoLogin.putString("userPassword", password);
-                                        autoLogin.apply();
+
 
                                         if (result.equals("Owner")) {
                                             Toast.makeText(LoginSignupActivity.this, "Owner계정", Toast.LENGTH_SHORT).show();
+                                            autoLogin.putString("userType", "Owner");
+                                            autoLogin.apply();
                                             Intent intent = new Intent(LoginSignupActivity.this, OwnerMainActivity.class);
                                             startActivity(intent);
                                             finish();
                                         } else {
                                             Toast.makeText(LoginSignupActivity.this, "Staff계정", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(LoginSignupActivity.this, StaffMainActivity.class);
+                                            autoLogin.putString("userType", "Staff");
+                                            autoLogin.apply();
                                             startActivity(intent);
                                             finish();
                                         }
