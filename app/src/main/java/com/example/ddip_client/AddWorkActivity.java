@@ -1,6 +1,7 @@
 package com.example.ddip_client;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -43,7 +44,9 @@ public class AddWorkActivity extends AppCompatActivity {
     private ScheduleApiService scheduleApiService;
     //임시id
     private String id ="1";
+    private String Croomid = "1";
     private long selectedDate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,17 @@ public class AddWorkActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.save_button);
         startTimePicker.setIs24HourView(true);
         endTimePicker.setIs24HourView(true);
+
+        // SharedPreferences에서 사용자 ID 가져오기
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String memberId = sharedPreferences.getString("userId", "");
+        id = memberId;
+        if (memberId.isEmpty()) {
+            Toast.makeText(this, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
 
         // 전달된 날짜 값을 Intent에서 가져옴
         selectedDate = getIntent().getLongExtra("selectedDate", -1);
@@ -160,8 +174,8 @@ public class AddWorkActivity extends AppCompatActivity {
 
         Long selectedDate = selectedDates.get(0); // 첫 번째 선택된 날짜 사용 예시
         Map<String, Object> scheduleData = new HashMap<>();
-        scheduleData.put("member", id); // 임시 memberId
-        scheduleData.put("crewRoom", 1);  // 예시 크루룸 ID
+        scheduleData.put("member", id);
+        scheduleData.put("crewRoom", Croomid);
         // 시간과 날짜 형식으로 데이터를 설정
         String startTime = String.format("%02d:%02d:00", startTimePicker.getHour(), startTimePicker.getMinute());
         String endTime = String.format("%02d:%02d:00", endTimePicker.getHour(), endTimePicker.getMinute());

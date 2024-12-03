@@ -1,0 +1,145 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 상단 제목 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="급여 계산기"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:paddingBottom="16dp" />
+
+        <!-- 크루룸 명 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="크루룸 명"
+            android:textSize="16sp"
+            android:paddingTop="8dp" />
+
+        <TextView
+            android:id="@+id/crewRoomName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="크루룸 명"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:background="#E0E0E0" />
+
+        <!-- 시급 (자동 입력) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="시급 (자동 입력)"
+            android:textSize="16sp"
+            android:paddingTop="8dp" />
+
+        <TextView
+            android:id="@+id/hourlyRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0 원"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:background="#E0E0E0" />
+
+        <!-- 근무 시간 (1~5주) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="근무시간 (1~5주)"
+            android:textSize="16sp"
+            android:paddingTop="8dp" />
+
+        <!-- 1주~5주 근무 시간 표시 -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="1주" />
+        <TextView android:id="@+id/workHoursWeek1" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 시간" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="2주" />
+        <TextView android:id="@+id/workHoursWeek2" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 시간" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="3주" />
+        <TextView android:id="@+id/workHoursWeek3" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 시간" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="4주" />
+        <TextView android:id="@+id/workHoursWeek4" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 시간" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="5주" />
+        <TextView android:id="@+id/workHoursWeek5" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 시간" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <!-- 주휴수당 (1~5주) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="주휴수당 (1~5주)"
+            android:textSize="16sp"
+            android:paddingTop="8dp" />
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="1주" />
+        <TextView android:id="@+id/allowanceWeek1" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 원" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="2주" />
+        <TextView android:id="@+id/allowanceWeek2" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 원" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="3주" />
+        <TextView android:id="@+id/allowanceWeek3" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 원" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="4주" />
+        <TextView android:id="@+id/allowanceWeek4" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 원" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="5주" />
+        <TextView android:id="@+id/allowanceWeek5" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 원" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <!-- 근무 수당 (1~5주) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="근무 수당 (1~5주)"
+            android:textSize="16sp"
+            android:paddingTop="8dp" />
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="1주" />
+        <TextView android:id="@+id/workAllowanceWeek1" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 원" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="2주" />
+        <TextView android:id="@+id/workAllowanceWeek2" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 원" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="3주" />
+        <TextView android:id="@+id/workAllowanceWeek3" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 원" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="4주" />
+        <TextView android:id="@+id/workAllowanceWeek4" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 원" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="5주" />
+        <TextView android:id="@+id/workAllowanceWeek5" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0 원" android:background="#E0E0E0" android:padding="8dp"/>
+
+        <!-- 총 지급 금액 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="총 지급 금액"
+            android:textSize="16sp"
+            android:paddingTop="8dp" />
+
+        <TextView
+            android:id="@+id/totalPayment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0 원"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:background="#E0E0E0" />
+
+    </LinearLayout>
+</ScrollView>
