@@ -15,7 +15,6 @@ import com.example.ddip_client.models.InviteCodeRequest;
 import com.example.ddip_client.models.InviteCodeResponse;
 import com.example.ddip_client.network.InviteApiService;
 import com.example.ddip_client.network.InviteApiServiceProvider;
-import com.example.ddip_client.network.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +35,6 @@ public class InviteCodeActivity extends AppCompatActivity {
 
         // InviteApiService를 InviteApiServiceProvider를 통해 가져오기
         InviteApiService apiService = InviteApiServiceProvider.getInviteApiService();
-
 
         confirmButton.setOnClickListener(v -> {
             String inviteCode = inviteCodeInput.getText().toString().trim();
@@ -76,29 +74,29 @@ public class InviteCodeActivity extends AppCompatActivity {
     }
 
     private void addMemberToCrew(InviteApiService apiService, int crewRoomId) {
-        // 멤버 추가 요청 정보
-        String memberId = "user1"; // 로그인된 사용자 ID
-        String color = "Red"; // 예시 색상
-        String contactNumber = "010-1234-5678"; // 예시 연락처
-        String memberType = "crew"; // 예시 멤버 유형
-
-        // 데이터 검증
-        if (crewRoomId <= 0 || memberId == null || memberId.isEmpty()) {
-            Log.e("InviteCodeActivity", "Invalid data: CrewRoomId or MemberId is missing.");
-            Toast.makeText(this, "잘못된 데이터입니다. 다시 시도하세요.", Toast.LENGTH_SHORT).show();
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String memberId = sharedPreferences.getString("userId", "");
+        if (memberId.isEmpty()) {
+            Toast.makeText(this, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // 요청 객체 생성
-        AddMemberRequest addMemberRequest = new AddMemberRequest(crewRoomId, memberId, color, contactNumber, memberType);
+        AddMemberRequest addMemberRequest = new AddMemberRequest(
+                crewRoomId,  // 서버에서 기대하는 "crewRoom"
+                memberId,    // 서버에서 기대하는 "member"
+                "Red",
+                "010-1234-5678",
+                "crew"
+        );
 
         // 로그 출력
         Log.d("InviteCodeActivity", "Adding member with data: " +
                 "CrewRoomId: " + crewRoomId +
                 ", MemberId: " + memberId +
-                ", Color: " + color +
-                ", Contact: " + contactNumber +
-                ", MemberType: " + memberType);
+                ", Color: " + addMemberRequest.getColor() +
+                ", Contact: " + addMemberRequest.getContactNumber() +
+                ", MemberType: " + addMemberRequest.getMemberType());
 
         // 서버에 요청
         apiService.addMemberToCrew(addMemberRequest).enqueue(new Callback<Void>() {
@@ -122,5 +120,4 @@ public class InviteCodeActivity extends AppCompatActivity {
             }
         });
     }
-
 }

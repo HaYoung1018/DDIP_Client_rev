@@ -1,34 +1,35 @@
 package com.example.ddip_client.models;
 
 public class AddMemberRequest {
-    private int crewRoomId;
-    private String memberId;
+    private int crewRoom; // 수정된 필드 이름
+    private String member; // 수정된 필드 이름
     private String color;
     private String contactNumber;
     private String memberType;
 
-    public AddMemberRequest(int crewRoomId, String memberId, String color, String contactNumber, String memberType) {
-        this.crewRoomId = crewRoomId;
-        this.memberId = memberId;
+    public AddMemberRequest(int crewRoom, String member, String color, String contactNumber, String memberType) {
+        this.crewRoom = crewRoom;
+        this.member = member;
         this.color = color;
         this.contactNumber = contactNumber;
         this.memberType = memberType;
     }
 
-    public int getCrewRoomId() {
-        return crewRoomId;
+    // Getters and Setters
+    public int getCrewRoom() {
+        return crewRoom;
     }
 
-    public void setCrewRoomId(int crewRoomId) {
-        this.crewRoomId = crewRoomId;
+    public void setCrewRoom(int crewRoom) {
+        this.crewRoom = crewRoom;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public String getMember() {
+        return member;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setMember(String member) {
+        this.member = member;
     }
 
     public String getColor() {
