@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#F0F4FF">
+    <TextView
+        android:id="@+id/room_name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Room Name"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+    <!-- 말풍선 컨테이너 -->
+    <!-- 이미지 -->
+    <LinearLayout
+        android:id="@+id/speech_bubble_container"
+        android:layout_width="311dp"
+        android:layout_height="335dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/speech_bubble"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <!-- 초대 코드 텍스트 -->
+        <TextView
+            android:id="@+id/owner_invite_code_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12dp"
+            android:text="크루룸 초대코드"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/owner_page_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="초대코드를 공유하고 크루를 초대하세요"
+            android:textColor="#808080"
+            android:textSize="16sp" />
+        <!-- 초대 코드 값 -->
+        <TextView
+            android:id="@+id/owner_invite_code_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12dp"
+            android:text="EV99G85S"
+            android:textColor="#1E90FF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+        <!-- 초대코드 복사 텍스트 -->
+        <TextView
+            android:id="@+id/owner_copy_invite_code_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:text="📋 초대코드 복사하기"
+            android:textColor="#808080"
+            android:textSize="14sp" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/owner_page_icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/crewing"
+        android:layout_marginTop="32dp" />
+</LinearLayout>

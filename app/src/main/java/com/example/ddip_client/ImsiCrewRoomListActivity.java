@@ -41,6 +41,7 @@ public class ImsiCrewRoomListActivity extends AppCompatActivity {
         // SharedPreferences에서 사용자 ID 가져오기
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String memberId = sharedPreferences.getString("userId", "");
+        Log.d("SharedPreferences", "Retrieved userId: " + memberId);
         if (memberId.isEmpty()) {
             Toast.makeText(this, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
             return;
@@ -58,15 +59,25 @@ public class ImsiCrewRoomListActivity extends AppCompatActivity {
         crewRoomRecyclerView.setAdapter(imsicrewRoomAdapter);
 
         // Retrofit API 호출
+        fetchCrewRooms(memberId);
+    }
+
+    private void fetchCrewRooms(String memberId) {
         CrewRoomApiService crewRoomApiService = RetrofitClient.getClient().create(CrewRoomApiService.class);
 
         crewRoomApiService.getCrewRooms(memberId).enqueue(new Callback<List<Map<String, String>>>() {
             @Override
             public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                    Log.d("API Response", "Received data: " + response.body().toString());
+
                     crewRoomList.clear();
                     crewRoomList.addAll(response.body());
-                    imsicrewRoomAdapter.notifyDataSetChanged(); // RecyclerView 데이터 갱신
+                    imsicrewRoomAdapter.notifyDataSetChanged();
+                } else if (response.isSuccessful() && response.body() != null && response.body().isEmpty()) {
+                    Toast.makeText(ImsiCrewRoomListActivity.this, "속한 크루룸이 없습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e("API Error", "Response not successful. Code: " + response.code());
                 }
             }
 
