@@ -49,6 +49,7 @@ public class StaffMainActivity extends AppCompatActivity {
 
         // ------------------ Header (상단바) ------------------
         TextView titleTextView = findViewById(R.id.title_text);
+        TextView titleNameView = findViewById(R.id.title_name);
         //titleTextView.setText("쿠잉");
 
         // ------------------ RecyclerView 설정 ------------------
@@ -59,6 +60,11 @@ public class StaffMainActivity extends AppCompatActivity {
         // SharedPreferences에서 사용자 ID 가져오기
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String memberId = sharedPreferences.getString("userId", "");
+        String savedName = sharedPreferences.getString("savedName", "");
+
+        String NameText = savedName+"님 환영합니다.";
+        titleNameView.setText(NameText);
+
         if (memberId.isEmpty()) {
             Toast.makeText(this, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
             return;
