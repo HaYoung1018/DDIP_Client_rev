@@ -1,6 +1,7 @@
 package com.example.ddip_client;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,9 @@ public class AlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String savedUserType = sharedPreferences.getString("userType", "");
+
         // ------------------ RecyclerView 초기화 ------------------
         alarmRecyclerView = findViewById(R.id.alarm_recycler_view);
         alarmLogList = new ArrayList<>();
@@ -50,14 +54,24 @@ public class AlarmActivity extends AppCompatActivity {
 
         // 홈 버튼 클릭 시 홈 액티비티로 이동
         homeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(AlarmActivity.this, MainActivity.class);
-            startActivity(intent);
+            if(savedUserType.equals("Owner")){
+                Intent intent = new Intent(AlarmActivity.this, OwnerMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (savedUserType.equals("Staff")) {
+                Intent intent = new Intent(AlarmActivity.this, StaffMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(AlarmActivity.this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // 문 버튼 클릭 시 크루룸 액티비티로 이동
         subCrewButton.setOnClickListener(v -> {
             Intent intent = new Intent(AlarmActivity.this, ImsiCrewRoomListActivity.class);
             startActivity(intent);
+            finish();
         });
 
         // 알람 버튼은 현재 화면이므로 토스트만 출력
@@ -69,6 +83,7 @@ public class AlarmActivity extends AppCompatActivity {
         myPageButton.setOnClickListener(v -> {
             Intent intent = new Intent(AlarmActivity.this, MypageActivity.class);
             startActivity(intent);
+            finish();
         });
     }
 

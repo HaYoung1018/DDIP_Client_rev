@@ -1,6 +1,7 @@
 package com.example.ddip_client;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -22,6 +23,9 @@ public class CrewRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crewroom);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String savedUserType = sharedPreferences.getString("userType", "");
+
         // ------------------ Intent로 전달받은 방 이름 표시 ------------------
         roomNameTextView = findViewById(R.id.room_name_text); // crewroom.xml에서 TextView ID
         String roomName = getIntent().getStringExtra("roomName"); // 전달받은 방 이름
@@ -39,8 +43,17 @@ public class CrewRoomActivity extends AppCompatActivity {
 
         // 홈 버튼 클릭 리스너 설정
         homeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(CrewRoomActivity.this, MainActivity.class);
-            startActivity(intent);
+            if (savedUserType.equals("Owner")){
+                Intent intent = new Intent(CrewRoomActivity.this, OwnerMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (savedUserType.equals("Staff")) {
+                Intent intent = new Intent(CrewRoomActivity.this, StaffMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(CrewRoomActivity.this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // 크루룸 이동 버튼 클릭 리스너 설정 (현재 Activity와 동일하므로 토스트만 표시)
@@ -50,12 +63,14 @@ public class CrewRoomActivity extends AppCompatActivity {
         alarmButton.setOnClickListener(v -> {
             Intent intent = new Intent(CrewRoomActivity.this, AlarmActivity.class);
             startActivity(intent);
+            finish();
         });
 
         // 마이페이지 버튼 클릭 리스너 설정
         myPageButton.setOnClickListener(v -> {
             Intent intent = new Intent(CrewRoomActivity.this, MypageActivity.class);
             startActivity(intent);
+            finish();
         });
 
         // ------------------ Radio Buttons (라디오 버튼) ------------------
