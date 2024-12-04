@@ -25,6 +25,14 @@
             android:textStyle="bold"
             android:textColor="@android:color/holo_blue_dark"
             android:layout_marginEnd="8dp" />
+        <!-- Title (사용자 이름) -->
+        <TextView
+            android:id="@+id/title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Name"
+            android:textSize="15sp"/>
     </LinearLayout>
 
     <!-- 메인 콘텐츠 영역 -->
