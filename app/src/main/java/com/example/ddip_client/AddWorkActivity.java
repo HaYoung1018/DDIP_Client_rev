@@ -1,6 +1,7 @@
 package com.example.ddip_client;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,12 +31,10 @@ public class AddWorkActivity extends AppCompatActivity {
     private TimePicker startTimePicker, endTimePicker;
     private List<Long> selectedDates = new ArrayList<>();  // 선택된 날짜 리스트
     private ScheduleApiService scheduleApiService;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addwork);
-
         // XML 요소와 연결
         wageInput = findViewById(R.id.wage_input);
         selectWorkDateButton = findViewById(R.id.select_work_date_button);
