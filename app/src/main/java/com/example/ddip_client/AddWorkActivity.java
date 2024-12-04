@@ -31,6 +31,11 @@ public class AddWorkActivity extends AppCompatActivity {
     private TimePicker startTimePicker, endTimePicker;
     private List<Long> selectedDates = new ArrayList<>();  // 선택된 날짜 리스트
     private ScheduleApiService scheduleApiService;
+    //임시id
+    private String id ="1";
+    private String Croomid = "1";
+    private long selectedDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +49,22 @@ public class AddWorkActivity extends AppCompatActivity {
         startTimePicker.setIs24HourView(true);
         endTimePicker.setIs24HourView(true);
 
-        // RetrofitClient 사용해 ScheduleApiService 초기화
-        scheduleApiService = RetrofitClient.getClient().create(ScheduleApiService.class);
+        // SharedPreferences에서 사용자 ID 가져오기
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String memberId = sharedPreferences.getString("userId", "");
+        id = memberId;
+        if (memberId.isEmpty()) {
+            Toast.makeText(this, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+
+        // 전달된 날짜 값을 Intent에서 가져옴
+        selectedDate = getIntent().getLongExtra("selectedDate", -1);
+        if (selectedDate != -1) {
+            // Date 객체로 변환
+            Date date = new Date(selectedDate);
 
         // 날짜 선택 버튼 클릭 리스너
         selectWorkDateButton.setOnClickListener(v -> {
@@ -106,13 +125,14 @@ public class AddWorkActivity extends AppCompatActivity {
     private void saveSchedule() {
         String wageText = wageInput.getText().toString().trim();
         int wage = Integer.parseInt(wageText);
-
+      
+        Long selectedDate = selectedDates.get(0); // 첫 번째 선택된 날짜 사용 예시
+        Map<String, Object> scheduleData = new HashMap<>();
+        scheduleData.put("member", id);
+        scheduleData.put("crewRoom", Croomid);
+        // 시간과 날짜 형식으로 데이터를 설정
         String startTime = String.format("%02d:%02d:00", startTimePicker.getHour(), startTimePicker.getMinute());
         String endTime = String.format("%02d:%02d:00", endTimePicker.getHour(), endTimePicker.getMinute());
-
-        Map<String, Object> scheduleData = new HashMap<>();
-        scheduleData.put("member", "1"); // 임시 memberId
-        scheduleData.put("crewRoom", 1); // 임시 크루룸 ID
         scheduleData.put("startTime", startTime);
         scheduleData.put("endTime", endTime);
         scheduleData.put("date", selectedDates.get(0));
