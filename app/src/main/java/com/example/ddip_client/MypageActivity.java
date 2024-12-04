@@ -140,50 +140,26 @@ public class MypageActivity extends AppCompatActivity {
 
         // 홈 버튼 클릭 시 홈 화면 이동
         homeButton.setOnClickListener(v -> {
-            Intent intent;
-//            LoginSignupService userApi = RetrofitClient.getClient().create(LoginSignupService.class);
-//            Call<Map<String, String>> userType = userApi.checkAdmin(savedId);
-//
-//            userType.enqueue(new Callback<Map<String, String>>() {
-//                @Override
-//                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
-//                    String result = response.body().get("result");
-//                    if (response.isSuccessful() && response.body() != null) {
-//                        if (result.equals("Owner")) {
-//                            Intent intent = new Intent(MypageActivity.this, OwnerMainActivity.class);
-//                            startActivity(intent);
-//                            finish();
-//                        } else {
-//                            Intent intent = new Intent(MypageActivity.this, StaffMainActivity.class);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-//                    } else {
-//                        return;
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Map<String, String>> call, Throwable t) {
-//                    System.out.println(t);
-//                    Toast.makeText(MypageActivity.this, "에러 발생", Toast.LENGTH_SHORT).show();
-//                }
-//            });
+
             if (savedUserType.equals("Owner")){
-                intent = new Intent(MypageActivity.this, OwnerMainActivity.class);
+                Intent intent = new Intent(MypageActivity.this, OwnerMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else if(savedUserType.equals("Staff")){
+                Intent intent = new Intent(MypageActivity.this, StaffMainActivity.class);
                 startActivity(intent);
                 finish();
             } else {
-                intent = new Intent(MypageActivity.this, StaffMainActivity.class);
-                startActivity(intent);
-                finish();
+                Toast.makeText(MypageActivity.this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
             }
         });
 
         // 크루룸 버튼 클릭 시 크루룸으로 이동
         calendarButton.setOnClickListener(v -> {
             Intent intent = new Intent(MypageActivity.this, ImsiCrewRoomListActivity.class);
-            startActivity(intent);  // 알람 액티비티로 이동
+            startActivity(intent);
+            finish();
+            // 알람 액티비티로 이동
         });
 
         // 마이페이지 버튼 클릭시 토스트 출력

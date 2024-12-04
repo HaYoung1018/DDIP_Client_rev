@@ -1,6 +1,7 @@
 package com.example.ddip_client;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -29,6 +30,9 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String savedUserType = sharedPreferences.getString("userType", "");
+
         // XML 요소와 연결
         calendarView = findViewById(R.id.calendar_view);
         addWorkButton = findViewById(R.id.add_work_button);
@@ -47,7 +51,19 @@ public class CalendarActivity extends AppCompatActivity {
         ImageButton alarmButton = findViewById(R.id.alarm_button);
         ImageButton myPageButton = findViewById(R.id.my_page_button);
 
-        homeButton.setOnClickListener(v -> startActivity(new Intent(CalendarActivity.this, MainActivity.class)));
+        homeButton.setOnClickListener(v -> {
+            if(savedUserType.equals("Owner")){
+                Intent intent = new Intent(CalendarActivity.this, OwnerMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (savedUserType.equals("Staff")) {
+                Intent intent = new Intent(CalendarActivity.this, StaffMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(CalendarActivity.this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
         subCrewButton.setOnClickListener(v -> startActivity(new Intent(CalendarActivity.this, CrewRoomActivity.class)));
         alarmButton.setOnClickListener(v -> startActivity(new Intent(CalendarActivity.this, AlarmActivity.class)));
         myPageButton.setOnClickListener(v -> startActivity(new Intent(CalendarActivity.this, MypageActivity.class)));
