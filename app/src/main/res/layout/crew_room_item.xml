@@ -2,16 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="16dp"
     android:background="#F0F0F0"
     android:layout_marginBottom="8dp">
 
+    <!-- 첫 번째 TextView: Room Name -->
     <TextView
         android:id="@+id/room_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Room Name"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- 두 번째 TextView: Room Pay (오른쪽 끝으로 정렬) -->
+    <TextView
+        android:id="@+id/room_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:text="Pay"
         android:textSize="16sp"
         android:textStyle="bold" />
 </LinearLayout>

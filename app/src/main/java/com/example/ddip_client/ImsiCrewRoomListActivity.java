@@ -88,40 +88,4 @@ public class ImsiCrewRoomListActivity extends AppCompatActivity {
             }
         });
     }
-
-
-        //여기까지 새로 추가
-
-
-
-//        // 초기 크루룸 리스트 설정
-//        crewRoomList = new ArrayList<>();
-//        crewRoomList.add("크루룸 A");
-//        crewRoomList.add("크루룸 B");
-//        crewRoomList.add("크루룸 C");
-
-//        // 어댑터 설정
-//        imsicrewRoomAdapter = new ImsiCrewRoomAdapter(this, crewRoomList, roomName -> {
-//            // 크루룸 클릭 시 처리
-//            Toast.makeText(this, "선택된 크루룸: " + roomName, Toast.LENGTH_SHORT).show();
-//        });
-
-//        crewRoomRecyclerView.setAdapter(imsicrewRoomAdapter);
-
-        // 근무 등록 버튼 설정
-//        Button registerWorkButton = findViewById(R.id.register_work_button);
-//        registerWorkButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // 근무 등록 후 크루룸 추가
-//                addNewCrewRoom("새로운 크루룸");
-//            }
-//        });
-    }
-
-    // 새로운 크루룸 추가 함수
-//    private void addNewCrewRoom(String crewRoomName) {
-//        crewRoomList.add(crewRoomName); // 리스트에 새로운 크루룸 추가
-//        imsicrewRoomAdapter.notifyDataSetChanged(); // 리스트 갱신
-//    }
-
+}

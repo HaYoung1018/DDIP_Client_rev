@@ -64,8 +64,6 @@ public class ImsiCrewRoomAdapter extends RecyclerView.Adapter<ImsiCrewRoomAdapte
         });
     }
 
-
-
     // ViewHolder 클래스
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView crewRoomName;
