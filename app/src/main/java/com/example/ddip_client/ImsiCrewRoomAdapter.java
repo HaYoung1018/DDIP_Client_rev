@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.BreakIterator;
 import java.util.List;
 import java.util.Map;
 
@@ -50,11 +52,14 @@ public class ImsiCrewRoomAdapter extends RecyclerView.Adapter<ImsiCrewRoomAdapte
     //ViewHolder에 데이터를 바인딩
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //데이터
+        // 데이터 가져오기
         Map<String, String> crewRoom = crewRoomList.get(position);
         String crewRoomName = crewRoom.get("crewRoomName");
         String crewRoomId = crewRoom.get("crewRoomId");
+        String crewRoomPay = crewRoom.get("monthlyPay");
+
         holder.crewRoomName.setText(crewRoomName);
+        holder.crewRoomPay.setText(crewRoomPay != null ? "이번달 급여  " + crewRoomPay + "원" : "0원");
 
         // 클릭 이벤트 처리
         holder.itemView.setOnClickListener(v -> {
@@ -64,14 +69,17 @@ public class ImsiCrewRoomAdapter extends RecyclerView.Adapter<ImsiCrewRoomAdapte
         });
     }
 
+
+
     // ViewHolder 클래스
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView crewRoomName;
+        TextView crewRoomName, crewRoomPay;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // crew_room_item.xml의 TextView ID와 연결
             crewRoomName = itemView.findViewById(R.id.room_name_text);
+            crewRoomPay = itemView.findViewById(R.id.room_pay); // ID 연결
         }
     }
 }
