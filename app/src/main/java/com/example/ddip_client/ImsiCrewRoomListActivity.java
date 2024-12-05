@@ -60,6 +60,12 @@ public class ImsiCrewRoomListActivity extends AppCompatActivity {
 
         // Retrofit API 호출
         fetchCrewRooms(memberId);
+
+        Button registerWorkButton = findViewById(R.id.register_work_button);
+        registerWorkButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ImsiCrewRoomListActivity.this, InviteCodeActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void fetchCrewRooms(String memberId) {
