@@ -107,6 +107,23 @@ public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHol
                     })
                     .show();
         });
+        // 삭제 버튼 클릭 이벤트
+        holder.overflowMenu.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(holder.itemView.getContext(), holder.overflowMenu);
+            popupMenu.inflate(R.menu.item_menu); // 팝업 메뉴 리소스 추가
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.delete_item) {
+                    // 항목 삭제 처리  --> 이거 디비랑 연결 부탁드립니닷...
+                    tradeItems.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, tradeItems.size());
+                    Toast.makeText(holder.itemView.getContext(), "항목이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                return false;
+            });
+            popupMenu.show();
+        });
     }
 
     @Override
