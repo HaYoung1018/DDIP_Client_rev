@@ -47,21 +47,26 @@ public class OwnerMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_main);
 
+        // SharedPreferences에서 사용자 ID, 이름 가져오기
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String memberId = sharedPreferences.getString("userId", "");
+        String savedName = sharedPreferences.getString("savedName", "");
+
         // ------------------ Header (상단바) ------------------
-        TextView titleTextView = findViewById(R.id.title_text);
+        TextView titleNameView = findViewById(R.id.title_name);
         //titleTextView.setText("쿠잉");
 
         // ------------------ RecyclerView 설정 ------------------
         crewRoomRecyclerView = findViewById(R.id.crew_room_list);
         crewRoomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // SharedPreferences에서 사용자 ID 가져오기
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        String memberId = sharedPreferences.getString("userId", "");
+        
         if (memberId.isEmpty()) {
             Toast.makeText(this, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        String NameText = savedName+"님 환영합니다.";
+        titleNameView.setText(NameText);
 
         // 어댑터 초기화
         crewRoomAdapter = new ImsiCrewRoomAdapter(this, crewRoomList, (roomId, roomName) -> {
