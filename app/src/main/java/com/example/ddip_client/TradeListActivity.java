@@ -40,6 +40,7 @@ public class TradeListActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String memberId = sharedPreferences.getString("userId", "");
         String savedUserType = sharedPreferences.getString("userTYpe", "");
+        String savedName = sharedPreferences.getString("name", "");
 
         if (memberId.isEmpty()) {
             Toast.makeText(this, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
@@ -58,7 +59,7 @@ public class TradeListActivity extends AppCompatActivity {
 
         // 데이터 준비
         tradeItems = new ArrayList<>();
-        adapter = new TradeAdapter(tradeItems, memberId); // memberId를 TradeAdapter에 전달
+        adapter = new TradeAdapter(tradeItems, memberId, savedName); // memberId를 TradeAdapter에 전달
         tradeRecyclerView.setAdapter(adapter);
 
         // 교환 가능한 리스트 불러오기
