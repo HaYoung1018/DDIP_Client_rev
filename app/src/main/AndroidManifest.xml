@@ -45,6 +45,7 @@
         <activity android:name=".CreateTradeActivity" android:exported="true" />
         <activity android:name=".TradeListActivity" android:exported="true" />
         <activity android:name=".OwnerCreateCrewRoomActivity" android:exported="true" />
+        <activity android:name=".OwnerCrewRoomActivity" android:exported="true"/>
     </application>
 
 </manifest>
