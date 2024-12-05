@@ -143,7 +143,7 @@
             android:src="@drawable/ic_subcrew" />
 
         <ImageButton
-            android:id="@+id/crew_room_button"
+            android:id="@+id/alarm_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

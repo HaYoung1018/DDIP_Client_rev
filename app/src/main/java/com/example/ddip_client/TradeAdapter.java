@@ -118,7 +118,7 @@ public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHol
     public static class TradeViewHolder extends RecyclerView.ViewHolder {
         TextView applicantName, workDate, startTime, endTime, totalWorkTime;
         Button exchangeButton;
-        ImageView overflowMenu; // 점 세 개 추가
+        ImageView overflowMenu; // 삭제 버튼
 
         public TradeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -128,7 +128,7 @@ public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHol
             endTime = itemView.findViewById(R.id.end_time);
             totalWorkTime = itemView.findViewById(R.id.total_work_time);
             exchangeButton = itemView.findViewById(R.id.exchange_button);
-            overflowMenu = itemView.findViewById(R.id.overflow_menu); // 점 세 개 참조
+            overflowMenu = itemView.findViewById(R.id.overflow_menu); // 삭제
         }
     }
 
