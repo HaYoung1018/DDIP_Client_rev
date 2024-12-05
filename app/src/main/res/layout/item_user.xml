@@ -36,5 +36,14 @@
             android:text="010-1234-5678"
             android:textSize="12sp"
             android:textColor="@android:color/darker_gray" />
+
+        <!-- 급여와 근무시간을 표시하는 TextView -->
+        <TextView
+            android:id="@+id/salary_and_hours_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="급여: 0원 | 근무시간: 0시간"
+            android:textSize="14sp"
+            android:textColor="@android:color/holo_blue_dark" />
     </LinearLayout>
 </LinearLayout>
