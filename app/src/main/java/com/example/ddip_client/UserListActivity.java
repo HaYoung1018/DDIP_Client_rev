@@ -1,6 +1,7 @@
 package com.example.ddip_client;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -48,6 +49,9 @@ public class UserListActivity extends AppCompatActivity {
         Intent intentData = getIntent();
         String RoomId = intentData.getStringExtra("ROOM_ID"); // ROOM_ID 값 받기
 
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String savedUserType = sharedPreferences.getString("userType", "");
+
         Call <List<Map<String, String>>> call = api.getCrewRoomMembers(RoomId);
         call.enqueue(new Callback<List<Map<String, String>>>() {
             @Override
@@ -62,17 +66,7 @@ public class UserListActivity extends AppCompatActivity {
                         member.setcolor(memberData.get("color"));
                         member.setcontactNumber(memberData.get("contactNumber"));
                         member.setcrewRoom(Integer.parseInt(memberData.get("crewRoom")));
-                        String strDate = memberData.get("startDate");
-                        try {
-                            // 문자열을 LocalDate로 변환
-                            LocalDate localDate = LocalDate.parse(strDate, formatter);
-                            // LocalDate를 java.util.Date로 변환
-                            Date date = java.sql.Date.valueOf(String.valueOf(localDate));
-                            member.setstartDate(date);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-//                        member.getall();
+
                         listedMembers.add(member);
                     }
 
@@ -121,8 +115,17 @@ public class UserListActivity extends AppCompatActivity {
 
         // 홈 버튼 클릭 시 홈 액티비티로 이동
         homeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(UserListActivity.this, MainActivity.class);
-            startActivity(intent);
+            if(savedUserType.equals("Owner")){
+                Intent intent = new Intent(UserListActivity.this, OwnerMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (savedUserType.equals("Staff")) {
+                Intent intent = new Intent(UserListActivity.this, StaffMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(UserListActivity.this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // 문 버튼 클릭시 크루룸 액티비티로 이동

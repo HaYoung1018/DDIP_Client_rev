@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ddip_client.network.RetrofitClient;
@@ -14,6 +15,7 @@ import com.example.ddip_client.network.ScheduleApiService;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,7 +36,7 @@ public class AddWorkActivity extends AppCompatActivity {
     private List<Long> selectedDates = new ArrayList<>();  // 선택된 날짜 리스트
     private ScheduleApiService scheduleApiService;
     //임시id
-    private String id ="1";
+    private String id = "1";
     private String Croomid = "1";
     private long selectedDate;
 
@@ -126,7 +129,7 @@ public class AddWorkActivity extends AppCompatActivity {
     private void saveSchedule() {
         String wageText = wageInput.getText().toString().trim();
         int wage = Integer.parseInt(wageText);
-      
+
         Long selectedDate = selectedDates.get(0); // 첫 번째 선택된 날짜 사용 예시
         Map<String, Object> scheduleData = new HashMap<>();
         scheduleData.put("member", id);

@@ -29,11 +29,13 @@ import retrofit2.Response;
 public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHolder> {
     private final List<Map<String, Object>> tradeItems;
     private final String memberId; // 추가된 필드
+    private final String savedName; //
 
     // Constructor
-    public TradeAdapter(List<Map<String, Object>> tradeItems, String memberId) {
+    public TradeAdapter(List<Map<String, Object>> tradeItems, String memberId, String savedName) {
         this.tradeItems = tradeItems;
         this.memberId = memberId; // memberId 저장
+        this.savedName = savedName;
     }
 
     @NonNull
@@ -63,6 +65,11 @@ public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHol
         holder.startTime.setText(workTime);
         holder.totalWorkTime.setText(totalWorkTime);
         holder.endTime.setText(pay);
+
+        // 현재 로그인 중인 계정의 사용자 이름과 교화 신청자의 이름이 같으면 버튼 숨김
+        if(applicantName.equals(savedName)){
+            holder.exchangeButton.setVisibility(View.INVISIBLE);
+        }
 
         // 교환 버튼 클릭 이벤트
         holder.exchangeButton.setOnClickListener(v -> {
