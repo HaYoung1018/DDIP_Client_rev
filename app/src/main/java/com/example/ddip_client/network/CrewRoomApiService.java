@@ -29,4 +29,8 @@ public interface CrewRoomApiService {
 
     @GET("/api/crewRoom/getCrewRoomMemberByMemberIdAndRoomId/{crewRoomMemberId, crewRoom}")
     Call<CrewRoomMember> getCrewRoomMemberByMemberIdAndRoomId(int CrewRoomMemberId, int crewRoom);
+
+    @GET("/api/crewroom/listWithInvitation/{memberId}")
+    Call<List<Map<String, String>>> getCrewRoomsWithInvitation(@Path("memberId") String memberId);
+
 }
