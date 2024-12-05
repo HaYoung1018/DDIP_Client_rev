@@ -25,7 +25,4 @@ public interface CrewRoomApiService {
     // 새로운 크루룸 생성
     @POST("/api/crewroom/create")
     Call<CrewRoom> createCrewRoom(@Body CrewRoom crewRoom);
-
-    @GET("/api/crewRoom/getCrewRoomMemberByMemberIdAndRoomId/{crewRoomMemberId, crewRoom}")
-    Call<CrewRoomMember> getCrewRoomMemberByMemberIdAndRoomId(int CrewRoomMemberId, int crewRoom);
 }
