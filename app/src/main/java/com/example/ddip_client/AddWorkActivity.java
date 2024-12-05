@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Date;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,39 +60,39 @@ public class AddWorkActivity extends AppCompatActivity {
         }
 
 
-
         // 전달된 날짜 값을 Intent에서 가져옴
         selectedDate = getIntent().getLongExtra("selectedDate", -1);
         if (selectedDate != -1) {
             // Date 객체로 변환
             Date date = new Date(selectedDate);
 
-        // 날짜 선택 버튼 클릭 리스너
-        selectWorkDateButton.setOnClickListener(v -> {
-            MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
-            builder.setTitleText("근무 날짜를 선택하세요");
+            // 날짜 선택 버튼 클릭 리스너
+            selectWorkDateButton.setOnClickListener(v -> {
+                MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+                builder.setTitleText("근무 날짜를 선택하세요");
 
-            CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
-            builder.setCalendarConstraints(constraintsBuilder.build());
+                CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
+                builder.setCalendarConstraints(constraintsBuilder.build());
 
-            MaterialDatePicker<Long> datePicker = builder.build();
-            datePicker.show(getSupportFragmentManager(), datePicker.toString());
+                MaterialDatePicker<Long> datePicker = builder.build();
+                datePicker.show(getSupportFragmentManager(), datePicker.toString());
 
-            datePicker.addOnPositiveButtonClickListener(selection -> {
-                selectedDates.add(selection);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                String formattedDate = sdf.format(selection);
-                Toast.makeText(this, "선택된 날짜: " + formattedDate, Toast.LENGTH_SHORT).show();
+                datePicker.addOnPositiveButtonClickListener(selection -> {
+                    selectedDates.add(selection);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    String formattedDate = sdf.format(selection);
+                    Toast.makeText(this, "선택된 날짜: " + formattedDate, Toast.LENGTH_SHORT).show();
+                });
             });
-        });
 
-        // 저장 버튼 클릭 리스너
-        saveButton.setOnClickListener(v -> {
-            if (validateInputs()) {
-                saveSchedule(); // 서버 저장
-                passDataToCalendarActivity(); // RecyclerView에 데이터 추가
-            }
-        });
+            // 저장 버튼 클릭 리스너
+            saveButton.setOnClickListener(v -> {
+                if (validateInputs()) {
+                    saveSchedule(); // 서버 저장
+                    passDataToCalendarActivity(); // RecyclerView에 데이터 추가
+                }
+            });
+        }
     }
 
     private boolean validateInputs() {

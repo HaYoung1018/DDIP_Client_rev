@@ -39,6 +39,8 @@ public class TradeListActivity extends AppCompatActivity {
         // SharedPreferences에서 사용자 ID 가져오기
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String memberId = sharedPreferences.getString("userId", "");
+        String savedUserType = sharedPreferences.getString("userTYpe", "");
+
         if (memberId.isEmpty()) {
             Toast.makeText(this, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
             return;
@@ -80,8 +82,17 @@ public class TradeListActivity extends AppCompatActivity {
 
         // 홈 버튼 클릭 리스너 설정
         homeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(TradeListActivity.this, MainActivity.class);
-            startActivity(intent);
+            if (savedUserType.equals("Owner")){
+                Intent intent = new Intent(TradeListActivity.this, OwnerMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (savedUserType.equals("Staff")) {
+                Intent intent = new Intent(TradeListActivity.this, StaffMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(TradeListActivity.this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // 서브크루룸 이동 버튼 클릭 리스너 설정
