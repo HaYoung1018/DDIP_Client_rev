@@ -16,8 +16,10 @@ import com.example.ddip_client.network.PayApiService;
 import com.example.ddip_client.network.RetrofitClient;
 import com.example.ddip_client.network.myPageService;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -118,8 +120,9 @@ public class ImsiCrewRoomListActivity extends AppCompatActivity {
                                     return 0.0;
                                 })
                                 .sum();
-
-                        crewRoom.put("monthlyPay", String.valueOf((int) monthlyPay)); // 월급 추가
+                        // 금액 포맷팅 (쉼표 추가)
+                        String formattedSalary = NumberFormat.getInstance(Locale.getDefault()).format(monthlyPay);
+                        crewRoom.put("monthlyPay",formattedSalary); // 월급 추가
                     } else {
                         Log.w("fetchSalaries", "No salary data for crewRoomId: " + crewRoomId); // 데이터 없음
                         crewRoom.put("monthlyPay", "0");

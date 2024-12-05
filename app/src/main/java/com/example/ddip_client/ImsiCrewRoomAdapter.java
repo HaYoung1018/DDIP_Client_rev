@@ -56,10 +56,20 @@ public class ImsiCrewRoomAdapter extends RecyclerView.Adapter<ImsiCrewRoomAdapte
         Map<String, String> crewRoom = crewRoomList.get(position);
         String crewRoomName = crewRoom.get("crewRoomName");
         String crewRoomId = crewRoom.get("crewRoomId");
-        String crewRoomPay = crewRoom.get("monthlyPay");
+        String crewRoomPay = crewRoom.get("monthlyPay"); // 내 급여
+        String totalSalary = crewRoom.get("totalSalary"); // 총 급여
 
+        // 크루룸 이름 설정
         holder.crewRoomName.setText(crewRoomName);
-        holder.crewRoomPay.setText(crewRoomPay != null ? "이번달 급여  " + crewRoomPay + "원" : "0원");
+
+        // 같은 TextView에 조건에 따라 데이터 설정
+        if (crewRoomPay != null && !crewRoomPay.isEmpty()) {
+            holder.crewRoomPay.setText("내 이번달 급여: " + crewRoomPay + "원");
+        } else if (totalSalary != null && !totalSalary.isEmpty()) {
+            holder.crewRoomPay.setText("알바생 총 급여: " + totalSalary + "원");
+        } else {
+            holder.crewRoomPay.setText("정보 없음");
+        }
 
         // 클릭 이벤트 처리
         holder.itemView.setOnClickListener(v -> {
@@ -71,6 +81,7 @@ public class ImsiCrewRoomAdapter extends RecyclerView.Adapter<ImsiCrewRoomAdapte
 
 
 
+
     // ViewHolder 클래스
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView crewRoomName, crewRoomPay;
@@ -79,7 +90,8 @@ public class ImsiCrewRoomAdapter extends RecyclerView.Adapter<ImsiCrewRoomAdapte
             super(itemView);
             // crew_room_item.xml의 TextView ID와 연결
             crewRoomName = itemView.findViewById(R.id.room_name_text);
-            crewRoomPay = itemView.findViewById(R.id.room_pay); // ID 연결
+            crewRoomPay = itemView.findViewById(R.id.room_pay);
         }
     }
+
 }
