@@ -40,7 +40,7 @@ public class TradeListActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String memberId = sharedPreferences.getString("userId", "");
         String savedUserType = sharedPreferences.getString("userTYpe", "");
-        String savedName = sharedPreferences.getString("name", "");
+        String savedName = sharedPreferences.getString("savedName", "");
 
         if (memberId.isEmpty()) {
             Toast.makeText(this, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();

@@ -66,9 +66,9 @@ public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHol
         holder.totalWorkTime.setText(totalWorkTime);
         holder.endTime.setText(pay);
 
-        // 현재 로그인 중인 계정의 사용자 이름과 교화 신청자의 이름이 같으면 버튼 숨김
-        if(applicantName.equals(savedName)){
-            holder.exchangeButton.setVisibility(View.INVISIBLE);
+        // 본인이 올린 교환이 아닐경우 버튼 활성화
+        if(!tradeItem.get("member").equals(savedName)){
+            holder.exchangeButton.setVisibility(View.VISIBLE);
         }
 
         // 교환 버튼 클릭 이벤트
