@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ddip_client.network.CrewRoomApiService;
+import com.example.ddip_client.network.PayApiService;
 import com.example.ddip_client.network.RetrofitClient;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -158,11 +160,11 @@ public class OwnerMainActivity extends AppCompatActivity {
                     crewRoomList.clear();
                     crewRoomList.addAll(response.body());
                     crewRoomAdapter.notifyDataSetChanged(); // RecyclerView 갱신
+                    calculateTotalSalaries();
                 } else {
                     Toast.makeText(OwnerMainActivity.this, "크루룸 정보를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<List<Map<String, String>>> call, Throwable t) {
                 Log.e("API Error", "Failed to fetch crew rooms", t);
@@ -170,6 +172,53 @@ public class OwnerMainActivity extends AppCompatActivity {
             }
         });
     }
+    private void calculateTotalSalaries() {
+        PayApiService crewRoomApiService = RetrofitClient.getClient().create(PayApiService.class);
+
+        for (Map<String, String> crewRoom : crewRoomList) {
+            String crewRoomId = crewRoom.get("crewRoomId");
+
+            Log.d("fetchSalaries", "Fetching salary for crewRoomId: " + crewRoomId);
+
+            crewRoomApiService.getAllMembersMonthlyPay(Integer.parseInt(crewRoomId)).enqueue(new Callback<Map<String, Object>>() {
+                @Override
+                public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Log.d("fetchSalaries", "Response for crewRoomId " + crewRoomId + ": " + response.body().toString());
+
+                        // 총 급여 계산
+                        double totalSalary = response.body().values().stream()
+                                .filter(value -> value instanceof Number) // Object가 Number인지 확인
+                                .mapToDouble(value -> ((Number) value).doubleValue()) // Number로 변환하여 합산
+                                .sum();
+
+                        // 금액 포맷팅 (쉼표 추가)
+                        String formattedSalary = NumberFormat.getInstance(Locale.getDefault()).format(totalSalary);
+
+
+                        Log.d("fetchSalaries", "Total salary for crewRoomId " + crewRoomId + ": " + totalSalary);
+
+                        // 총 급여를 크루룸 데이터에 추가
+                        crewRoom.put("totalSalary",  formattedSalary);
+                    } else {
+                        Log.w("fetchSalaries", "Empty or invalid response for crewRoomId: " + crewRoomId);
+                        crewRoom.put("totalSalary", "0");
+                    }
+
+                    // RecyclerView 갱신
+                    crewRoomAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                    Log.e("fetchSalaries", "Failed to fetch total salaries for crewRoomId: " + crewRoomId, t);
+                    crewRoom.put("totalSalary", "0");
+                    crewRoomAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
 
     // 초대코드 Activity 결과 처리
     @Override

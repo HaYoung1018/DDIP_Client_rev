@@ -26,4 +26,5 @@
         android:text="Pay"
         android:textSize="16sp"
         android:textStyle="bold" />
+
 </LinearLayout>
