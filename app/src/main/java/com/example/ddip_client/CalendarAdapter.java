@@ -1,11 +1,15 @@
 package com.example.ddip_client;
 
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder> {
@@ -23,6 +27,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         public TextView dayOfWeekText;
         public TextView timeText;
         public TextView salaryText;
+        public TextView nameText;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -30,6 +35,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             dayOfWeekText = itemView.findViewById(R.id.day_of_week_text);
             timeText = itemView.findViewById(R.id.time_text);
             salaryText = itemView.findViewById(R.id.salary_text);
+            nameText = itemView.findViewById(R.id.name_text);
         }
     }
 
@@ -50,6 +56,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         holder.dayOfWeekText.setText(item.getDayOfWeek());
         holder.timeText.setText(item.getTime());
         holder.salaryText.setText(item.getSalary());
+        String userType = item.getUserType();
+        if(userType.equals("Staff")){
+            holder.nameText.setVisibility(View.INVISIBLE);
+        } else {
+            holder.nameText.setText(item.getName());
+        }
     }
 
     @Override

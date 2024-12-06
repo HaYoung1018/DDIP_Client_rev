@@ -29,11 +29,13 @@ import retrofit2.Response;
 public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHolder> {
     private final List<Map<String, Object>> tradeItems;
     private final String memberId; // 추가된 필드
+    private final String savedName; //
 
     // Constructor
-    public TradeAdapter(List<Map<String, Object>> tradeItems, String memberId) {
+    public TradeAdapter(List<Map<String, Object>> tradeItems, String memberId, String savedName) {
         this.tradeItems = tradeItems;
         this.memberId = memberId; // memberId 저장
+        this.savedName = savedName;
     }
 
     @NonNull
@@ -63,6 +65,11 @@ public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHol
         holder.startTime.setText(workTime);
         holder.totalWorkTime.setText(totalWorkTime);
         holder.endTime.setText(pay);
+
+        // 본인이 올린 교환이 아닐경우 버튼 활성화
+        if(!tradeItem.get("member").equals(savedName)){
+            holder.exchangeButton.setVisibility(View.VISIBLE);
+        }
 
         // 교환 버튼 클릭 이벤트
         holder.exchangeButton.setOnClickListener(v -> {
@@ -100,6 +107,23 @@ public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHol
                     })
                     .show();
         });
+        // 삭제 버튼 클릭 이벤트
+        holder.overflowMenu.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(holder.itemView.getContext(), holder.overflowMenu);
+            popupMenu.inflate(R.menu.item_menu); // 팝업 메뉴 리소스 추가
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.delete_item) {
+                    // 항목 삭제 처리  --> 이거 디비랑 연결 부탁드립니닷...
+                    tradeItems.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, tradeItems.size());
+                    Toast.makeText(holder.itemView.getContext(), "항목이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                return false;
+            });
+            popupMenu.show();
+        });
     }
 
     @Override
@@ -111,7 +135,7 @@ public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHol
     public static class TradeViewHolder extends RecyclerView.ViewHolder {
         TextView applicantName, workDate, startTime, endTime, totalWorkTime;
         Button exchangeButton;
-        ImageView overflowMenu; // 점 세 개 추가
+        ImageView overflowMenu; // 삭제 버튼
 
         public TradeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -121,7 +145,7 @@ public class TradeAdapter extends RecyclerView.Adapter<TradeAdapter.TradeViewHol
             endTime = itemView.findViewById(R.id.end_time);
             totalWorkTime = itemView.findViewById(R.id.total_work_time);
             exchangeButton = itemView.findViewById(R.id.exchange_button);
-            overflowMenu = itemView.findViewById(R.id.overflow_menu); // 점 세 개 참조
+            overflowMenu = itemView.findViewById(R.id.overflow_menu); // 삭제
         }
     }
 

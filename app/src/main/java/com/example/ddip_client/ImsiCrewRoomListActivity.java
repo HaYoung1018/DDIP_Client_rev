@@ -12,11 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ddip_client.network.CrewRoomApiService;
+import com.example.ddip_client.network.PayApiService;
 import com.example.ddip_client.network.RetrofitClient;
 import com.example.ddip_client.network.myPageService;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -60,6 +63,12 @@ public class ImsiCrewRoomListActivity extends AppCompatActivity {
 
         // Retrofit API 호출
         fetchCrewRooms(memberId);
+
+        Button registerWorkButton = findViewById(R.id.register_work_button);
+        registerWorkButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ImsiCrewRoomListActivity.this, InviteCodeActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void fetchCrewRooms(String memberId) {
@@ -73,11 +82,14 @@ public class ImsiCrewRoomListActivity extends AppCompatActivity {
 
                     crewRoomList.clear();
                     crewRoomList.addAll(response.body());
-                    imsicrewRoomAdapter.notifyDataSetChanged();
+
+                    // 크루룸 데이터를 가져온 후 급여 데이터를 가져옵니다.
+                    fetchSalariesForCrewRooms(memberId);
                 } else if (response.isSuccessful() && response.body() != null && response.body().isEmpty()) {
                     Toast.makeText(ImsiCrewRoomListActivity.this, "속한 크루룸이 없습니다.", Toast.LENGTH_SHORT).show();
+                    Log.w("fetchCrewRooms", "No crew rooms found for memberId: " + memberId); // 데이터 없음
                 } else {
-                    Log.e("API Error", "Response not successful. Code: " + response.code());
+                    Log.e("fetchCrewRooms", "Error fetching crew rooms. Response code: " + response.code()); // 실패 로그
                 }
             }
 
@@ -89,39 +101,50 @@ public class ImsiCrewRoomListActivity extends AppCompatActivity {
         });
     }
 
+    private void fetchSalariesForCrewRooms(String memberId) {
+        PayApiService payApiService = RetrofitClient.getClient().create(PayApiService.class);
 
-        //여기까지 새로 추가
+        for (Map<String, String> crewRoom : crewRoomList) {
+            String crewRoomId = crewRoom.get("crewRoomId");
 
+            Log.d("fetchSalaries", "Fetching salary for crewRoomId: " + crewRoomId + ", memberId: " + memberId); // 요청 전 로그
 
+            payApiService.getMemberMonthlyPay(Integer.parseInt(crewRoomId), memberId).enqueue(new Callback<Map<String, Object>>() {
+                @Override
+                public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Log.d("fetchSalaries", "Salary data for crewRoomId " + crewRoomId + ": " + response.body()); // 성공 로그
 
-//        // 초기 크루룸 리스트 설정
-//        crewRoomList = new ArrayList<>();
-//        crewRoomList.add("크루룸 A");
-//        crewRoomList.add("크루룸 B");
-//        crewRoomList.add("크루룸 C");
+                        // 월급 계산
+                        double monthlyPay = response.body().values().stream()
+                                .mapToDouble(value -> {
+                                    if (value instanceof Map) {
+                                        Map<String, Object> weekData = (Map<String, Object>) value;
+                                        Object pay = weekData.get("pay");
+                                        return pay instanceof Number ? ((Number) pay).doubleValue() : 0.0;
+                                    }
+                                    return 0.0;
+                                })
+                                .sum();
+                        // 금액 포맷팅 (쉼표 추가)
+                        String formattedSalary = NumberFormat.getInstance(Locale.getDefault()).format(monthlyPay);
+                        crewRoom.put("monthlyPay",formattedSalary); // 월급 추가
+                    } else {
+                        Log.w("fetchSalaries", "No salary data for crewRoomId: " + crewRoomId); // 데이터 없음
+                        crewRoom.put("monthlyPay", "0");
+                    }
+                    imsicrewRoomAdapter.notifyDataSetChanged(); // UI 갱신
+                }
 
-//        // 어댑터 설정
-//        imsicrewRoomAdapter = new ImsiCrewRoomAdapter(this, crewRoomList, roomName -> {
-//            // 크루룸 클릭 시 처리
-//            Toast.makeText(this, "선택된 크루룸: " + roomName, Toast.LENGTH_SHORT).show();
-//        });
-
-//        crewRoomRecyclerView.setAdapter(imsicrewRoomAdapter);
-
-        // 근무 등록 버튼 설정
-//        Button registerWorkButton = findViewById(R.id.register_work_button);
-//        registerWorkButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // 근무 등록 후 크루룸 추가
-//                addNewCrewRoom("새로운 크루룸");
-//            }
-//        });
+                @Override
+                public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                    Log.e("fetchSalaries", "Failed to fetch salary for crewRoomId: " + crewRoomId, t); // 네트워크 실패 로그
+                    crewRoom.put("monthlyPay", "0");
+                    imsicrewRoomAdapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 
-    // 새로운 크루룸 추가 함수
-//    private void addNewCrewRoom(String crewRoomName) {
-//        crewRoomList.add(crewRoomName); // 리스트에 새로운 크루룸 추가
-//        imsicrewRoomAdapter.notifyDataSetChanged(); // 리스트 갱신
-//    }
 
+}

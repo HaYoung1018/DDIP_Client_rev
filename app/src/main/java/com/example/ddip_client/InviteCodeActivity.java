@@ -15,6 +15,10 @@ import com.example.ddip_client.models.InviteCodeRequest;
 import com.example.ddip_client.models.InviteCodeResponse;
 import com.example.ddip_client.network.InviteApiService;
 import com.example.ddip_client.network.InviteApiServiceProvider;
+import com.example.ddip_client.network.MemberService;
+import com.example.ddip_client.network.RetrofitClient;
+
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,7 +61,7 @@ public class InviteCodeActivity extends AppCompatActivity {
                     InviteCodeResponse inviteCodeResponse = response.body();
                     if (inviteCodeResponse.isValid()) {
                         int crewRoomId = inviteCodeResponse.getCrewRoomId();
-                        addMemberToCrew(apiService, crewRoomId);
+                        fetchMemberDetailsAndAddToCrew(apiService, crewRoomId);
                     } else {
                         Toast.makeText(InviteCodeActivity.this, "잘못된 초대 코드입니다.", Toast.LENGTH_SHORT).show();
                     }
@@ -73,7 +77,7 @@ public class InviteCodeActivity extends AppCompatActivity {
         });
     }
 
-    private void addMemberToCrew(InviteApiService apiService, int crewRoomId) {
+    private void fetchMemberDetailsAndAddToCrew(InviteApiService apiService, int crewRoomId) {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String memberId = sharedPreferences.getString("userId", "");
         if (memberId.isEmpty()) {
@@ -81,16 +85,37 @@ public class InviteCodeActivity extends AppCompatActivity {
             return;
         }
 
-        // 요청 객체 생성
+        MemberService memberService = RetrofitClient.getClient().create(MemberService.class);
+
+        memberService.findMemberDetails(memberId).enqueue(new Callback<Map<String, String>>() {
+            @Override
+            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().containsKey("contactNumber")) {
+                    String contactNumber = response.body().get("contactNumber");
+                    addMemberToCrew(apiService, crewRoomId, memberId, contactNumber);
+                } else {
+                    Log.e("fetchMemberDetails", "Failed to fetch user details: " + response.message());
+                    addMemberToCrew(apiService, crewRoomId, memberId, "010-0000-0000"); // 기본 전화번호
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                Log.e("fetchMemberDetails", "API call failed: " + t.getMessage());
+                addMemberToCrew(apiService, crewRoomId, memberId, "010-0000-0000"); // 기본 전화번호
+            }
+        });
+    }
+
+    private void addMemberToCrew(InviteApiService apiService, int crewRoomId, String memberId, String contactNumber) {
         AddMemberRequest addMemberRequest = new AddMemberRequest(
-                crewRoomId,  // 서버에서 기대하는 "crewRoom"
-                memberId,    // 서버에서 기대하는 "member"
+                crewRoomId,
+                memberId,
                 "Red",
-                "010-1234-5678",
+                contactNumber,
                 "crew"
         );
 
-        // 로그 출력
         Log.d("InviteCodeActivity", "Adding member with data: " +
                 "CrewRoomId: " + crewRoomId +
                 ", MemberId: " + memberId +
@@ -98,7 +123,6 @@ public class InviteCodeActivity extends AppCompatActivity {
                 ", Contact: " + addMemberRequest.getContactNumber() +
                 ", MemberType: " + addMemberRequest.getMemberType());
 
-        // 서버에 요청
         apiService.addMemberToCrew(addMemberRequest).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

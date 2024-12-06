@@ -13,4 +13,7 @@ public interface MemberService {
 
     @GET("/api/Member/findMemberById/{id}")
     Call<Map<String, String>> findMemberById(@Path("id") String id);
+
+    @GET("/api/Member/findMemberDetails/{id}")
+    Call<Map<String, String>> findMemberDetails(@Path("id") String id);
 }

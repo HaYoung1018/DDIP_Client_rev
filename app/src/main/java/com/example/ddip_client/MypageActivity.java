@@ -76,14 +76,9 @@ public class MypageActivity extends AppCompatActivity {
 
         // ------------------ Bottom Navigation (하단바) ------------------
         ImageButton homeButton = findViewById(R.id.home_button);
-        ImageButton calendarButton = findViewById(R.id.calendar_button);
-        ImageButton crewRoomButton = findViewById(R.id.crew_room_button);
+        ImageButton subCrewButton = findViewById(R.id.calendar_button);
+        ImageButton alarmButton = findViewById(R.id.alarm_button);
         ImageButton myPageButton = findViewById(R.id.mypage_button);
-
-//        homeButton.setOnClickListener(v -> Toast.makeText(this, "홈 버튼 클릭됨", Toast.LENGTH_SHORT).show());
-//        calendarButton.setOnClickListener(v -> Toast.makeText(this, "캘린더 버튼 클릭됨", Toast.LENGTH_SHORT).show());
-//        crewRoomButton.setOnClickListener(v -> Toast.makeText(this, "알람 버튼 클릭됨", Toast.LENGTH_SHORT).show());
-//        myPageButton.setOnClickListener(v -> Toast.makeText(this, "마이페이지 버튼 클릭됨", Toast.LENGTH_SHORT).show());
 
 
         //--------------------(유우선) 임시 개인정보 수정--------------------
@@ -154,9 +149,23 @@ public class MypageActivity extends AppCompatActivity {
             }
         });
 
-        // 크루룸 버튼 클릭 시 크루룸으로 이동
-        calendarButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MypageActivity.this, ImsiCrewRoomListActivity.class);
+        // 문 버튼 클릭 시 크루룸 액티비티로 이동
+        subCrewButton.setOnClickListener(v -> {
+            if(savedUserType.equals("Owner")){
+                Intent intent = new Intent(MypageActivity.this, OwnerCrewRoomListActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (savedUserType.equals("Staff")) {
+                Intent intent = new Intent(MypageActivity.this, ImsiCrewRoomListActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(MypageActivity.this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //알람버튼 클릭 시 알람 페이지로 이동
+        alarmButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MypageActivity.this, AlarmActivity.class);
             startActivity(intent);
             finish();
             // 알람 액티비티로 이동

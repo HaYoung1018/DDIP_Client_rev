@@ -39,7 +39,8 @@ public class TradeListActivity extends AppCompatActivity {
         // SharedPreferences에서 사용자 ID 가져오기
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String memberId = sharedPreferences.getString("userId", "");
-        String savedUserType = sharedPreferences.getString("userTYpe", "");
+        String savedUserType = sharedPreferences.getString("userType", "");
+        String savedName = sharedPreferences.getString("savedName", "");
 
         if (memberId.isEmpty()) {
             Toast.makeText(this, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
@@ -51,14 +52,13 @@ public class TradeListActivity extends AppCompatActivity {
         String roomId = intentData.getStringExtra("ROOM_ID"); // ROOM_ID 값 받기
         String roomName = intentData.getStringExtra("ROOM_NAME"); // ROOM_NAME 값 받기
 
-
         // RecyclerView 초기화
         RecyclerView tradeRecyclerView = findViewById(R.id.recycler_view);
         tradeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // 데이터 준비
         tradeItems = new ArrayList<>();
-        adapter = new TradeAdapter(tradeItems, memberId); // memberId를 TradeAdapter에 전달
+        adapter = new TradeAdapter(tradeItems, memberId, savedName); // memberId를 TradeAdapter에 전달
         tradeRecyclerView.setAdapter(adapter);
 
         // 교환 가능한 리스트 불러오기
@@ -72,6 +72,16 @@ public class TradeListActivity extends AppCompatActivity {
             intent.putExtra("ROOM_ID", roomId); // roomId 전달
             intent.putExtra("ROOM_NAME", roomName); // roomName 전달
             startActivityForResult(intent, REQUEST_CREATE_TRADE);
+        });
+
+        // 새로고침 버튼 동작 추가
+        ImageButton refreshButton = findViewById(R.id.restart_button);
+        refreshButton.setOnClickListener(v -> {
+            // tradeItems 초기화 및 리스트 새로고침
+            tradeItems.clear(); // 기존 데이터 삭제
+            adapter.notifyDataSetChanged(); // RecyclerView 초기화
+            fetchExchangeableSchedules(roomId); // 데이터 다시 불러오기
+            Toast.makeText(this, "새로고침했습니다.", Toast.LENGTH_SHORT).show();
         });
 
         // ------------------ Bottom Navigation (하단 네비게이션 바) ------------------
@@ -95,10 +105,19 @@ public class TradeListActivity extends AppCompatActivity {
             }
         });
 
-        // 서브크루룸 이동 버튼 클릭 리스너 설정
+        // 문 버튼 클릭 시 크루룸 액티비티로 이동
         subCrewButton.setOnClickListener(v -> {
-            Intent intent = new Intent(TradeListActivity.this, ImsiCrewRoomListActivity.class);
-            startActivity(intent);
+            if(savedUserType.equals("Owner")){
+                Intent intent = new Intent(TradeListActivity.this, OwnerCrewRoomListActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (savedUserType.equals("Staff")) {
+                Intent intent = new Intent(TradeListActivity.this, ImsiCrewRoomListActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(TradeListActivity.this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // 알람 버튼 클릭 리스너 설정
@@ -112,10 +131,7 @@ public class TradeListActivity extends AppCompatActivity {
             Intent intent = new Intent(TradeListActivity.this, MypageActivity.class);
             startActivity(intent);
         });
-
     }
-
-
 
     private void fetchExchangeableSchedules(String roomId) {
         // Retrofit API 호출
@@ -141,5 +157,4 @@ public class TradeListActivity extends AppCompatActivity {
             }
         });
     }
-
 }
