@@ -34,5 +34,5 @@ public interface ScheduleApiService {
 
     //sharedpreference에 저장된 로그인 된 아이디를 통해 crewRoomSchedule 테이블에서 데이터 가져오기
     @GET("/api/schedules/getMySchedule/{member}")
-    Call<List<Map<String, String>>> getMySchedule(String member);
+    Call<List<Map<String, String>>> getMySchedule(@Path("member") String member);
 }

@@ -70,13 +70,8 @@ public class CalendarActivity extends AppCompatActivity {
             public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
                 for(int i = 0; i < response.body().size(); i++){
                     Map<String, String> scheduleData = response.body().get(i);
-                    Schedule schedule = new Schedule();
-                    Integer crewRoom = Integer.valueOf(scheduleData.get("crewRoom"));
-                    String member = scheduleData.get("member");
                     String strtimeS = scheduleData.get("startTime");
                     String strtimeE = scheduleData.get("endTime");
-                    LocalTime startTime = StringToLocalTime(strtimeS);
-                    LocalTime endTime = StringToLocalTime(strtimeE);
                     Double totalHours = Double.valueOf(scheduleData.get("totalHours"));
                     Integer pay = Integer.valueOf(scheduleData.get("pay"));
                     Date date;
@@ -87,7 +82,6 @@ public class CalendarActivity extends AppCompatActivity {
                     }
                     String day = DateToDay(date);
                     String itemTime = strtimeS + " ~ " + strtimeE;
-                    String itemHours = scheduleData.get("totalHours");
                     Double dSalary = totalHours * pay;
                     String salary = String.valueOf(dSalary.intValue());
 
@@ -194,7 +188,7 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
     public Date StringToDate(String time) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = format.parse(time);
         return date;
     }
