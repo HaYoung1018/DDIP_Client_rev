@@ -202,6 +202,7 @@ public class AddWorkActivity extends AppCompatActivity {
             }
         });
     }
+
     private void passDataToCalendarActivity() {
         String wageText = wageInput.getText().toString().trim();
         int startHour = startTimePicker.getHour();
