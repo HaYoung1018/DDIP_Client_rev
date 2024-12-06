@@ -1,5 +1,6 @@
 package com.example.ddip_client;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,8 +14,11 @@ import com.example.ddip_client.models.CreateCrewRoomResponse;
 import com.example.ddip_client.models.CrewRoom;
 import com.example.ddip_client.network.CrewRoomApiService;
 import com.example.ddip_client.network.InviteApiService;
+import com.example.ddip_client.network.MemberService;
 import com.example.ddip_client.network.RetrofitClient;
 import com.google.gson.Gson;
+
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,12 +86,13 @@ public class OwnerCreateCrewRoomActivity extends AppCompatActivity {
                     Log.d("OwnerCreateCrewRoom", "Received CrewRoom ID: " + createResponse.getId());
 
                     if (createResponse.getId() != null) {
-                        Toast.makeText(OwnerCreateCrewRoomActivity.this,
-                                "크루룸 생성 완료! ID: " + createResponse.getId(),
-                                Toast.LENGTH_SHORT).show();
-
-                        // Owner를 추가
-                        addOwnerToCrew(Integer.parseInt(createResponse.getId()), userId);
+                        Toast.makeText(OwnerCreateCrewRoomActivity.this, "크루룸 생성 완료! ID: " + createResponse.getId(), Toast.LENGTH_SHORT).show();
+                        fetchMemberDetails(userId, contactNumber -> {
+                            // Owner 추가
+                            addOwnerToCrew(Integer.parseInt(createResponse.getId()), userId, contactNumber);
+                            Intent intent = new Intent(OwnerCreateCrewRoomActivity.this, OwnerCrewRoomListActivity.class);
+                            startActivity(intent);
+                        });
                     } else {
                         Toast.makeText(OwnerCreateCrewRoomActivity.this, "생성된 크루룸 ID를 확인할 수 없습니다.", Toast.LENGTH_SHORT).show();
                         Log.e("OwnerCreateCrewRoom", "CrewRoom ID is null in the response.");
@@ -106,14 +111,37 @@ public class OwnerCreateCrewRoomActivity extends AppCompatActivity {
         });
     }
 
-    private void addOwnerToCrew(int crewRoomId, String userId) {
+    private void fetchMemberDetails(String userId, OnContactNumberFetched callback) {
+        MemberService memberService = RetrofitClient.getClient().create(MemberService.class);
+
+        memberService.findMemberDetails(userId).enqueue(new Callback<Map<String, String>>() {
+            @Override
+            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().containsKey("contactNumber")) {
+                    String contactNumber = response.body().get("contactNumber");
+                    callback.onFetched(contactNumber); // 받은 전화번호 전달
+                } else {
+                    Log.e("fetchMemberDetails", "Failed to fetch member details: " + response.message());
+                    callback.onFetched("010-0000-0000"); // 기본값
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                Log.e("fetchMemberDetails", "API call failed: " + t.getMessage());
+                callback.onFetched("010-0000-0000"); // 기본값
+            }
+        });
+    }
+
+    private void addOwnerToCrew(int crewRoomId, String userId, String contactNumber) {
         InviteApiService inviteApiService = RetrofitClient.getClient().create(InviteApiService.class);
 
         AddMemberRequest addMemberRequest = new AddMemberRequest(
                 crewRoomId,  // 생성된 크루룸 ID
                 userId,      // 점주 ID
                 "Owner",     // 기본 색상
-                "010-0000-0000", // 기본 연락처
+                contactNumber, // 전화번호
                 "owner"      // 점주의 멤버 타입
         );
 
@@ -135,5 +163,9 @@ public class OwnerCreateCrewRoomActivity extends AppCompatActivity {
                 Log.e("AddOwnerToCrew", "API call failed: " + t.getMessage());
             }
         });
+    }
+
+    private interface OnContactNumberFetched {
+        void onFetched(String contactNumber);
     }
 }
