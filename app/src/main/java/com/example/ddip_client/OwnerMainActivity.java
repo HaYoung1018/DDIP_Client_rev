@@ -61,13 +61,13 @@ public class OwnerMainActivity extends AppCompatActivity {
         // ------------------ RecyclerView 설정 ------------------
         crewRoomRecyclerView = findViewById(R.id.crew_room_list);
         crewRoomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        
+
         if (memberId.isEmpty()) {
             Toast.makeText(this, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String NameText = savedName+"님 환영합니다.";
+        String NameText = savedName + "님 환영합니다.";
         titleNameView.setText(NameText);
 
         // 어댑터 초기화
@@ -95,7 +95,7 @@ public class OwnerMainActivity extends AppCompatActivity {
 
         // 서브크루 버튼 클릭
         subCrewButton.setOnClickListener(v -> {
-            Intent intent = new Intent(OwnerMainActivity.this, OwnerCrewRoomListActivity.class );
+            Intent intent = new Intent(OwnerMainActivity.this, OwnerCrewRoomListActivity.class);
             startActivity(intent);
         });
 
@@ -116,11 +116,10 @@ public class OwnerMainActivity extends AppCompatActivity {
         addWorkButton.setOnClickListener(v -> {
             Toast.makeText(this, "근무지 추가 클릭됨", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(OwnerMainActivity.this, InviteCodeActivity.class);
+            // InviteCodeActivity를 OwnerCreateCrewRoomActivity로 변경
+            Intent intent = new Intent(OwnerMainActivity.this, OwnerCreateCrewRoomActivity.class);
 
-            startActivityForResult(intent, 100); // 초대코드 Activity 결과 반환 요청
-
-            startActivity(intent);
+            startActivityForResult(intent, 100); // OwnerCreateCrewRoomActivity 결과 반환 요청
         });
 
         // ------------------ Memo (메모) ------------------
@@ -227,7 +226,7 @@ public class OwnerMainActivity extends AppCompatActivity {
         if (requestCode == 100 && resultCode == RESULT_OK) {
             String newRoom = data.getStringExtra("newRoom");
             if (newRoom != null && !newRoom.isEmpty()) {
-                //saveRoomToPreferences(newRoom);
+                // saveRoomToPreferences(newRoom);
                 roomList.add(newRoom);
                 roomAdapter.notifyDataSetChanged(); // RecyclerView 업데이트
             }
@@ -255,7 +254,7 @@ public class OwnerMainActivity extends AppCompatActivity {
 
         popupMenu.show();
     }
-  
+
     private void loadMemo(SimpleDateFormat dateFormat) {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String currentDate = dateFormat.format(calendar.getTime());
@@ -273,4 +272,3 @@ public class OwnerMainActivity extends AppCompatActivity {
         Toast.makeText(this, "메모가 삭제되었습니다", Toast.LENGTH_SHORT).show();
     }
 }
-

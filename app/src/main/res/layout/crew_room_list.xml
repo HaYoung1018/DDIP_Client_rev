@@ -39,7 +39,7 @@
         android:id="@+id/register_work_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="근무 등록하기"
+        android:text="근무지 등록하기"
         android:layout_marginTop="16dp"
         android:backgroundTint="#448AFF"
         android:textColor="@android:color/white" />

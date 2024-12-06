@@ -7,16 +7,52 @@
     android:gravity="center"
     android:background="#C0E0EA">
 
-    <!-- Title (쿠잉 로그인/회원가입) -->
-    <TextView
-        android:id="@+id/login_signup_title"
+    <!-- Title with images on both sides -->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="쿠잉"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/holo_blue_dark"
-        android:layout_marginBottom="32dp" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingHorizontal="16dp">
+
+        <!-- Left Image -->
+        <ImageView
+            android:id="@+id/left_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/crewing"
+            android:layout_marginEnd="8dp" />
+
+        <!-- '쿠잉' Text -->
+        <TextView
+            android:id="@+id/login_signup_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="쿠잉"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_blue_dark" />
+
+        <!-- Right Image -->
+        <ImageView
+            android:id="@+id/right_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/crewing"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="사장님과 알바생이 함께 근무지 관리와 스케줄을 간편하게 조율 및 관리할 수 있는 앱"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center" />
 
     <!-- 이메일 입력 필드 -->
     <EditText

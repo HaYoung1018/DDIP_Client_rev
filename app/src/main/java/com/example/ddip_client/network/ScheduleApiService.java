@@ -33,8 +33,8 @@ public interface ScheduleApiService {
     Call<Void> exchangeSchedule(@Body Map<String, String> requestData);
 
     //sharedpreference에 저장된 로그인 된 아이디를 통해 crewRoomSchedule 테이블에서 데이터 가져오기
-    @GET("/api/schedules/getMySchedule/{member}")
-    Call<List<Map<String, String>>> getMySchedule(@Path("member") String member);
+    @GET("/api/schedules/getMySchedule/{member}/{crewRoom}")
+    Call<List<Map<String, String>>> getMySchedule(@Path("member") String member, @Path("crewRoom") Integer crewRoom);
 
     //intent에 저장된 roomId를 통해 해당 크루룸의 모든 스케줄 불러오기
     @GET("/api/schedules/getAllSchedules/{crewRoom}")

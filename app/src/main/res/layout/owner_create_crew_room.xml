@@ -9,6 +9,7 @@
     android:gravity="center"
     android:background="#F0F4FF"
     tools:context=".OwnerCreateCrewRoomActivity">
+
     <!-- 상단 타이틀 -->
     <TextView
         android:id="@+id/create_crew_title"
@@ -20,6 +21,18 @@
         android:textColor="#3B5998"
         android:layout_marginBottom="24dp"
         android:gravity="center" />
+
+    <!-- 크루룸 설명 -->
+    <TextView
+        android:id="@+id/crew_room_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="크루룸은 점주와 알바생들이 소통하고 근무 일정을 관리하기 위한 공간입니다.\n\n'크루룸명'은 본인이 생성할 방의 이름을 설정하는 것이며, \n'업장명'은 해당 지점의 정확한 정보를 알 수 있도록 도와줍니다."
+        android:textSize="12sp"
+        android:textColor="#8BA3C5"
+        android:layout_marginBottom="16dp"
+        android:gravity="center" />
+
     <!-- 크루룸 생성 이미지 (crewing.png) -->
     <ImageView
         android:id="@+id/crewing_image"
@@ -28,41 +41,48 @@
         android:src="@drawable/crewing"
         android:layout_marginBottom="24dp"
         android:contentDescription="크루룸 생성 이미지" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:text=" 크루룸명:" />
+
     <!-- 크루룸명 입력란 -->
     <EditText
         android:id="@+id/crew_room_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="크루룸명 입력"
+        android:hint="크루룸명 입력   (예: 버거공주왕자들)"
         android:padding="16dp"
         android:background="@android:color/white"
         android:layout_marginBottom="16dp"
         android:textColor="@android:color/black" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:text=" 업장명:" />
+
     <!-- 업장명 입력란 -->
     <EditText
         android:id="@+id/store_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="업장명 입력"
+        android:hint="업장명 입력     (예: 버거킹 충주호암점)"
         android:padding="16dp"
         android:background="@android:color/white"
         android:layout_marginBottom="16dp"
         android:textColor="@android:color/black" />
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:text=" 점주명:" />
+
     <!-- 크루룸장(점주명) 자동 불러오기 -->
     <EditText
         android:id="@+id/crew_room_leader_name"
@@ -74,6 +94,7 @@
         android:layout_marginBottom="16dp"
         android:textColor="@android:color/black"
         android:enabled="false" />
+
     <!-- 생성 버튼 -->
     <Button
         android:id="@+id/create_crew_room_button"
@@ -86,4 +107,5 @@
         android:backgroundTint="#448AFF"
         android:textColor="@android:color/white"
         android:gravity="center" />
+
 </LinearLayout>
