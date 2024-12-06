@@ -73,7 +73,7 @@
             android:id="@+id/radio_worker_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="원하는 크루룸 알바생 리스트 보기"
+            android:text="알바생 리스트 보기"
             android:padding="16dp"
             android:background="@drawable/ic_selector_box_background"
             android:textSize="18sp"
