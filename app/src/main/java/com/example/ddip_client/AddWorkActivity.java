@@ -191,7 +191,7 @@ public class AddWorkActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(AddWorkActivity.this, "Schedule saved successfully.", Toast.LENGTH_SHORT).show();
-                    finish();
+                    passDataToCalendarActivity();
                 } else {
                     Toast.makeText(AddWorkActivity.this, "Failed to save schedule.", Toast.LENGTH_SHORT).show();
                 }
@@ -202,6 +202,7 @@ public class AddWorkActivity extends AppCompatActivity {
             }
         });
     }
+
     private void passDataToCalendarActivity() {
         String wageText = wageInput.getText().toString().trim();
         int startHour = startTimePicker.getHour();
