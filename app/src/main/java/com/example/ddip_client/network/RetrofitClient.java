@@ -15,19 +15,22 @@ public class RetrofitClient {
 
     public static Retrofit getClient() {
         if (retrofit == null) {
+
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
 
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             OkHttpClient client = new OkHttpClient.Builder()
-                    .addInterceptor(logging)
+                    .addInterceptor(loggingInterceptor)
+                    .build();
+
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .client(client)
+                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
         return retrofit;

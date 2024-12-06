@@ -52,7 +52,6 @@ public class TradeListActivity extends AppCompatActivity {
         String roomId = intentData.getStringExtra("ROOM_ID"); // ROOM_ID 값 받기
         String roomName = intentData.getStringExtra("ROOM_NAME"); // ROOM_NAME 값 받기
 
-
         // RecyclerView 초기화
         RecyclerView tradeRecyclerView = findViewById(R.id.recycler_view);
         tradeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -73,6 +72,16 @@ public class TradeListActivity extends AppCompatActivity {
             intent.putExtra("ROOM_ID", roomId); // roomId 전달
             intent.putExtra("ROOM_NAME", roomName); // roomName 전달
             startActivityForResult(intent, REQUEST_CREATE_TRADE);
+        });
+
+        // 새로고침 버튼 동작 추가
+        ImageButton refreshButton = findViewById(R.id.restart_button);
+        refreshButton.setOnClickListener(v -> {
+            // tradeItems 초기화 및 리스트 새로고침
+            tradeItems.clear(); // 기존 데이터 삭제
+            adapter.notifyDataSetChanged(); // RecyclerView 초기화
+            fetchExchangeableSchedules(roomId); // 데이터 다시 불러오기
+            Toast.makeText(this, "새로고침했습니다.", Toast.LENGTH_SHORT).show();
         });
 
         // ------------------ Bottom Navigation (하단 네비게이션 바) ------------------
@@ -113,10 +122,7 @@ public class TradeListActivity extends AppCompatActivity {
             Intent intent = new Intent(TradeListActivity.this, MypageActivity.class);
             startActivity(intent);
         });
-
     }
-
-
 
     private void fetchExchangeableSchedules(String roomId) {
         // Retrofit API 호출
@@ -142,5 +148,4 @@ public class TradeListActivity extends AppCompatActivity {
             }
         });
     }
-
 }
