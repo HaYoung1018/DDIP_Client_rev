@@ -63,7 +63,7 @@
         android:layout_marginTop="8dp"
         android:paddingHorizontal="40dp"
         android:paddingVertical="12dp"
-        android:backgroundTint="#448AFF"
+        android:backgroundTint="#3B5998"
         android:textColor="@android:color/white"
         android:gravity="center" />
 

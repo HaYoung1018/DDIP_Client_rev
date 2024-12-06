@@ -39,5 +39,6 @@
         android:layout_height="wrap_content"
         android:text="교환 신청"
         android:layout_gravity="center"
+        android:backgroundTint="#4F7BBF"
         android:layout_marginTop="16dp" />
 </LinearLayout>

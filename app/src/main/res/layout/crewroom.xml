@@ -1,129 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center"
-    android:background="#C0E0EA">
+    android:background="#E6F3F9">
 
-    <!-- 상단바 (메인페이지와 동일) -->
+    <!-- 전체 내용물 컨테이너 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="16dp"
-        android:gravity="center_vertical">
+        android:gravity="center_horizontal">
 
-        <!-- Title (쿠잉) -->
+        <!-- 상단바 (메인페이지와 동일) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <!-- Title (쿠잉) -->
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="쿠잉"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/holo_blue_dark"
+                android:layout_marginEnd="8dp" />
+        </LinearLayout>
+
+        <!-- 방 이름 텍스트뷰 (중앙 정렬) -->
         <TextView
-            android:id="@+id/title_text"
+            android:id="@+id/room_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="쿠잉"
-            android:textSize="28sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@android:color/holo_blue_dark"
-            android:layout_marginEnd="8dp" />
+            android:layout_marginBottom="100dp"
+            android:text="방 이름"
+            android:gravity="center"
+            android:layout_gravity="center" />
+
+        <!-- 메인 콘텐츠 영역 (3개의 박스 중 하나 선택, 중앙 정렬) -->
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <!-- 캘린더 박스 -->
+            <RadioButton
+                android:id="@+id/radio_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/ic_selector_box_background"
+                android:buttonTint="@android:color/holo_blue_dark"
+                android:padding="16dp"
+                android:text="나의 근무 등록 및 보기"
+                android:textSize="18sp" />
+
+            <!-- 교환하기 박스 -->
+            <RadioButton
+                android:id="@+id/radio_exchange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/ic_selector_box_background"
+                android:buttonTint="@android:color/holo_blue_dark"
+                android:padding="16dp"
+                android:text="나의 근무 교환하기"
+                android:textSize="18sp" />
+
+            <!-- 알바생 리스트 박스 -->
+            <RadioButton
+                android:id="@+id/radio_worker_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_selector_box_background"
+                android:buttonTint="@android:color/holo_blue_dark"
+                android:padding="16dp"
+                android:text="알바생 리스트 보기"
+                android:textSize="18sp" />
+        </RadioGroup>
+
     </LinearLayout>
-    <TextView
-        android:id="@+id/room_name_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
-        android:text="방 이름" />
-    <!-- 메인 콘텐츠 영역 (3개의 박스 중 하나 선택) -->
-    <RadioGroup
-        android:id="@+id/radio_group"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="16dp">
 
-        <!-- 캘린더 박스 -->
-        <RadioButton
-            android:id="@+id/radio_calendar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="나의 근무 등록 및 보기"
-            android:layout_marginBottom="16dp"
-            android:padding="16dp"
-            android:background="@drawable/ic_selector_box_background"
-            android:textSize="18sp"
-            android:buttonTint="@android:color/holo_blue_dark"/>
-
-        <!-- 교환하기 박스 -->
-        <RadioButton
-            android:id="@+id/radio_exchange"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="나의 근무 교환하기"
-            android:layout_marginBottom="16dp"
-            android:padding="16dp"
-            android:background="@drawable/ic_selector_box_background"
-            android:textSize="18sp"
-            android:buttonTint="@android:color/holo_blue_dark"/>
-
-        <!-- 알바생 리스트 박스 -->
-        <RadioButton
-            android:id="@+id/radio_worker_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="알바생 리스트 보기"
-            android:padding="16dp"
-            android:background="@drawable/ic_selector_box_background"
-            android:textSize="18sp"
-            android:buttonTint="@android:color/holo_blue_dark"/>
-    </RadioGroup>
-
-    <!-- 하단 네비게이션 바 (메인페이지와 동일) -->
+    <!-- 하단 네비게이션 바 (화면 하단에 고정) -->
     <LinearLayout
+        android:id="@+id/navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
         android:padding="18dp"
-        android:background="#C0E0EA">
+        android:background="#C0E0EA"
+        android:layout_gravity="bottom">
 
         <ImageButton
             android:id="@+id/home_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_home"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="홈"
-            android:background="?android:attr/selectableItemBackgroundBorderless" />
+            android:src="@drawable/ic_home" />
 
         <ImageButton
             android:id="@+id/sub_crew_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_subcrew"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="크루룸으로 이동"
-            android:background="?android:attr/selectableItemBackgroundBorderless" />
+            android:src="@drawable/ic_subcrew" />
 
         <ImageButton
             android:id="@+id/alarm_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_alarm"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="알람"
-            android:background="?android:attr/selectableItemBackgroundBorderless" />
+            android:src="@drawable/ic_alarm" />
 
         <ImageButton
             android:id="@+id/my_page_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_mypage"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="마이페이지"
-            android:background="?android:attr/selectableItemBackgroundBorderless" />
+            android:src="@drawable/ic_mypage" />
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

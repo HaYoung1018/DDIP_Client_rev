@@ -86,7 +86,9 @@
                 android:layout_height="wrap_content"
                 android:text="근무 교환 수락"
                 android:visibility="invisible"
+                android:background="#4F7BBF"
                 android:textSize="14sp" />
+
         </LinearLayout>
     </LinearLayout>
 

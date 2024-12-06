@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+ 나의 근무 추가"
-                android:backgroundTint="#448AFF"
+                android:backgroundTint="#4F7BBF"
                 android:textColor="@android:color/white"
                 android:paddingHorizontal="32dp"
                 android:paddingVertical="12dp"
