@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Room Name"
-        android:textSize="16sp"
+        android:textSize="28sp"
         android:textStyle="bold" />
     <!-- 말풍선 컨테이너 -->
     <!-- 이미지 -->
@@ -65,6 +65,15 @@
             android:text="📋 초대코드 복사하기"
             android:textColor="#808080"
             android:textSize="14sp" />
+        <Button
+            android:id="@+id/ok_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="확인"
+            android:textColor="#000000"
+            android:layout_marginTop="16dp"
+
+            />
     </LinearLayout>
     <ImageView
         android:id="@+id/owner_page_icon"

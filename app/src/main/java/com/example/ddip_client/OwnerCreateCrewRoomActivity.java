@@ -88,10 +88,15 @@ public class OwnerCreateCrewRoomActivity extends AppCompatActivity {
                     if (createResponse.getId() != null) {
                         Toast.makeText(OwnerCreateCrewRoomActivity.this, "크루룸 생성 완료! ID: " + createResponse.getId(), Toast.LENGTH_SHORT).show();
                         fetchMemberDetails(userId, contactNumber -> {
-                            // Owner 추가
                             addOwnerToCrew(Integer.parseInt(createResponse.getId()), userId, contactNumber);
-                            Intent intent = new Intent(OwnerCreateCrewRoomActivity.this, OwnerCrewRoomListActivity.class);
-                            startActivity(intent);
+
+                            // 초대코드 가져오기
+                            fetchInviteCode(createResponse.getId(), inviteCode -> {
+                                Intent intent = new Intent(OwnerCreateCrewRoomActivity.this, OwnerInviteCodeInputActivity.class);
+                                intent.putExtra("roomName", crewRoomName); // 크루룸 이름 전달
+                                intent.putExtra("inviteCode", inviteCode); // 초대 코드 전달
+                                startActivity(intent);
+                            });
                         });
                     } else {
                         Toast.makeText(OwnerCreateCrewRoomActivity.this, "생성된 크루룸 ID를 확인할 수 없습니다.", Toast.LENGTH_SHORT).show();
@@ -133,6 +138,25 @@ public class OwnerCreateCrewRoomActivity extends AppCompatActivity {
             }
         });
     }
+    private void fetchInviteCode(String crewRoomId, OnInviteCodeFetched callback) {
+        InviteApiService inviteApiService = RetrofitClient.getClient().create(InviteApiService.class);
+
+        inviteApiService.getInviteCode(crewRoomId).enqueue(new Callback<Map<String, String>>() {
+            @Override
+            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().containsKey("inviteCode")) {
+                    callback.onFetched(response.body().get("inviteCode"));
+                } else {
+                    callback.onFetched("초대코드 없음");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                callback.onFetched("초대코드 없음");
+            }
+        });
+    }
 
     private void addOwnerToCrew(int crewRoomId, String userId, String contactNumber) {
         InviteApiService inviteApiService = RetrofitClient.getClient().create(InviteApiService.class);
@@ -168,4 +192,9 @@ public class OwnerCreateCrewRoomActivity extends AppCompatActivity {
     private interface OnContactNumberFetched {
         void onFetched(String contactNumber);
     }
+
+    private interface OnInviteCodeFetched {
+        void onFetched(String inviteCode);
+    }
+
 }
