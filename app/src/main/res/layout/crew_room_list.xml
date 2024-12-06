@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:background="#FFFFFF">
 
     <!-- 상단바 -->
     <LinearLayout
+        android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -25,22 +24,75 @@
             android:layout_marginEnd="8dp" />
     </LinearLayout>
 
-    <!-- 크루룸 리스트 (RecyclerView) -->
+    <!-- 크루룸 리스트 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/crew_room_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
+        android:layout_below="@id/top_bar"
+        android:layout_above="@id/register_work_button"
         android:padding="16dp" />
 
     <!-- 근무 등록 버튼 -->
     <Button
         android:id="@+id/register_work_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_nav"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#448AFF"
+        android:text="근무지 등록하기"
+        android:textColor="@android:color/white" />
+
+    <!-- 하단 네비게이션 바 -->
+    <LinearLayout
+        android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="근무 등록하기"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#448AFF"
-        android:textColor="@android:color/white" />
-</LinearLayout>
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="18dp"
+        android:layout_alignParentBottom="true"
+        android:background="#C0E0EA">
+
+        <ImageButton
+            android:id="@+id/home_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_home"
+            android:contentDescription="홈"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+        <ImageButton
+            android:id="@+id/sub_crew_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_subcrew"
+            android:contentDescription="크루룸으로 이동"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+        <ImageButton
+            android:id="@+id/alarm_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_alarm"
+            android:contentDescription="알람"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+        <ImageButton
+            android:id="@+id/my_page_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_mypage"
+            android:contentDescription="마이페이지"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
+    </LinearLayout>
+</RelativeLayout>

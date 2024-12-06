@@ -1,9 +1,11 @@
 package com.example.ddip_client;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +34,9 @@ public class OwnerCrewRoomListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.owner_crew_room_list);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String savedUserType = sharedPreferences.getString("userType", "");
+
         // RecyclerView 초기화
         recyclerView = findViewById(R.id.crew_room_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -49,6 +54,42 @@ public class OwnerCrewRoomListActivity extends AppCompatActivity {
 
         // 서버에서 데이터 로드
         loadCrewRoomData();
+
+        // ------------------ Bottom Navigation (하단 네비게이션 바) ------------------
+        ImageButton homeButton = findViewById(R.id.home_button);
+        ImageButton subCrewButton = findViewById(R.id.sub_crew_button);
+        ImageButton alarmButton = findViewById(R.id.alarm_button);
+        ImageButton myPageButton = findViewById(R.id.my_page_button);
+
+        // 홈 버튼 클릭 리스너 설정
+        homeButton.setOnClickListener(v -> {
+            if (savedUserType.equals("Owner")){
+                Intent intent = new Intent(this, OwnerMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (savedUserType.equals("Staff")) {
+                Intent intent = new Intent(this, StaffMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 문 버튼 클릭 시 크루룸 액티비티로 이동
+        subCrewButton.setOnClickListener(v -> Toast.makeText(this, "서브크루 화면에 있습니다.", Toast.LENGTH_SHORT).show());
+
+        // 알람 버튼 클릭 리스너 설정
+        alarmButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AlarmActivity.class);
+            startActivity(intent);
+        });
+
+        // 마이페이지 버튼 클릭 리스너 설정
+        myPageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MypageActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void loadCrewRoomData() {

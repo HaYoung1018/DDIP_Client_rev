@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,13 +37,14 @@ public class ImsiCrewRoomListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crew_room_list);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String savedUserType = sharedPreferences.getString("userType", "");
 
         // RecyclerView 설정
         crewRoomRecyclerView = findViewById(R.id.crew_room_list);
         crewRoomRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // SharedPreferences에서 사용자 ID 가져오기
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String memberId = sharedPreferences.getString("userId", "");
         Log.d("SharedPreferences", "Retrieved userId: " + memberId);
         if (memberId.isEmpty()) {
@@ -69,6 +71,43 @@ public class ImsiCrewRoomListActivity extends AppCompatActivity {
             Intent intent = new Intent(ImsiCrewRoomListActivity.this, InviteCodeActivity.class);
             startActivity(intent);
         });
+
+        // ------------------ Bottom Navigation (하단 네비게이션 바) ------------------
+        ImageButton homeButton = findViewById(R.id.home_button);
+        ImageButton subCrewButton = findViewById(R.id.sub_crew_button);
+        ImageButton alarmButton = findViewById(R.id.alarm_button);
+        ImageButton myPageButton = findViewById(R.id.my_page_button);
+
+        // 홈 버튼 클릭 리스너 설정
+        homeButton.setOnClickListener(v -> {
+            if (savedUserType.equals("Owner")){
+                Intent intent = new Intent(this, OwnerMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (savedUserType.equals("Staff")) {
+                Intent intent = new Intent(this, StaffMainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 문 버튼 클릭 시 크루룸 액티비티로 이동
+        subCrewButton.setOnClickListener(v -> Toast.makeText(this, "서브크루 화면에 있습니다.", Toast.LENGTH_SHORT).show());
+
+        // 알람 버튼 클릭 리스너 설정
+        alarmButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AlarmActivity.class);
+            startActivity(intent);
+        });
+
+        // 마이페이지 버튼 클릭 리스너 설정
+        myPageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MypageActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     private void fetchCrewRooms(String memberId) {
