@@ -26,7 +26,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="근무 날짜 (복수 선택 가능)"
+        android:text="근무 날짜"
         android:textSize="18sp"
         android:layout_marginBottom="8dp"/>
 
@@ -34,7 +34,8 @@
         android:id="@+id/select_work_date_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="날짜 선택"/>
+        android:text="날짜 선택"
+        android:backgroundTint="#4F7BBF"/>
 
     <!-- 근무 시간 설정 -->
     <TextView
@@ -50,19 +51,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:timePickerMode="spinner"
-        android:layout_marginEnd="8dp"/>
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp" />
 
-    <!-- 확인 버튼 -->
+    <!-- 근무 종료 시간 -->
     <TimePicker
         android:id="@+id/end_time_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:timePickerMode="spinner" />
+
 
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="확인"
+        android:backgroundTint="#4F7BBF"
         android:layout_marginTop="24dp"/>
 </LinearLayout>
