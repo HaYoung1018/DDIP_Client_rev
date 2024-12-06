@@ -8,13 +8,11 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.Toast;
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ddip_client.models.Schedule;
-import com.example.ddip_client.network.CrewRoomApiService;
 import com.example.ddip_client.network.MemberService;
 import com.example.ddip_client.network.RetrofitClient;
 import com.example.ddip_client.network.ScheduleApiService;
@@ -30,7 +28,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -42,6 +39,7 @@ public class CalendarActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CalendarAdapter calendarAdapter;
     private List<CalendarItem> calendarItemList;
+    private ImageButton restartButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +47,17 @@ public class CalendarActivity extends AppCompatActivity {
         setContentView(R.layout.calendar);
         Intent intentData = getIntent();
         String roomId = intentData.getStringExtra("ROOM_ID");
-        System.out.println(roomId);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String savedUserType = sharedPreferences.getString("userType", "");
+        System.out.println(savedUserType);
         String savedId = sharedPreferences.getString("userId", "");
 
         // XML 요소와 연결
         calendarView = findViewById(R.id.calendar_view);
         addWorkButton = findViewById(R.id.add_work_button);
         recyclerView = findViewById(R.id.recycler_view);
+        restartButton = findViewById(R.id.restart_button);
 
         // RecyclerView 설정
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -116,7 +115,8 @@ public class CalendarActivity extends AppCompatActivity {
 
                 }
             });
-        } else {
+        } else if (savedUserType.equals("Staff")) {
+            System.out.println("스태프");
             ScheduleApiService scheduleApiService = RetrofitClient.getClient().create(ScheduleApiService.class);
             Call<List<Map<String, String>>> call = scheduleApiService.getMySchedule(savedId);
 
@@ -165,7 +165,119 @@ public class CalendarActivity extends AppCompatActivity {
                     Toast.makeText(CalendarActivity.this, "일정을 불러오지 못했습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
+        } else {
+            Toast.makeText(this, "근무 리스트를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show();
         }
+
+        //새로고침 버튼 동작
+        restartButton.setOnClickListener(v -> {
+            calendarItemList.clear();
+            calendarAdapter.notifyDataSetChanged();
+            Toast.makeText(this, "새로고침 했습니다.", Toast.LENGTH_SHORT).show();
+            if(savedUserType.equals("Owner")){
+                addWorkButton.setVisibility(View.INVISIBLE);
+                ScheduleApiService scheduleApiService = RetrofitClient.getClient().create(ScheduleApiService.class);
+                Call<List<Map<String, String>>> call = scheduleApiService.getAllSchedules(roomId);
+                call.enqueue(new Callback<List<Map<String, String>>>() {
+                    @Override
+                    public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
+                        for(int i = 0; i < response.body().size(); i++){
+                            Map<String, String> scheduleData = response.body().get(i);
+                            String crewRoom = scheduleData.get("crewRoom");
+                            String member = scheduleData.get("member");
+                            String strtimeS = scheduleData.get("startTime");
+                            String strtimeE = scheduleData.get("endTime");
+                            Double totalHours = Double.valueOf(scheduleData.get("totalHours"));
+                            Integer pay = Integer.valueOf(scheduleData.get("pay"));
+                            Date date;
+                            try {
+                                date = StringToDate(scheduleData.get("date"));
+                            } catch (ParseException e) {
+                                throw new RuntimeException(e);
+                            }
+                            String day = DateToDay(date);
+                            String itemTime = strtimeS + " ~ " + strtimeE;
+                            Double dSalary = totalHours * pay;
+                            String salary = String.valueOf(dSalary.intValue());
+
+                            MemberService memberService = RetrofitClient.getClient().create(MemberService.class);
+                            Call<Map<String, String>> userName = memberService.findMemberById(member);
+                            userName.enqueue(new Callback<Map<String, String>>() {
+                                @Override
+                                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                                    String name = response.body().get("name");
+                                    calendarItemList.add(new CalendarItem(scheduleData.get("date"), day, itemTime, salary+"원", savedUserType, name));
+                                    calendarAdapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                                    Toast.makeText(CalendarActivity.this, "이름을 받아오지 못했습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Map<String, String>>> call, Throwable t) {
+
+                    }
+                });
+            } else if (savedUserType.equals("Staff")) {
+                ScheduleApiService scheduleApiService = RetrofitClient.getClient().create(ScheduleApiService.class);
+                Call<List<Map<String, String>>> call = scheduleApiService.getMySchedule(savedId);
+
+                call.enqueue(new Callback<List<Map<String, String>>>() {
+                    @Override
+                    public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
+                        for(int i = 0; i < response.body().size(); i++){
+                            Map<String, String> scheduleData = response.body().get(i);
+                            String crewRoom = scheduleData.get("crewRoom");
+                            String member = scheduleData.get("member");
+                            String strtimeS = scheduleData.get("startTime");
+                            String strtimeE = scheduleData.get("endTime");
+                            Double totalHours = Double.valueOf(scheduleData.get("totalHours"));
+                            Integer pay = Integer.valueOf(scheduleData.get("pay"));
+                            Date date;
+                            try {
+                                date = StringToDate(scheduleData.get("date"));
+                            } catch (ParseException e) {
+                                throw new RuntimeException(e);
+                            }
+                            String day = DateToDay(date);
+                            String itemTime = strtimeS + " ~ " + strtimeE;
+                            Double dSalary = totalHours * pay;
+                            String salary = String.valueOf(dSalary.intValue());
+
+                            MemberService memberService = RetrofitClient.getClient().create(MemberService.class);
+                            Call<Map<String, String>> userName = memberService.findMemberById(member);
+                            userName.enqueue(new Callback<Map<String, String>>() {
+                                @Override
+                                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                                    String name = response.body().get("name");
+                                    calendarItemList.add(new CalendarItem(scheduleData.get("date"), day, itemTime, salary+"원", savedUserType, name));
+                                    calendarAdapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                                    Toast.makeText(CalendarActivity.this, "이름을 받아오지 못했습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Map<String, String>>> call, Throwable t) {
+                        Toast.makeText(CalendarActivity.this, "일정을 불러오지 못했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(this, "근무 리스트를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         // ------------------ Bottom Navigation (하단바) ------------------
         ImageButton homeButton = findViewById(R.id.home_button);
@@ -252,18 +364,15 @@ public class CalendarActivity extends AppCompatActivity {
 //            }
 //        }
 //    }
-    public LocalTime StringToLocalTime(String time){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime localTime = LocalTime.parse(time, formatter);
-        return localTime;
-    }
 
+    // 문자열을 Date 형으로 변환
     public Date StringToDate(String time) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = format.parse(time);
         return date;
     }
 
+    // Date 값을 통해 요일 계산하기
     public String DateToDay(Date date){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -272,5 +381,108 @@ public class CalendarActivity extends AppCompatActivity {
         String[] dayOfWeekKorean = {"일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"};
 
         return dayOfWeekKorean[dayOfWeek - 1];
+    }
+
+    //스케줄 가져오기
+    public void fetchSchedules(String userType, String roomId){
+        if(userType.equals("Owner")){
+            addWorkButton.setVisibility(View.INVISIBLE);
+            ScheduleApiService scheduleApiService = RetrofitClient.getClient().create(ScheduleApiService.class);
+            Call<List<Map<String, String>>> call = scheduleApiService.getAllSchedules(roomId);
+            call.enqueue(new Callback<List<Map<String, String>>>() {
+                @Override
+                public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
+                    for(int i = 0; i < response.body().size(); i++){
+                        Map<String, String> scheduleData = response.body().get(i);
+                        String crewRoom = scheduleData.get("crewRoom");
+                        String member = scheduleData.get("member");
+                        String strtimeS = scheduleData.get("startTime");
+                        String strtimeE = scheduleData.get("endTime");
+                        Double totalHours = Double.valueOf(scheduleData.get("totalHours"));
+                        Integer pay = Integer.valueOf(scheduleData.get("pay"));
+                        Date date;
+                        try {
+                            date = StringToDate(scheduleData.get("date"));
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+                        String day = DateToDay(date);
+                        String itemTime = strtimeS + " ~ " + strtimeE;
+                        Double dSalary = totalHours * pay;
+                        String salary = String.valueOf(dSalary.intValue());
+
+                        MemberService memberService = RetrofitClient.getClient().create(MemberService.class);
+                        Call<Map<String, String>> userName = memberService.findMemberById(member);
+                        userName.enqueue(new Callback<Map<String, String>>() {
+                            @Override
+                            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                                String name = response.body().get("name");
+                                calendarItemList.add(new CalendarItem(scheduleData.get("date"), day, itemTime, salary+"원", userType, name));
+                                calendarAdapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                                Toast.makeText(CalendarActivity.this, "이름을 받아오지 못했습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Map<String, String>>> call, Throwable t) {
+
+                }
+            });
+        } else {
+            ScheduleApiService scheduleApiService = RetrofitClient.getClient().create(ScheduleApiService.class);
+            Call<List<Map<String, String>>> call = scheduleApiService.getMySchedule(roomId);
+
+            call.enqueue(new Callback<List<Map<String, String>>>() {
+                @Override
+                public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
+                    for(int i = 0; i < response.body().size(); i++){
+                        Map<String, String> scheduleData = response.body().get(i);
+                        String crewRoom = scheduleData.get("crewRoom");
+                        String member = scheduleData.get("member");
+                        String strtimeS = scheduleData.get("startTime");
+                        String strtimeE = scheduleData.get("endTime");
+                        Double totalHours = Double.valueOf(scheduleData.get("totalHours"));
+                        Integer pay = Integer.valueOf(scheduleData.get("pay"));
+                        Date date;
+                        try {
+                            date = StringToDate(scheduleData.get("date"));
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+                        String day = DateToDay(date);
+                        String itemTime = strtimeS + " ~ " + strtimeE;
+                        Double dSalary = totalHours * pay;
+                        String salary = String.valueOf(dSalary.intValue());
+
+                        MemberService memberService = RetrofitClient.getClient().create(MemberService.class);
+                        Call<Map<String, String>> userName = memberService.findMemberById(member);
+                        userName.enqueue(new Callback<Map<String, String>>() {
+                            @Override
+                            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                                String name = response.body().get("name");
+                                calendarItemList.add(new CalendarItem(scheduleData.get("date"), day, itemTime, salary+"원", userType, name));
+                                calendarAdapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                                Toast.makeText(CalendarActivity.this, "이름을 받아오지 못했습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Map<String, String>>> call, Throwable t) {
+                    Toast.makeText(CalendarActivity.this, "일정을 불러오지 못했습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

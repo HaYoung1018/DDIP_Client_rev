@@ -39,7 +39,7 @@ public class TradeListActivity extends AppCompatActivity {
         // SharedPreferences에서 사용자 ID 가져오기
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String memberId = sharedPreferences.getString("userId", "");
-        String savedUserType = sharedPreferences.getString("userTYpe", "");
+        String savedUserType = sharedPreferences.getString("userType", "");
         String savedName = sharedPreferences.getString("savedName", "");
 
         if (memberId.isEmpty()) {
