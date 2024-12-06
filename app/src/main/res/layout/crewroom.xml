@@ -61,7 +61,7 @@
             android:id="@+id/radio_exchange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="교환하기"
+            android:text="근무 교환하기"
             android:layout_marginBottom="16dp"
             android:padding="16dp"
             android:background="@drawable/ic_selector_box_background"
