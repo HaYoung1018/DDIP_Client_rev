@@ -149,7 +149,7 @@
             android:id="@+id/add_work_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="근무지 추가"
+            android:text="나의 근무지 추가"
             android:layout_marginTop="16dp"
             android:backgroundTint="#80FFFFFF"
             android:textColor="@android:color/black"
