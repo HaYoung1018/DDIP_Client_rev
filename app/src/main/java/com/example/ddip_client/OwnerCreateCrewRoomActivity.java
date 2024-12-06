@@ -86,7 +86,7 @@ public class OwnerCreateCrewRoomActivity extends AppCompatActivity {
                     Log.d("OwnerCreateCrewRoom", "Received CrewRoom ID: " + createResponse.getId());
 
                     if (createResponse.getId() != null) {
-                        Toast.makeText(OwnerCreateCrewRoomActivity.this, "크루룸 생성 완료! ID: " + createResponse.getId(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(OwnerCreateCrewRoomActivity.this, "크루룸 생성 완료! ID: " + createResponse.getId(), Toast.LENGTH_SHORT).show();
                         fetchMemberDetails(userId, contactNumber -> {
                             addOwnerToCrew(Integer.parseInt(createResponse.getId()), userId, contactNumber);
 

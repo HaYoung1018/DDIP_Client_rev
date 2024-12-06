@@ -126,7 +126,7 @@ public class StaffMainActivity extends AppCompatActivity {
         // ------------------ Add Work (근무지 추가) ------------------
         Button addWorkButton = findViewById(R.id.add_work_button);
         addWorkButton.setOnClickListener(v -> {
-            Toast.makeText(this, "근무지 추가 클릭됨", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "근무지 추가 클릭됨", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(StaffMainActivity.this, InviteCodeActivity.class);
             startActivityForResult(intent, 100); // 초대코드 Activity 결과 반환 요청
         });

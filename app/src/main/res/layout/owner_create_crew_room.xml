@@ -27,7 +27,7 @@
         android:id="@+id/crew_room_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="크루룸은 점주와 알바생들이 소통하고 근무 일정을 관리하기 위한 공간입니다.\n\n'크루룸명'은 본인이 생성할 방의 이름을 설정하는 것이며, \n'업장명'은 해당 지점의 정확한 정보를 알 수 있도록 도와줍니다."
+        android:text="크루룸은 점주와 알바생들이 소통하고 일정을 관리하기 위한 공간입니다.\n\n'크루룸명'은 본인이 생성할 방의 이름을 설정하는 것이며, \n'업장명'은 해당 지점의 정확한 정보를 알 수 있도록 도와줍니다."
         android:textSize="12sp"
         android:textColor="#8BA3C5"
         android:layout_marginBottom="16dp"
@@ -46,14 +46,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
-        android:text=" 크루룸명:" />
+        android:text=" 크루룸명(업장명):" />
 
     <!-- 크루룸명 입력란 -->
     <EditText
         android:id="@+id/crew_room_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="크루룸명 입력   (예: 버거공주왕자들)"
+        android:hint="크루룸명 입력   ex) 어디야커피 교통대점"
         android:padding="16dp"
         android:background="@android:color/white"
         android:layout_marginBottom="16dp"
@@ -63,14 +63,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
-        android:text=" 업장명:" />
+        android:text=" 세부정보:" />
 
     <!-- 업장명 입력란 -->
     <EditText
         android:id="@+id/store_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="업장명 입력     (예: 버거킹 충주호암점)"
+        android:hint="세부정보 입력    ex)교통빌딩 1층"
         android:padding="16dp"
         android:background="@android:color/white"
         android:layout_marginBottom="16dp"
@@ -100,7 +100,7 @@
         android:id="@+id/create_crew_room_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="생성"
+        android:text="크루룸 생성"
         android:layout_marginTop="16dp"
         android:paddingHorizontal="40dp"
         android:paddingVertical="12dp"

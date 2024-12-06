@@ -114,7 +114,7 @@ public class OwnerMainActivity extends AppCompatActivity {
         // ------------------ Add Work (근무지 추가) ------------------
         Button addWorkButton = findViewById(R.id.add_work_button);
         addWorkButton.setOnClickListener(v -> {
-            Toast.makeText(this, "근무지 추가 클릭됨", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "근무지 추가 클릭됨", Toast.LENGTH_SHORT).show();
 
             // InviteCodeActivity를 OwnerCreateCrewRoomActivity로 변경
             Intent intent = new Intent(OwnerMainActivity.this, OwnerCreateCrewRoomActivity.class);

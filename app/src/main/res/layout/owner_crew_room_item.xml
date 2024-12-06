@@ -30,13 +30,10 @@
         android:layout_marginEnd="8dp"
         android:textStyle="bold"/>
     <!-- 점 세 개 메뉴 -->
-    <ImageView
+    <TextView
         android:id="@+id/menu_more"
+        android:text="📋"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_more_vert"
-        android:contentDescription="More options"
-        android:padding="8dp"
-        android:clickable="true"
-        android:focusable="true" />
+        android:padding="8dp"/>
 </LinearLayout>
