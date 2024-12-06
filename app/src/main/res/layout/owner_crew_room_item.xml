@@ -4,7 +4,9 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="16dp"
-    android:gravity="center_vertical">
+    android:background="#F0F0F0"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="8dp">
     <!-- 크루룸 이름 -->
     <TextView
         android:id="@+id/crew_room_name"
@@ -15,7 +17,8 @@
         android:textSize="16sp"
         android:textColor="#000000"
         android:ellipsize="end"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:textStyle="bold"/>
     <!-- 초대코드 -->
     <TextView
         android:id="@+id/crew_room_invite_code"
@@ -24,7 +27,8 @@
         android:text="초대코드: EV99G85S"
         android:textSize="14sp"
         android:textColor="#808080"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        android:textStyle="bold"/>
     <!-- 점 세 개 메뉴 -->
     <ImageView
         android:id="@+id/menu_more"
