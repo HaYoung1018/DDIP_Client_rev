@@ -118,7 +118,7 @@ public class CalendarActivity extends AppCompatActivity {
         } else if (savedUserType.equals("Staff")) {
             System.out.println("스태프");
             ScheduleApiService scheduleApiService = RetrofitClient.getClient().create(ScheduleApiService.class);
-            Call<List<Map<String, String>>> call = scheduleApiService.getMySchedule(savedId);
+            Call<List<Map<String, String>>> call = scheduleApiService.getMySchedule(savedId, Integer.parseInt(roomId));
 
             call.enqueue(new Callback<List<Map<String, String>>>() {
                 @Override
@@ -225,7 +225,7 @@ public class CalendarActivity extends AppCompatActivity {
                 });
             } else if (savedUserType.equals("Staff")) {
                 ScheduleApiService scheduleApiService = RetrofitClient.getClient().create(ScheduleApiService.class);
-                Call<List<Map<String, String>>> call = scheduleApiService.getMySchedule(savedId);
+                Call<List<Map<String, String>>> call = scheduleApiService.getMySchedule(savedId, Integer.parseInt(roomId));
 
                 call.enqueue(new Callback<List<Map<String, String>>>() {
                     @Override
@@ -449,7 +449,7 @@ public class CalendarActivity extends AppCompatActivity {
             });
         } else {
             ScheduleApiService scheduleApiService = RetrofitClient.getClient().create(ScheduleApiService.class);
-            Call<List<Map<String, String>>> call = scheduleApiService.getMySchedule(roomId);
+            Call<List<Map<String, String>>> call = scheduleApiService.getMySchedule(roomId, Integer.parseInt(roomId));
 
             call.enqueue(new Callback<List<Map<String, String>>>() {
                 @Override
