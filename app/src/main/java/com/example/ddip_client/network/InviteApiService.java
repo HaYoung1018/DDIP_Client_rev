@@ -25,4 +25,7 @@ public interface InviteApiService {
     // 사용자 정보 가져오기 (전화번호 포함)
     @GET("/api/users/{userId}/contact")
     Call<Map<String, String>> getUserContact(@Path("userId") String userId);
+
+    @GET("/api/crewroom/getInviteCode/{crewRoomId}")
+    Call<Map<String, String>> getInviteCode(@Path("crewRoomId") String crewRoomId);
 }
