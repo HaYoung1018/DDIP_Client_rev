@@ -56,7 +56,7 @@
                 android:id="@+id/tag_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="대나무숲 | 메가커피 레시피 외우는법"
+                android:text="대나무숲 | 기가커피 레시피 외우는법"
                 android:textColor="@android:color/black" />
         </LinearLayout>
 
