@@ -114,10 +114,10 @@ public class OwnerMainActivity extends AppCompatActivity {
         addWorkButton.setOnClickListener(v -> {
             Toast.makeText(this, "근무지 추가 클릭됨", Toast.LENGTH_SHORT).show();
 
+            // InviteCodeActivity를 OwnerCreateCrewRoomActivity로 변경
             Intent intent = new Intent(OwnerMainActivity.this, OwnerCreateCrewRoomActivity.class);
 
             startActivityForResult(intent, 100); // OwnerCreateCrewRoomActivity 결과 반환 요청
-            startActivity(intent);
         });
 
         // ------------------ Memo (메모) ------------------

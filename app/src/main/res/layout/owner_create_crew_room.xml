@@ -30,17 +30,17 @@
         android:text="크루룸은 점주와 알바생들이 소통하고 근무 일정을 관리하기 위한 공간입니다.\n\n'크루룸명'은 본인이 생성할 방의 이름을 설정하는 것이며, \n'업장명'은 해당 지점의 정확한 정보를 알 수 있도록 도와줍니다."
         android:textSize="12sp"
         android:textColor="#8BA3C5"
-        android:layout_marginBottom="16dp" />
-
+        android:layout_marginBottom="16dp"
+        android:gravity="center" />
 
     <!-- 크루룸 생성 이미지 (crewing.png) -->
     <ImageView
         android:id="@+id/crewing_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:src="@drawable/crewing"
         android:layout_marginBottom="24dp"
-        android:contentDescription="크루룸 생성 이미지"
-        android:src="@drawable/crewing" />
+        android:contentDescription="크루룸 생성 이미지" />
 
     <TextView
         android:layout_width="match_parent"
@@ -70,7 +70,7 @@
         android:id="@+id/store_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="업장명 입력      (예: 버거킹 충주호암점)"
+        android:hint="업장명 입력     (예: 버거킹 충주호암점)"
         android:padding="16dp"
         android:background="@android:color/white"
         android:layout_marginBottom="16dp"
