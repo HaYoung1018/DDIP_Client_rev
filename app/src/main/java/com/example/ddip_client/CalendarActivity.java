@@ -298,7 +298,20 @@ public class CalendarActivity extends AppCompatActivity {
                 Toast.makeText(CalendarActivity.this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
             }
         });
-        subCrewButton.setOnClickListener(v -> startActivity(new Intent(CalendarActivity.this, ImsiCrewRoomListActivity.class)));
+        // 문 버튼 클릭 시 크루룸 액티비티로 이동
+        subCrewButton.setOnClickListener(v -> {
+            if(savedUserType.equals("Owner")){
+                Intent intent = new Intent(CalendarActivity.this, OwnerCrewRoomListActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (savedUserType.equals("Staff")) {
+                Intent intent = new Intent(CalendarActivity.this, ImsiCrewRoomListActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(CalendarActivity.this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
         alarmButton.setOnClickListener(v -> startActivity(new Intent(CalendarActivity.this, AlarmActivity.class)));
         myPageButton.setOnClickListener(v -> startActivity(new Intent(CalendarActivity.this, MypageActivity.class)));
 

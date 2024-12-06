@@ -105,10 +105,19 @@ public class TradeListActivity extends AppCompatActivity {
             }
         });
 
-        // 서브크루룸 이동 버튼 클릭 리스너 설정
+        // 문 버튼 클릭 시 크루룸 액티비티로 이동
         subCrewButton.setOnClickListener(v -> {
-            Intent intent = new Intent(TradeListActivity.this, ImsiCrewRoomListActivity.class);
-            startActivity(intent);
+            if(savedUserType.equals("Owner")){
+                Intent intent = new Intent(TradeListActivity.this, OwnerCrewRoomListActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (savedUserType.equals("Staff")) {
+                Intent intent = new Intent(TradeListActivity.this, ImsiCrewRoomListActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(TradeListActivity.this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // 알람 버튼 클릭 리스너 설정

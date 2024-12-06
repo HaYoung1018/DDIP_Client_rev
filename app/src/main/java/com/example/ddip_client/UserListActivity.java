@@ -170,11 +170,18 @@ public class UserListActivity extends AppCompatActivity {
 
         // 문 버튼 클릭 시 크루룸 액티비티로 이동
         subCrewButton.setOnClickListener(v -> {
-            Intent intent = new Intent(UserListActivity.this, ImsiCrewRoomListActivity.class);
-            startActivity(intent);
-            finish();
+            if(savedUserType.equals("Owner")){
+                Intent intent = new Intent(UserListActivity.this, OwnerCrewRoomListActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (savedUserType.equals("Staff")) {
+                Intent intent = new Intent(UserListActivity.this, ImsiCrewRoomListActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(UserListActivity.this, "사용자 종류가 저장되지 않았습니다. 로그아웃 후 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            }
         });
-
         // 알람 버튼 클릭 시 알람 액티비티로 이동
         alarmButton.setOnClickListener(v ->{
             Intent intent = new Intent(UserListActivity.this, AlarmActivity.class);
