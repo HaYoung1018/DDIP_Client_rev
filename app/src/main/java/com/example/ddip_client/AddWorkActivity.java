@@ -190,10 +190,10 @@ public class AddWorkActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(AddWorkActivity.this, "Schedule saved successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddWorkActivity.this, "스케줄이 저장 되었습니다..", Toast.LENGTH_SHORT).show();
                     passDataToCalendarActivity();
                 } else {
-                    Toast.makeText(AddWorkActivity.this, "Failed to save schedule.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddWorkActivity.this, "스케줄 저장 실패되었습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override

@@ -90,7 +90,7 @@ public class OwnerCrewRoomListActivity extends AppCompatActivity {
 
     private void onCrewRoomItemClick(String roomId, String roomName) {
         // 클릭된 크루룸에 대한 동작 처리
-        Toast.makeText(this, "Clicked: " + roomName, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Clicked: " + roomName, Toast.LENGTH_SHORT).show();
 
         // 선택된 크루룸 상세 페이지로 이동
         Intent intent = new Intent(this, OwnerCrewRoomActivity.class);

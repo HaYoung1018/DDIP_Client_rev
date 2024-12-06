@@ -53,12 +53,12 @@ public class LoginSignupActivity extends AppCompatActivity {
                 public void onResponse(Call<Member> call, Response<Member> response) {
                     if (response.isSuccessful()) {
                         if (savedUserType.equals("Owner")){
-                            Toast.makeText(LoginSignupActivity.this, "Owner계정", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LoginSignupActivity.this, "Owner계정", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginSignupActivity.this, OwnerMainActivity.class);
                             startActivity(intent);
                             finish();
                         } else if (savedUserType.equals("Staff")) {
-                            Toast.makeText(LoginSignupActivity.this, "Staff 계정", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LoginSignupActivity.this, "Staff 계정", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginSignupActivity.this, StaffMainActivity.class);
                             startActivity(intent);
                             finish();
@@ -142,14 +142,14 @@ public class LoginSignupActivity extends AppCompatActivity {
 
 
                                         if (result.equals("Owner")) {
-                                            Toast.makeText(LoginSignupActivity.this, "Owner계정", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(LoginSignupActivity.this, "Owner계정", Toast.LENGTH_SHORT).show();
                                             autoLogin.putString("userType", "Owner");
                                             autoLogin.apply();
                                             Intent intent = new Intent(LoginSignupActivity.this, OwnerMainActivity.class);
                                             startActivity(intent);
                                             finish();
                                         } else {
-                                            Toast.makeText(LoginSignupActivity.this, "Staff계정", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(LoginSignupActivity.this, "Staff계정", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(LoginSignupActivity.this, StaffMainActivity.class);
                                             autoLogin.putString("userType", "Staff");
                                             autoLogin.apply();

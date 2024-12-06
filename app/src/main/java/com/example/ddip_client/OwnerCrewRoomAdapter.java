@@ -74,8 +74,7 @@ public class OwnerCrewRoomAdapter extends RecyclerView.Adapter<OwnerCrewRoomAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView crewRoomName, crewRoomInvitation;
-        ImageView menuMore;
+        TextView crewRoomName, crewRoomInvitation, menuMore;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
