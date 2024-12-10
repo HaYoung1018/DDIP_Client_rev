@@ -112,6 +112,11 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
 
+                if(!isIdValid){
+                    Toast.makeText(SignupActivity.this, "아이디 중복확인을 해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // 회원가입 성공 로직 (실제 서버로의 데이터 전송이 필요)
                 isManager = usertype;
                 Member data = new Member(id, password, name, email, isManager, contactNumber);
