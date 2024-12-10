@@ -161,7 +161,7 @@ public class OwnerMainActivity extends AppCompatActivity {
                     crewRoomAdapter.notifyDataSetChanged(); // RecyclerView 갱신
                     calculateTotalSalaries();
                 } else {
-                    Toast.makeText(OwnerMainActivity.this, "크루룸 정보를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(OwnerMainActivity.this, "크루룸 정보를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override

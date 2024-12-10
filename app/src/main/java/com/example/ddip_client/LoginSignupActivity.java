@@ -64,7 +64,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                             finish();
                         }
                     } else {
-                        Toast.makeText(LoginSignupActivity.this, "기존 정보로 로그인 실패", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginSignupActivity.this, "로그인해주세요", Toast.LENGTH_SHORT).show();
                     }
                 }
 

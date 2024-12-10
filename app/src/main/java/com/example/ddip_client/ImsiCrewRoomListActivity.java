@@ -125,7 +125,7 @@ public class ImsiCrewRoomListActivity extends AppCompatActivity {
                     // 크루룸 데이터를 가져온 후 급여 데이터를 가져옵니다.
                     fetchSalariesForCrewRooms(memberId);
                 } else if (response.isSuccessful() && response.body() != null && response.body().isEmpty()) {
-                    Toast.makeText(ImsiCrewRoomListActivity.this, "속한 크루룸이 없습니다.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ImsiCrewRoomListActivity.this, "속한 크루룸이 없습니다.", Toast.LENGTH_SHORT).show();
                     Log.w("fetchCrewRooms", "No crew rooms found for memberId: " + memberId); // 데이터 없음
                 } else {
                     Log.e("fetchCrewRooms", "Error fetching crew rooms. Response code: " + response.code()); // 실패 로그
