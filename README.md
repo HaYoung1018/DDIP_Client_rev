@@ -61,7 +61,7 @@
 
 ### 회원정보 수정 및 확인
 
-![Image](https://github.com/user-attachments/assets/f55d1e66-71e3-4c94-b06d-f80cdc251413)
+<img src="https://github.com/user-attachments/assets/f55d1e66-71e3-4c94-b06d-f80cdc251413" width="300" />
 
 # 🛠 기술 스택 (Tech Stack)
 
@@ -115,3 +115,4 @@
 |이고은|@Leebbangthug|UI/UX 제작, 프로젝트 재무 관리|
 |이재현|@LeeJJJae|안드로이드 로직 개발, 데이터 흐름 제어, 보고서 작성|
 |전하영|@HaYoung1018|UI/UX 제작, 서버 구축, DB 관리, 회의록 작성|
+
