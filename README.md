@@ -107,28 +107,29 @@
 # 🚀 시작하기 (Getting Started)
 
 1. 이 저장소를 로컬 PC로 클론합니다.
-
-   **git clone [https://github.com/HaYoung1018/DDIP_Client_rev.git](https://github.com/HaYoung1018/DDIP_Client_rev.git)**
-
+```
+git clone https://github.com/HaYoung1018/DDIP_Client_rev.git
+```
 2. Android Studio를 실행하고 Open an Existing Project를 통해 클론한 폴더를 엽니다.
 
 3. Gradle Sync가 완료될 때까지 기다립니다.
 
 4. 안드로이드 기기(또는 에뮬레이터)를 연결하고 Run(Shift + F10) 버튼을 눌러 앱을 실행합니다.
-
-    **target API = 31**
-
+```
+target API = 31
+```
 
 
 # 👩‍💻 Developer
 
-|이름|Github ID|역할|
-|---|---|---|
-|유우선|@first-woosun|안드로이드 로직 개발, 데이터 흐름 제어, 프로젝트 총괄|
-|안해은|@An-Haeeun-02|서버 구축, DB 관리, 프로젝트 진행 일정 관리 및 조율|
-|이고은|@Leebbangthug|UI/UX 제작, 프로젝트 재무 관리|
-|이재현|@LeeJJJae|안드로이드 로직 개발, 데이터 흐름 제어, 보고서 작성|
-|전하영|@HaYoung1018|UI/UX 제작, 서버 구축, DB 관리, 회의록 작성|
+|이름|학번|역할|Github ID|
+|---|---|---|---|
+|유우선|2026098|안드로이드 로직 개발, 데이터 흐름 제어, 프로젝트 총괄|@first-woosun|
+|안해은|2226043|서버 구축, DB 관리, 프로젝트 진행 일정 관리 및 조율|@An-Haeeun-02|
+|이고은|2226052|UI/UX 제작, 프로젝트 재무 관리|@Leebbangthug|
+|이재현|2226059|안드로이드 로직 개발, 데이터 흐름 제어, 보고서 작성|@LeeJJJae|
+|전하영|2226067|UI/UX 제작, 서버 구축, DB 관리, 회의록 작성|@HaYoung1018|
+
 
 
 
