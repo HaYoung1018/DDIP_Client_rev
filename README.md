@@ -1,14 +1,43 @@
-# 🕰️ Crewing(쿠잉)
+# <img src="https://github.com/user-attachments/assets/3d72ddfa-3371-4796-9e61-a54b0beb162d" width="50"> Crewing(쿠잉)
 
 <img width="7066" height="4200" alt="Image" src="https://github.com/user-attachments/assets/1e1fba0c-603d-47bd-9758-b547f29d1813" />
 쿠잉은 사용자의 근무 시간을 관리하고 다른 사람과 근무를 교환할 수 있는 기능을 제공하는 안드로이드 클라이언트 애플리케이션입니다.
 
+<div align=center><h2>📚 STACKS</h2></div>
+
+<div align="center">
+  
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+<br>
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
+![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white)
+![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
+<br>
+![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)
+![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)
+![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+<br>
+</div>
 
 # 📌 프로젝트 개요
 
-본 저장소는 쿠잉 서비스의 안드로이드 클라이언트 코드를 담고 있습니다. 사용자는 자신의 근무를 리스트에 올리거나 타인과 교환할 수 있습니다.
+### 프로젝트 진행 기간 : 2024.06~2024.12
 
-## 📱 주요 기능
+### 프로젝트 추진 배경
+
+
+2024년 1월 통계청의 조사에 따르면, 최근 5년간 우리나라 파트타임 근로자(주 30시간 미만 근로) 수는 51만 9000여 명에서 62만 4000여 명으로 20.2% 증가했습니다.
+
+파트타임 근로자의 증가 원인은 주로 2030세대가 워라벨을 추구하여 파트타임을 선호하고, 고령화 사회로 인해 은퇴 후 경제활동을 이어가는 노인 세대가 장시간 근무의 부담을 느끼기 때문입니다. 게다가 코로나 이후 경제 상황이 어려워진 업장주들이 주휴수당 지급에 대한 부담감 때문에 파트타임 일자리를 더 많이 구하게 되었습니다.
+
+그러나 이러한 증가에도 불구하고 파트타임 근로자 관리는 여전히 체계적이지 않습니다. 대학생들의 아르바이트 경험에서도 다양한 문제가 드러났습니다. 특히 소규모 사업장에서는 주간 근무 일정이 매주 조정되는 경우가 흔한데, 지금까지는 이와 같은 일정 조정이 직접적인 연락을 통해 이루어졌습니다. 예를 들어, 급한 일정이 생길 경우, 다른 동료에게 개인적으로 연락을 돌려 공백을 채워줄 인원을 찾는 번거로움이 있습니다.
+
+위 문제를 해결하기 위해, 업장주와 파트타임 근무자들이 공동으로 접속하여 서로의 근무 일정을 공유하고 능동적으로 조율할 수 있는 시스템을 개발하고자 합니다. 이를 통해 업장주는 근무 현황을 한눈에 확인하고, 임금 계산 및 지급 여부를 효율적으로 관리할 수 있게 하는 것이 목표입니다.
+
+
+## ✅ 주요 기능
 
 ### 1. 로그인, 회원가입
   - ID Duplicate Validation 및 PW Validation
@@ -39,56 +68,41 @@
 
 ![Image](https://github.com/user-attachments/assets/326a5547-5b6c-405c-ba28-c1bd34ccb7c7)
 
+---
+
 ### 메인 화면
 
 <img width="3926" height="2600" alt="Image" src="https://github.com/user-attachments/assets/d2d5aa04-edc1-4ac6-b29e-2acea4885d3b" />
+
+---
 
 ### 크루룸 생성 및 입장
 
 ![Image](https://github.com/user-attachments/assets/73431b6b-e63f-4043-95ac-d67095a42a34)
 
+---
+
 ### 근무 일정 등록 및 확인
 
 ![Image](https://github.com/user-attachments/assets/e43864dd-d5b7-483e-a28e-b06e3c5e0d57)
+
+---
 
 ### 근무 교환 신청/수락 후 반영
 
 ![Image](https://github.com/user-attachments/assets/b642ae56-3033-4bc2-b0ef-37205632f8ab)
 
+---
+
 ### 회원 유형 별 근무자 리스트
 
 <img width="622" height="557" alt="Image" src="https://github.com/user-attachments/assets/af7a9b5f-5508-40a8-ae34-2f7e31fc3d77" />
 
+---
+
 ### 회원정보 수정 및 확인
 
 <img src="https://github.com/user-attachments/assets/f55d1e66-71e3-4c94-b06d-f80cdc251413" width="300" />
-
-# 🛠 기술 스택 (Tech Stack)
-
-### IDE
-|<img src="https://github.com/user-attachments/assets/2f7ee7c7-fc40-4128-85f7-b3c10716f86c" width="150" />|<img src="https://github.com/user-attachments/assets/9260aa1a-b61e-4c45-a997-648541b00900" width="150" />|
-|---|---|
-|intelliJ|Android Studio|
-
-### Language
-|<img src="https://github.com/user-attachments/assets/6c1de071-e096-4e9e-b0d7-526a833e4f3b" width="150" />|
-|---|
-|Java|
-
-### DB
-|<img src="https://github.com/user-attachments/assets/4dbdaf70-57fd-4bbd-b0b7-64536828e675" width="150" />|
-|---|
-|MySql|
-
-### Framework
-|<img src="https://github.com/user-attachments/assets/accd979c-be07-4be8-b7c6-07dd2d9891b2" width="150" />|
-|---|
-|Spring Boot|
-
-### Build tool
-|<img src="https://github.com/user-attachments/assets/7f607a51-53bc-4dec-9708-dc7ab3912a6f" width="150" />|
-|--|
-|Gradle|
 
 # 🚀 시작하기 (Getting Started)
 
@@ -115,5 +129,6 @@
 |이고은|@Leebbangthug|UI/UX 제작, 프로젝트 재무 관리|
 |이재현|@LeeJJJae|안드로이드 로직 개발, 데이터 흐름 제어, 보고서 작성|
 |전하영|@HaYoung1018|UI/UX 제작, 서버 구축, DB 관리, 회의록 작성|
+
 
 
